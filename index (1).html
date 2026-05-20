@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ElectroCalc Pro · قوادرية نذير</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #020817;
+  --panel: rgba(15,23,42,.92);
+  --border: rgba(148,163,184,.12);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --subtle: #64748b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;font-family:'Cairo',system-ui,sans-serif;direction:rtl}
+body{background:radial-gradient(circle at top right,rgba(168,85,247,.16),transparent 24%),
+  radial-gradient(circle at top left,rgba(59,130,246,.15),transparent 18%),
+  linear-gradient(180deg,#020817 0%,#081022 100%);
+  color:var(--text);min-height:100vh}
+button,input,select{font:inherit}
+button{border:0;cursor:pointer}
+input,select{width:100%}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0f172a}
+::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:4px}
+@keyframes pulse{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+select option{background:#0f172a;color:#e2e8f0}
+
+/* layout */
+.shell{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+
+/* header */
+header{background:linear-gradient(135deg,rgba(15,23,42,.95),rgba(12,26,58,.9));
+  border-bottom:1px solid rgba(59,130,246,.16);padding:0 20px}
+.hdr-inner{max-width:860px;margin:0 auto;padding:18px 0;display:flex;
+  align-items:center;justify-content:space-between;gap:12;flex-wrap:wrap}
+.logo-title{font-size:21px;font-weight:900;background:linear-gradient(90deg,#93c5fd,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em}
+.logo-sub{font-size:11px;color:#64748b;margin-top:3px}
+.author-badge{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(168,85,247,.12));
+  border:1px solid rgba(167,139,250,.3);border-radius:16px;padding:10px 16px;text-align:center;min-width:180px}
+.author-badge .by{font-size:11px;color:#a78bfa;font-weight:700;letter-spacing:.04em;margin-bottom:3px}
+.author-badge .name{font-weight:900;font-size:14px;color:#f1f5f9}
+.author-badge .stars{color:#fbbf24;font-size:13px;margin:3px 0}
+.author-badge .role{font-size:10px;color:#94a3b8;margin-top:2px}
+
+/* summary */
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.scard{background:rgba(15,23,42,.9);border:1px solid var(--border);border-radius:18px;padding:16px 14px;backdrop-filter:blur(10px)}
+.scard .val{font-size:22px;font-weight:900;color:#f8fafc;display:block}
+.scard .lbl{font-size:11px;color:var(--muted);margin-top:3px;display:block}
+
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.tab-btn{background:rgba(15,23,42,.8);border:1px solid var(--border);border-radius:16px;
+  padding:13px 8px;display:grid;gap:7px;justify-items:center;min-height:88px;
+  color:#64748b;transition:all .2s}
+.tab-btn svg{width:21px;height:21px}
+.tab-btn .tlbl{font-size:10.5px;font-weight:700;text-align:center;line-height:1.35}
+.tab-btn.active{color:white}
+.tab-btn:hover:not(.active){transform:translateY(-2px)}
+
+/* panel */
+.panel{background:var(--panel);border-radius:28px;padding:22px;backdrop-filter:blur(10px);
+  animation:fadeUp .3s ease}
+.panel-hdr{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:16px;
+  border-bottom:1px solid rgba(148,163,184,.1)}
+.panel-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;flex-shrink:0}
+.panel-icon svg{width:22px;height:22px}
+.panel-hdr h2{font-size:17px;font-weight:800;color:#f1f5f9}
+.panel-hdr p{font-size:12px;color:#94a3b8;margin-top:4px;line-height:1.7}
+
+/* fields */
+.stack{display:grid;gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.field{display:grid;gap:7px}
+.field-label{color:#cbd5e1;font-size:13px;font-weight:700}
+.field-ctrl{display:flex;gap:8px;align-items:center}
+.field-input{background:rgba(2,8,23,.58);border:1px solid rgba(59,130,246,.22);border-radius:14px;
+  color:#e2e8f0;padding:11px 14px;outline:none;transition:border-color .2s,box-shadow .2s;font-size:14px}
+.field-input:focus{border-color:rgba(96,165,250,.8);box-shadow:0 0 0 4px rgba(59,130,246,.12)}
+.field-input::placeholder{color:#64748b}
+.field-unit{white-space:nowrap;color:#93c5fd;font-size:12px;font-weight:700}
+
+/* tips */
+.tips{display:flex;gap:10px;align-items:flex-start;background:rgba(59,130,246,.08);
+  border:1px solid rgba(59,130,246,.16);border-radius:18px;padding:13px 15px;
+  color:#cbd5e1;line-height:1.9;font-size:13px}
+.tips svg{width:16px;height:16px;color:#60a5fa;flex-shrink:0;margin-top:2px}
+
+/* results */
+.results{border-radius:22px;padding:18px}
+.results-hdr{display:flex;justify-content:space-between;margin-bottom:12px;align-items:center}
+.results-hdr span{font-weight:800;font-size:15px}
+.results-hdr small{color:var(--muted);font-size:12px}
+.results-list{display:grid;gap:9px}
+.res-row{display:flex;justify-content:space-between;align-items:center;
+  background:rgba(2,8,23,.36);border:1px solid rgba(148,163,184,.08);border-radius:14px;padding:11px 14px}
+.res-row span{color:#cbd5e1;font-size:13px}
+.res-row strong{font-family:'JetBrains Mono',monospace;color:#f8fafc;font-size:15px}
+.empty{border:1px dashed rgba(148,163,184,.2);border-radius:18px;padding:18px;
+  color:var(--muted);text-align:center;background:rgba(15,23,42,.5);font-size:13px}
+
+/* ai chat */
+.chat-msgs{height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px}
+.bubble{max-width:85%;padding:11px 15px;border-radius:18px;font-size:13.5px;line-height:1.85;white-space:pre-wrap}
+.bubble-ai{align-self:flex-start;background:rgba(30,41,59,.95);border:1px solid rgba(96,165,250,.16);border-radius:18px 18px 18px 4px}
+.bubble-user{align-self:flex-end;background:linear-gradient(135deg,#3b82f6,#6366f1);color:white;border-radius:18px 18px 4px 18px}
+.chat-composer{display:flex;gap:10px}
+.send-btn{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+  color:white;display:grid;place-items:center;flex-shrink:0;box-shadow:0 8px 20px rgba(99,102,241,.28)}
+.send-btn svg{width:18px;height:18px}
+.typing-dots{display:flex;gap:5px;padding:4px}
+.dot{width:7px;height:7px;border-radius:50%;background:#3b82f6;animation:pulse 1.2s ease-in-out infinite}
+
+/* footer */
+footer{margin-top:20px;padding:10px 4px;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:8px;border-top:1px solid rgba(148,163,184,.08)}
+.ft-brand{font-size:13px;color:#475569}
+.ft-author{font-size:12px;font-weight:700;background:linear-gradient(90deg,#93c5fd,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+@media(max-width:700px){
+  .summary,.tabs,.grid2{grid-template-columns:repeat(2,1fr)}
+  .tabs{grid-template-columns:repeat(4,1fr)}
+  .hdr-inner{flex-direction:column;align-items:flex-start}
+  .author-badge{align-self:stretch}
+}
+@media(max-width:480px){
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .summary{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-inner">
+    <div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:22px">⚡</span>
+        <span class="logo-title">ElectroCalc Pro</span>
+      </div>
+      <div class="logo-sub">حاسبات الهندسة الإلكتروميكانيكية · مع مساعد ذكاء اصطناعي</div>
+    </div>
+    <div class="author-badge">
+      <div class="by">👤 تم إعداده بواسطة</div>
+      <div class="name">قوادرية نذير</div>
+      <div class="stars">★★★★★</div>
+      <div class="role">مهندس في الإلكتروميكانيك</div>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- SUMMARY -->
+  <div class="summary" style="margin-top:20px">
+    <div class="scard"><span class="val">8</span><span class="lbl">حاسبات هندسية</span></div>
+    <div class="scard"><span class="val">AI</span><span class="lbl">مساعد ذكي</span></div>
+    <div class="scard"><span class="val">RTL</span><span class="lbl">واجهة عربية</span></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs" id="tabs"></div>
+
+  <!-- PANEL -->
+  <div class="panel" id="panel"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="ft-brand">⚡ ElectroCalc Pro · نتائج تقريبية للتقدير الأولي</span>
+    <span class="ft-author">إعداد: قوادرية نذير · مهندس إلكتروميكانيك</span>
+  </footer>
+</div>
+
+<script>
+// ── helpers ──────────────────────────────────────────────────────────────
+const fmt=(v,d=2)=>Number.isFinite(v)?new Intl.NumberFormat('ar-EG',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v):'—';
+const pos=v=>Number.isFinite(v)&&v>0;
+const n=v=>Number.parseFloat(v);
+
+// ── SVG icons ────────────────────────────────────────────────────────────
+const SVG={
+  motor:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg>`,
+  torque:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.4 16.6"/><path d="M12 2v4"/><path d="M4.6 18.6A10 10 0 0 1 12 2"/><polyline points="16 6 12 2 8 6"/></svg>`,
+  current:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+  breaker:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/></svg>`,
+  air:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`,
+  pump:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9"/><line x1="12" y1="12" x2="12" y2="19"/><path d="M8 19h8"/><circle cx="12" cy="8" r="2"/></svg>`,
+  convert:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
+  ai:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="7.5" cy="14.5" r="1.5"/><circle cx="16.5" cy="14.5" r="1.5"/></svg>`,
+  send:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
+  info:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
+};
+
+// ── tabs config ──────────────────────────────────────────────────────────
+const TABS=[
+  {id:'motor',    label:'قدرة المحرك',    color:'#3b82f6',icon:'motor',   help:'احسب القدرة الظاهرية والفعالة وقدرة الخرج للمحركات أحادية أو ثلاثية الطور.'},
+  {id:'torque',   label:'عزم الدوران',   color:'#8b5cf6',icon:'torque',  help:'احسب العزم من القدرة والسرعة أو من القوة ونصف القطر.'},
+  {id:'3phase',   label:'التيار الثلاثي',color:'#06b6d4',icon:'current', help:'قدّر تيار التشغيل والجهد الطوري وتيار الإقلاع لمحرك ثلاثي الطور.'},
+  {id:'breaker',  label:'القاطع والكابل',color:'#f59e0b',icon:'breaker', help:'اختيار مبدئي للقاطع ومقطع الكابل بناءً على نوع الحمل والتيار.'},
+  {id:'air',      label:'الهواء المضغوط',color:'#10b981',icon:'air',     help:'حساب تقريبي لقدرة الضاغط وحجم الخزان والإزاحة الحجمية.'},
+  {id:'pump',     label:'المضخات',       color:'#f97316',icon:'pump',    help:'احسب القدرة الهيدروليكية وقدرة عمود المضخة وتقدير NPSH.'},
+  {id:'convert',  label:'تحويل الوحدات',color:'#ec4899',icon:'convert', help:'تحويل سريع بين أشهر الوحدات الهندسية.'},
+  {id:'ai',       label:'مساعد AI',      color:'#a78bfa',icon:'ai',      help:'مساعد ذكاء اصطناعي متخصص في الهندسة الإلكتروميكانيكية.'},
+];
+
+// ── calc engines ─────────────────────────────────────────────────────────
+const calc={
+  motor(f){
+    const V=n(f.voltage),I=n(f.current),PF=n(f.pf)/100,eff=n(f.eff)/100,ph=parseInt(f.phases);
+    if(!pos(V)||!pos(I)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
+    const S=ph===3?Math.sqrt(3)*V*I:V*I,P=S*PF,Pout=P*eff,Q=Math.sqrt(Math.max(S**2-P**2,0));
+    return[
+      {l:'القدرة الظاهرية',v:`${fmt(S/1000,3)} kVA`},
+      {l:'القدرة الفعالة',v:`${fmt(P/1000,3)} kW`},
+      {l:'قدرة الخرج',v:`${fmt(Pout/1000,3)} kW`},
+      {l:'القدرة بالحصان',v:`${fmt(Pout/746,2)} HP`},
+      {l:'القدرة غير الفعالة',v:`${fmt(Q/1000,3)} kVAR`},
+    ];
+  },
+  torque(f){
+    if(f.type==='power'){
+      const P=n(f.power),N=n(f.rpm);
+      if(!pos(P)||!pos(N))return null;
+      const T=9550*P/N;
+      return[{l:'العزم',v:`${fmt(T,2)} N·m`},{l:'العزم المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
+    }
+    const F=n(f.force),R=n(f.radius);
+    if(!pos(F)||!pos(R))return null;
+    const T=F*R;
+    return[{l:'العزم',v:`${fmt(T,2)} N·m`},{l:'العزم المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
+  },
+  threePhase(f){
+    const P=n(f.power),V=n(f.voltage),PF=n(f.pf)/100,eff=n(f.eff)/100;
+    if(!pos(P)||!pos(V)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
+    const I=(P*1000)/(Math.sqrt(3)*V*PF*eff);
+    return[
+      {l:'تيار التشغيل',v:`${fmt(I,2)} A`},
+      {l:'جهد الخط',v:`${fmt(V,1)} V`},
+      {l:'جهد الطور',v:`${fmt(V/Math.sqrt(3),1)} V`},
+      {l:'تيار إقلاع DOL (تقريبي)',v:`${fmt(I*6,1)} A`},
+    ];
+  },
+  breaker(f){
+    const I=n(f.current);
+    if(!pos(I))return null;
+    const fm={motor:1.25,general:1.25,welding:2,lighting:1.15};
+    const cm={motor:'D',general:'C',welding:'D',lighting:'B'};
+    const factor=fm[f.type]||1.25,min=I*factor;
+    const STD=[6,10,16,20,25,32,40,50,63,80,100,125,160,200,250,315,400,500,630];
+    const sel=STD.find(x=>x>=min)||STD[STD.length-1];
+    const CT=[[1.5,15],[2.5,21],[4,28],[6,36],[10,50],[16,68],[25,89],[35,110],[50,134],[70,171],[95,207],[120,239],[150,275],[185,314],[240,361]];
+    const cable=(CT.find(([,a])=>a>=I*1.25)||['>240'])[0];
+    return[
+      {l:'أقل قاطع مطلوب',v:`${fmt(min,1)} A`},
+      {l:'القاطع المقترح',v:`${sel} A`},
+      {l:'منحنى الفصل',v:`Curve ${cm[f.type]||'C'}`},
+      {l:'مقطع الكابل المبدئي',v:`${cable} mm²`},
+      {l:'معامل الاختيار',v:`${fmt(factor,2)} ×`},
+    ];
+  },
+  air(f){
+    const P=n(f.pressure),Q=n(f.flow),np=n(f.pistons),N=n(f.rpm);
+    if(!pos(P)||!pos(Q))return null;
+    const kW=(P*1e5*(Q/60))/(1000*0.85),rec=Q*250;
+    const disp=(pos(np)&&pos(N))?(Q/(np*N))*1e6:null;
+    return[
+      {l:'قدرة عمود الضاغط',v:`${fmt(kW,2)} kW`},
+      {l:'القدرة بالحصان',v:`${fmt(kW/0.746,2)} HP`},
+      {l:'حجم الخزان المقترح',v:`${fmt(rec,0)} L`},
+      {l:'الإزاحة/مكبس/لفة',v:disp?`${fmt(disp,0)} cc`:'—'},
+    ];
+  },
+  pump(f){
+    const Q=n(f.flow)/3600,H=n(f.head),eff=n(f.eff)/100,rho=n(f.density);
+    if(!pos(Q)||!pos(H)||!(eff>0&&eff<=1)||!pos(rho))return null;
+    const Wh=rho*9.81*Q*H,Ws=Wh/eff;
+    return[
+      {l:'القدرة الهيدروليكية',v:`${fmt(Wh/1000,2)} kW`},
+      {l:'قدرة العمود المطلوبة',v:`${fmt(Ws/1000,2)} kW`},
+      {l:'القدرة بالحصان',v:`${fmt(Ws/746,2)} HP`},
+      {l:'NPSH تقريبي',v:`${fmt(Math.max(2,H*0.1+2),1)} m`},
+    ];
+  },
+  convert(f){
+    const v=n(f.value);
+    if(!Number.isFinite(v)||!f.from||!f.to)return null;
+    const T={
+      power:{W:1,kW:1000,MW:1e6,HP:746,'HP(m)':735.5,'BTU/h':0.293071},
+      torque:{'N·m':1,'kN·m':1000,'kgf·m':9.80665,'lbf·ft':1.35582,'lbf·in':0.112985},
+      pressure:{Pa:1,kPa:1000,MPa:1e6,bar:1e5,psi:6894.76,atm:101325,mmHg:133.322},
+      flow:{'m³/s':1,'m³/h':1/3600,'L/s':0.001,'L/min':1/60000,GPM:6.309e-5},
+      length:{m:1,cm:0.01,mm:0.001,km:1000,ft:0.3048,in:0.0254,yd:0.9144},
+    };
+    if(f.cat==='temperature'){
+      let C=f.from==='°C'?v:f.from==='°F'?(v-32)*5/9:f.from==='K'?v-273.15:null;
+      if(C===null)return null;
+      const r=f.to==='°C'?C:f.to==='°F'?C*9/5+32:f.to==='K'?C+273.15:null;
+      return r!==null?[{l:'القيمة المحولة',v:`${fmt(r,4)} ${f.to}`}]:null;
+    }
+    const tb=T[f.cat];
+    if(!tb||!tb[f.from]||!tb[f.to])return null;
+    return[{l:'القيمة المحولة',v:`${fmt(v*tb[f.from]/tb[f.to],4)} ${f.to}`}];
+  },
+};
+
+const UNITS={
+  power:['W','kW','MW','HP','HP(m)','BTU/h'],
+  torque:['N·m','kN·m','kgf·m','lbf·ft','lbf·in'],
+  pressure:['Pa','kPa','MPa','bar','psi','atm','mmHg'],
+  flow:['m³/s','m³/h','L/s','L/min','GPM'],
+  length:['m','cm','mm','km','ft','in','yd'],
+  temperature:['°C','°F','K'],
+};
+
+// ── UI helpers ───────────────────────────────────────────────────────────
+function field(id,label,{type='number',placeholder='',unit='',options=null,value='',min='0',step='any'}={}){
+  if(options){
+    const opts=options.map(o=>`<option value="${o.v}"${o.v===value?' selected':''}>${o.l}</option>`).join('');
+    return `<label class="field"><span class="field-label">${label}</span>
+      <select class="field-input" id="${id}" onchange="onchange_${id}(this.value)">${opts}</select></label>`;
+  }
+  return `<label class="field"><span class="field-label">${label}</span>
+    <div class="field-ctrl">
+      <input class="field-input" id="${id}" type="${type}" inputmode="decimal" value="${value}"
+        placeholder="${placeholder}" min="${min}" step="${step}"
+        oninput="onchange_${id}(this.value)"/>
+      ${unit?`<span class="field-unit">${unit}</span>`:''}
+    </div></label>`;
+}
+function tips(txt){return`<div class="tips">${SVG.info}<div>${txt}</div></div>`;}
+function results(items,color,note){
+  if(!items)return`<div class="empty">أدخل القيم المطلوبة لعرض النتائج.</div>`;
+  return`<div class="results" style="background:linear-gradient(180deg,color-mix(in srgb,${color} 8%,rgba(15,23,42,1)),rgba(15,23,42,.82));border:1px solid color-mix(in srgb,${color} 28%,rgba(148,163,184,.12))">
+    <div class="results-hdr"><span>النتائج</span><small>${note}</small></div>
+    <div class="results-list">${items.map(it=>`<div class="res-row"><span>${it.l}</span><strong>${it.v}</strong></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── state ────────────────────────────────────────────────────────────────
+let activeTab='motor';
+const state={
+  motor:{voltage:'',current:'',pf:'85',eff:'90',phases:'3'},
+  torque:{type:'power',power:'',rpm:'',force:'',radius:''},
+  '3phase':{power:'',voltage:'380',pf:'85',eff:'90'},
+  breaker:{current:'',type:'motor'},
+  air:{pressure:'',flow:'',pistons:'2',rpm:'900'},
+  pump:{flow:'',head:'',eff:'75',density:'1000'},
+  convert:{cat:'power',value:'',from:'kW',to:'HP'},
+};
+const chatMsgs=[{role:'ai',text:'مرحباً! أنا مساعدك الهندسي. اسألني عن أي حساب في الإلكتروميكانيك.'}];
+
+// ── render tabs ──────────────────────────────────────────────────────────
+function renderTabs(){
+  document.getElementById('tabs').innerHTML=TABS.map(t=>`
+    <button class="tab-btn${t.id===activeTab?' active':''}" onclick="setTab('${t.id}')"
+      style="${t.id===activeTab?`background:color-mix(in srgb,${t.color} 15%,rgba(15,23,42,1));border:1.5px solid color-mix(in srgb,${t.color} 50%,transparent);box-shadow:0 12px 24px color-mix(in srgb,${t.color} 18%,transparent)`:''}">
+      <span style="color:${t.id===activeTab?t.color:'#64748b'};width:21px;height:21px;display:inline-flex">${SVG[t.icon]}</span>
+      <span class="tlbl" style="color:${t.id===activeTab?t.color:'#64748b'}">${t.label}</span>
+    </button>`).join('');
+}
+
+function setTab(id){activeTab=id;renderTabs();renderPanel();}
+
+// ── render panel ─────────────────────────────────────────────────────────
+function renderPanel(){
+  const t=TABS.find(x=>x.id===activeTab);
+  const content=buildContent();
+  document.getElementById('panel').style.border=`1px solid color-mix(in srgb,${t.color} 28%,rgba(148,163,184,.1))`;
+  document.getElementById('panel').style.boxShadow=`0 20px 48px color-mix(in srgb,${t.color} 12%,rgba(2,8,23,.5))`;
+  document.getElementById('panel').innerHTML=`
+    <div class="panel-hdr">
+      <div class="panel-icon" style="background:color-mix(in srgb,${t.color} 14%,rgba(15,23,42,1));border:1px solid color-mix(in srgb,${t.color} 28%,transparent);color:${t.color}">
+        ${SVG[t.icon]}
+      </div>
+      <div><h2>${t.label}</h2><p>${t.help}</p></div>
+    </div>
+    ${content}`;
+  bindInputs();
+}
+
+// ── content builders ─────────────────────────────────────────────────────
+function buildContent(){
+  const tab=activeTab, s=state;
+  if(tab==='motor'){
+    const r=calc.motor(s.motor);
+    return`<div class="stack">
+      <div class="grid2">
+        ${field('motor_phases','نوع التغذية',{options:[{v:'3',l:'ثلاثي الطور'},{v:'1',l:'أحادي الطور'}],value:s.motor.phases})}
+        ${field('motor_voltage','الجهد',{placeholder:'380',unit:'V',value:s.motor.voltage})}
+      </div>
+      <div class="grid2">
+        ${field('motor_current','التيار',{placeholder:'10',unit:'A',value:s.motor.current})}
+        ${field('motor_pf','معامل القدرة',{placeholder:'85',unit:'%',value:s.motor.pf})}
+      </div>
+      ${field('motor_eff','الكفاءة',{placeholder:'90',unit:'%',value:s.motor.eff})}
+      ${tips('هذه الحاسبة تعتمد على قيم اسمية. للمحركات الكبيرة يُفضَّل الرجوع إلى لوحة البيانات أو كتالوج المصنع.')}
+      ${results(r,'#3b82f6','نتائج تقريبية للاستخدام الأولي')}
+    </div>`;
+  }
+  if(tab==='torque'){
+    const r=calc.torque(s.torque);
+    return`<div class="stack">
+      ${field('torque_type','طريقة الحساب',{options:[{v:'power',l:'من القدرة والسرعة'},{v:'force',l:'من القوة ونصف القطر'}],value:s.torque.type})}
+      ${s.torque.type==='power'?
+        `<div class="grid2">${field('torque_power','القدرة',{placeholder:'5.5',unit:'kW',value:s.torque.power})}${field('torque_rpm','السرعة',{placeholder:'1450',unit:'RPM',value:s.torque.rpm})}</div>`:
+        `<div class="grid2">${field('torque_force','القوة',{placeholder:'500',unit:'N',value:s.torque.force})}${field('torque_radius','نصف القطر',{placeholder:'0.5',unit:'m',value:s.torque.radius})}</div>`}
+      ${tips('المعادلة الأساسية: T = 9550 × P / n عندما تكون القدرة بالكيلوواط والسرعة بالدورة/الدقيقة.')}
+      ${results(r,'#8b5cf6','العزم محسوب بقيم اسمية')}
+    </div>`;
+  }
+  if(tab==='3phase'){
+    const r=calc.threePhase(s['3phase']);
+    return`<div class="stack">
+      <div class="grid2">
+        ${field('3p_power','قدرة الحمل',{placeholder:'7.5',unit:'kW',value:s['3phase'].power})}
+        ${field('3p_voltage','جهد الشبكة (L-L)',{placeholder:'380',unit:'V',value:s['3phase'].voltage})}
+      </div>
+      <div class="grid2">
+        ${field('3p_pf','معامل القدرة',{placeholder:'85',unit:'%',value:s['3phase'].pf})}
+        ${field('3p_eff','الكفاءة',{placeholder:'90',unit:'%',value:s['3phase'].eff})}
+      </div>
+      ${tips('تيار الإقلاع مقدَّر بـ 6× تيار التشغيل، وهي قيمة تقريبية للمحركات ذات الإقلاع المباشر DOL.')}
+      ${results(r,'#06b6d4','يعتمد على معامل قدرة وكفاءة مدخلين')}
+    </div>`;
+  }
+  if(tab==='breaker'){
+    const r=calc.breaker(s.breaker);
+    return`<div class="stack">
+      <div class="grid2">
+        ${field('br_current','تيار الحمل',{placeholder:'25',unit:'A',value:s.breaker.current})}
+        ${field('br_type','نوع الحمل',{options:[{v:'motor',l:'محرك كهربائي'},{v:'general',l:'حمل عام'},{v:'welding',l:'جهاز لحام'},{v:'lighting',l:'إنارة'}],value:s.breaker.type})}
+      </div>
+      ${tips('النتيجة هنا اختيار مبدئي فقط. يجب مراجعة طريقة التمديد، درجة الحرارة، الهبوط في الجهد، ومعيار الحماية المعتمد.')}
+      ${results(r,'#f59e0b','اختيار مبدئي للقاطع والكابل')}
+    </div>`;
+  }
+  if(tab==='air'){
+    const r=calc.air(s.air);
+    return`<div class="stack">
+      <div class="grid2">
+        ${field('air_pressure','ضغط التشغيل',{placeholder:'8',unit:'bar',value:s.air.pressure})}
+        ${field('air_flow','التدفق المطلوب',{placeholder:'5',unit:'m³/min',value:s.air.flow})}
+      </div>
+      <div class="grid2">
+        ${field('air_pistons','عدد المكابس',{placeholder:'2',value:s.air.pistons,step:'1',min:'1'})}
+        ${field('air_rpm','سرعة الدوران',{placeholder:'900',unit:'RPM',value:s.air.rpm,step:'1'})}
+      </div>
+      ${tips('القيم تعتمد على كفاءة تقديرية 85% وقاعدة خزان مبدئية 250 لتر لكل m³/min.')}
+      ${results(r,'#10b981','تقدير مبدئي للضاغط والخزان')}
+    </div>`;
+  }
+  if(tab==='pump'){
+    const r=calc.pump(s.pump);
+    return`<div class="stack">
+      <div class="grid2">
+        ${field('pump_flow','التدفق',{placeholder:'50',unit:'m³/h',value:s.pump.flow})}
+        ${field('pump_head','الرفع الكلي (Head)',{placeholder:'30',unit:'m',value:s.pump.head})}
+      </div>
+      <div class="grid2">
+        ${field('pump_eff','الكفاءة',{placeholder:'75',unit:'%',value:s.pump.eff})}
+        ${field('pump_density','كثافة السائل',{placeholder:'1000',unit:'kg/m³',value:s.pump.density})}
+      </div>
+      ${tips('قيمة NPSH تقريبية لأغراض أولية فقط، ولا تغني عن الرجوع إلى بيانات المصنع وتحليل خط السحب الفعلي.')}
+      ${results(r,'#f97316','القدرات محسوبة اعتماداً على الكفاءة المدخلة')}
+    </div>`;
+  }
+  if(tab==='convert'){
+    const cv=s.convert;
+    const catOpts=[{v:'power',l:'قدرة'},{v:'torque',l:'عزم'},{v:'pressure',l:'ضغط'},{v:'flow',l:'تدفق'},{v:'length',l:'طول'},{v:'temperature',l:'درجة حرارة'}];
+    const unitOpts=UNITS[cv.cat]||[];
+    const r=calc.convert(cv);
+    return`<div class="stack">
+      ${field('cv_cat','فئة التحويل',{options:catOpts,value:cv.cat})}
+      ${field('cv_value','القيمة',{placeholder:'100',value:cv.value})}
+      <div class="grid2">
+        ${field('cv_from','من',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.from})}
+        ${field('cv_to','إلى',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.to})}
+      </div>
+      ${results(r,'#ec4899','التحويل وفق معاملات قياسية دولية')}
+    </div>`;
+  }
+  if(tab==='ai'){return buildAITab();}
+  return '';
+}
+
+// ── bind dynamic onchange ─────────────────────────────────────────────────
+function bindInputs(){
+  const m=state.motor,t=state.torque,tp=state['3phase'],br=state.breaker,air=state.air,p=state.pump,cv=state.convert;
+  window.onchange_motor_phases=v=>{m.phases=v;renderPanel()};
+  window.onchange_motor_voltage=v=>{m.voltage=v;renderPanel()};
+  window.onchange_motor_current=v=>{m.current=v;renderPanel()};
+  window.onchange_motor_pf=v=>{m.pf=v;renderPanel()};
+  window.onchange_motor_eff=v=>{m.eff=v;renderPanel()};
+  window.onchange_torque_type=v=>{t.type=v;renderPanel()};
+  window.onchange_torque_power=v=>{t.power=v;renderPanel()};
+  window.onchange_torque_rpm=v=>{t.rpm=v;renderPanel()};
+  window.onchange_torque_force=v=>{t.force=v;renderPanel()};
+  window.onchange_torque_radius=v=>{t.radius=v;renderPanel()};
+  window.onchange_3p_power=v=>{tp.power=v;renderPanel()};
+  window.onchange_3p_voltage=v=>{tp.voltage=v;renderPanel()};
+  window.onchange_3p_pf=v=>{tp.pf=v;renderPanel()};
+  window.onchange_3p_eff=v=>{tp.eff=v;renderPanel()};
+  window.onchange_br_current=v=>{br.current=v;renderPanel()};
+  window.onchange_br_type=v=>{br.type=v;renderPanel()};
+  window.onchange_air_pressure=v=>{air.pressure=v;renderPanel()};
+  window.onchange_air_flow=v=>{air.flow=v;renderPanel()};
+  window.onchange_air_pistons=v=>{air.pistons=v;renderPanel()};
+  window.onchange_air_rpm=v=>{air.rpm=v;renderPanel()};
+  window.onchange_pump_flow=v=>{p.flow=v;renderPanel()};
+  window.onchange_pump_head=v=>{p.head=v;renderPanel()};
+  window.onchange_pump_eff=v=>{p.eff=v;renderPanel()};
+  window.onchange_pump_density=v=>{p.density=v;renderPanel()};
+  window.onchange_cv_cat=v=>{cv.cat=v;const u=UNITS[v]||[];cv.from=u[0];cv.to=u[1]||u[0];renderPanel()};
+  window.onchange_cv_value=v=>{cv.value=v;renderPanel()};
+  window.onchange_cv_from=v=>{cv.from=v;renderPanel()};
+  window.onchange_cv_to=v=>{cv.to=v;renderPanel()};
+}
+
+// ── AI tab ───────────────────────────────────────────────────────────────
+function buildAITab(){
+  const msgs=chatMsgs.map(m=>`<div class="bubble bubble-${m.role}">${escHtml(m.text)}</div>`).join('');
+  return`<div class="stack">
+    <div class="chat-msgs" id="chatMsgs">${msgs}</div>
+    <div class="chat-composer">
+      <input class="field-input" id="chatInput" placeholder="مثال: ما حجم القاطع المناسب لمحرك 15 كيلوواط؟"
+        style="flex:1" onkeydown="if(event.key==='Enter')sendChat()"/>
+      <button class="send-btn" onclick="sendChat()">${SVG.send}</button>
+    </div>
+    ${tips('المساعد يعمل بذكاء اصطناعي متخصص في الهندسة الإلكتروميكانيكية ويجيب على أسئلتك بدقة.')}
+  </div>`;
+}
+
+function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+
+function scrollChat(){const c=document.getElementById('chatMsgs');if(c)c.scrollTop=c.scrollHeight;}
+
+async function sendChat(){
+  const inp=document.getElementById('chatInput');
+  if(!inp)return;
+  const txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  chatMsgs.push({role:'user',text:txt});
+  // add typing indicator
+  chatMsgs.push({role:'ai',text:'···',typing:true});
+  renderChatOnly();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:`أنت مهندس إلكتروميكانيك خبير. متخصص في: حسابات المحركات الكهربائية، عزم الدوران، التيار الثلاثي، اختيار القواطع والكابلات، أنظمة الهواء المضغوط، والمضخات. أجب بالعربية دائماً. كن دقيقاً ومختصراً. استخدم المعادلات مع الوحدات. هذا التطبيق من إعداد قوادرية نذير مهندس في الإلكتروميكانيك.`,
+        messages:[{role:'user',content:txt}]
+      })
+    });
+    const data=await res.json();
+    const reply=data.content?.map(c=>c.text||'').join('')||'حدث خطأ في الاستجابة.';
+    chatMsgs.splice(chatMsgs.findIndex(m=>m.typing),1);
+    chatMsgs.push({role:'ai',text:reply});
+  }catch{
+    chatMsgs.splice(chatMsgs.findIndex(m=>m.typing),1);
+    chatMsgs.push({role:'ai',text:'⚠️ تعذّر الاتصال. تحقق من اتصالك وحاول مجدداً.'});
+  }
+  renderChatOnly();
+}
+
+function renderChatOnly(){
+  const c=document.getElementById('chatMsgs');
+  if(!c)return;
+  c.innerHTML=chatMsgs.map(m=>{
+    if(m.typing)return`<div class="bubble bubble-ai"><div class="typing-dots"><div class="dot" style="animation-delay:0s"></div><div class="dot" style="animation-delay:.2s"></div><div class="dot" style="animation-delay:.4s"></div></div></div>`;
+    return`<div class="bubble bubble-${m.role}">${escHtml(m.text)}</div>`;
+  }).join('');
+  scrollChat();
+}
+
+// ── init ──────────────────────────────────────────────────────────────────
+renderTabs();
+renderPanel();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "background_color": "#020817",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "ElectroCalc Pro",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "ElectroCalc",
+  "start_url": "/",
+  "theme_color": "#020817",
+  "description": "حاسبة هندسية للإلكتروميكانيك",
+  "id": "com.guadriannadhir.electrocalc"
+}
