@@ -2,480 +2,164 @@
 <html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>ElectroCalc Pro · Kouadria Nadir</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --bg: #020817;
-  --panel: rgba(15,23,42,.92);
-  --border: rgba(148,163,184,.12);
-  --text: #e2e8f0;
-  --muted: #94a3b8;
-  --subtle: #64748b;
-}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100%;font-family:'Roboto',system-ui,sans-serif;direction:ltr}
-body{background:radial-gradient(circle at top right,rgba(168,85,247,.16),transparent 24%),
-  radial-gradient(circle at top left,rgba(59,130,246,.15),transparent 18%),
-  linear-gradient(180deg,#020817 0%,#081022 100%);
-  color:var(--text);min-height:100vh}
-button,input,select{font:inherit}
-button{border:0;cursor:pointer}
-input,select{width:100%}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:#0f172a}
-::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:4px}
+:root{--bg:#020817;--panel:rgba(15,23,42,.95);--border:rgba(148,163,184,.12);--text:#e2e8f0;--muted:#94a3b8}
+html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(circle at top right,rgba(168,85,247,.14),transparent 30%),radial-gradient(circle at bottom left,rgba(59,130,246,.12),transparent 30%),linear-gradient(180deg,#020817,#060f1e);color:var(--text)}
+button,input,select{font:inherit}button{border:0;cursor:pointer}input,select{width:100%}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0f172a}::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:4px}
 @keyframes pulse{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(59,130,246,.4)}50%{box-shadow:0 0 20px rgba(59,130,246,.7)}}
 select option{background:#0f172a;color:#e2e8f0}
-/* Mode Toggle */
-.mode-toggle{display:flex;gap:0;background:rgba(2,8,23,.6);border:1px solid rgba(148,163,184,.15);border-radius:12px;padding:3px;margin-bottom:18px}
-.mode-btn{flex:1;padding:9px 14px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:#64748b;font-family:inherit}
-.mode-btn.active-eng{background:linear-gradient(135deg,#3b82f6,#6366f1);color:white;box-shadow:0 4px 12px rgba(59,130,246,.3)}
-.mode-btn.active-stu{background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;box-shadow:0 4px 12px rgba(139,92,246,.3)}
-.formula-box{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.25);border-radius:16px;padding:16px;margin-bottom:14px}
-.formula-title{font-size:11px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.formula-content{font-family:'JetBrains Mono',monospace;font-size:14px;color:#e2e8f0;line-height:2}
-.formula-step{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid rgba(148,163,184,.08)}
-.formula-step:last-child{border-bottom:none}
-.step-num{width:20px;height:20px;background:rgba(139,92,246,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#a78bfa;font-weight:800;flex-shrink:0}
-.step-text{font-size:13px;color:#cbd5e1;font-family:inherit}
-.step-formula{font-family:'JetBrains Mono',monospace;color:#93c5fd;font-size:13px}
-
-
-/* layout */
-.shell{max-width:860px;margin:0 auto;padding:20px 16px 48px}
-
-/* header */
-header{background:linear-gradient(135deg,rgba(15,23,42,.95),rgba(12,26,58,.9));
-  border-bottom:1px solid rgba(59,130,246,.16);padding:0 20px}
-.hdr-inner{max-width:860px;margin:0 auto;padding:18px 0;display:flex;
-  align-items:center;justify-content:space-between;gap:12;flex-wrap:wrap}
-.logo-title{font-size:21px;font-weight:900;background:linear-gradient(90deg,#93c5fd,#a78bfa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em}
-.logo-sub{font-size:11px;color:#64748b;margin-top:3px}
-.author-badge{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(168,85,247,.12));
-  border:1px solid rgba(167,139,250,.3);border-radius:16px;padding:10px 16px;text-align:center;min-width:180px}
-.author-badge .by{font-size:11px;color:#a78bfa;font-weight:700;letter-spacing:.04em;margin-bottom:3px}
-.author-badge .name{font-weight:900;font-size:14px;color:#f1f5f9}
-.author-badge .stars{color:#fbbf24;font-size:13px;margin:3px 0}
-.author-badge .role{font-size:10px;color:#94a3b8;margin-top:2px}
-
-/* summary */
-.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
-.scard{background:rgba(15,23,42,.9);border:1px solid var(--border);border-radius:18px;padding:16px 14px;backdrop-filter:blur(10px)}
-.scard .val{font-size:22px;font-weight:900;color:#f8fafc;display:block}
-.scard .lbl{font-size:11px;color:var(--muted);margin-top:3px;display:block}
-
-/* tabs */
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-.tab-btn{background:rgba(15,23,42,.8);border:1px solid var(--border);border-radius:16px;
-  padding:13px 8px;display:grid;gap:7px;justify-items:center;min-height:88px;
-  color:#64748b;transition:all .2s}
-.tab-btn svg{width:21px;height:21px}
-.tab-btn .tlbl{font-size:10.5px;font-weight:700;text-align:center;line-height:1.35}
+.shell{max-width:860px;margin:0 auto;padding:16px 12px 48px}
+header{background:linear-gradient(135deg,rgba(15,23,42,.97),rgba(9,20,46,.95));border-bottom:1px solid rgba(59,130,246,.18);padding:0 16px}
+.hdr{max-width:860px;margin:0 auto;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:12px;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.logo-title{font-size:20px;font-weight:900;background:linear-gradient(90deg,#93c5fd,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-sub{font-size:11px;color:#64748b;margin-top:2px}
+.author-card{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(139,92,246,.1));border:1px solid rgba(167,139,250,.25);border-radius:14px;padding:10px 14px;text-align:center}
+.author-name{font-weight:800;font-size:13px;color:#f1f5f9}
+.author-stars{color:#fbbf24;font-size:12px;margin:2px 0}
+.author-role{font-size:10px;color:#94a3b8}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.scard{background:rgba(15,23,42,.85);border:1px solid var(--border);border-radius:16px;padding:14px 12px}
+.scard .val{font-size:20px;font-weight:900;color:#f8fafc;display:block}
+.scard .lbl{font-size:10px;color:var(--muted);margin-top:2px;display:block}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.tab-btn{background:rgba(15,23,42,.8);border:1px solid var(--border);border-radius:14px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;color:#64748b;transition:all .2s}
+.ticon{font-size:20px;line-height:1}
+.tlbl{font-size:10px;font-weight:700;text-align:center;line-height:1.3}
 .tab-btn.active{color:white}
-.tab-btn:hover:not(.active){transform:translateY(-2px)}
-
-/* panel */
-.panel{background:var(--panel);border-radius:28px;padding:22px;backdrop-filter:blur(10px);
-  animation:fadeUp .3s ease}
-.panel-hdr{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:16px;
-  border-bottom:1px solid rgba(148,163,184,.1)}
-.panel-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;flex-shrink:0}
-.panel-icon svg{width:22px;height:22px}
-.panel-hdr h2{font-size:17px;font-weight:800;color:#f1f5f9}
-.panel-hdr p{font-size:12px;color:#94a3b8;margin-top:4px;line-height:1.7}
-
-/* fields */
-.stack{display:grid;gap:14px}
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.field{display:grid;gap:7px}
-.field-label{color:#cbd5e1;font-size:13px;font-weight:700}
+.panel{background:var(--panel);border-radius:24px;padding:20px;backdrop-filter:blur(12px);animation:fadeUp .3s ease}
+.panel-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(148,163,184,.08)}
+.panel-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;flex-shrink:0;font-size:22px}
+.panel-hdr h2{font-size:16px;font-weight:800;color:#f1f5f9}
+.panel-hdr p{font-size:11px;color:#94a3b8;margin-top:3px;line-height:1.6}
+.mode-toggle{display:flex;gap:0;background:rgba(2,8,23,.6);border:1px solid rgba(148,163,184,.12);border-radius:12px;padding:3px;margin-bottom:16px}
+.mode-btn{flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:#64748b;font-family:inherit}
+.eng-active{background:linear-gradient(135deg,#3b82f6,#6366f1)!important;color:white!important;box-shadow:0 4px 12px rgba(59,130,246,.3)}
+.stu-active{background:linear-gradient(135deg,#8b5cf6,#a78bfa)!important;color:white!important;box-shadow:0 4px 12px rgba(139,92,246,.3)}
+.stack{display:grid;gap:13px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:480px){.grid2{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,1fr)}}
+.field{display:grid;gap:6px}
+.field-label{color:#cbd5e1;font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px}
 .field-ctrl{display:flex;gap:8px;align-items:center}
-.field-input{background:rgba(2,8,23,.58);border:1px solid rgba(59,130,246,.22);border-radius:14px;
-  color:#e2e8f0;padding:11px 14px;outline:none;transition:border-color .2s,box-shadow .2s;font-size:14px}
-.field-input:focus{border-color:rgba(96,165,250,.8);box-shadow:0 0 0 4px rgba(59,130,246,.12)}
-.field-input::placeholder{color:#64748b}
-.field-unit{white-space:nowrap;color:#93c5fd;font-size:12px;font-weight:700}
-
-/* tips */
-.tips{display:flex;gap:10px;align-items:flex-start;background:rgba(59,130,246,.08);
-  border:1px solid rgba(59,130,246,.16);border-radius:18px;padding:13px 15px;
-  color:#cbd5e1;line-height:1.9;font-size:13px}
-.tips svg{width:16px;height:16px;color:#60a5fa;flex-shrink:0;margin-top:2px}
-
-/* results */
-.results{border-radius:22px;padding:18px}
-.results-hdr{display:flex;justify-content:space-between;margin-bottom:12px;align-items:center}
-.results-hdr span{font-weight:800;font-size:15px}
-.results-hdr small{color:var(--muted);font-size:12px}
-.results-list{display:grid;gap:9px}
-.res-row{display:flex;justify-content:space-between;align-items:center;
-  background:rgba(2,8,23,.36);border:1px solid rgba(148,163,184,.08);border-radius:14px;padding:11px 14px}
-.res-row span{color:#cbd5e1;font-size:13px}
-.res-row strong{font-family:'JetBrains Mono',monospace;color:#f8fafc;font-size:15px}
-.empty{border:1px dashed rgba(148,163,184,.2);border-radius:18px;padding:18px;
-  color:var(--muted);text-align:center;background:rgba(15,23,42,.5);font-size:13px}
-
-/* ai chat */
-.chat-msgs{height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px}
-.bubble{max-width:85%;padding:11px 15px;border-radius:18px;font-size:13.5px;line-height:1.85;white-space:pre-wrap}
-.bubble-ai{align-self:flex-start;background:rgba(30,41,59,.95);border:1px solid rgba(96,165,250,.16);border-radius:18px 18px 18px 4px}
-.bubble-user{align-self:flex-end;background:linear-gradient(135deg,#3b82f6,#6366f1);color:white;border-radius:18px 18px 4px 18px}
-.chat-composer{display:flex;gap:10px}
-.send-btn{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-  color:white;display:grid;place-items:center;flex-shrink:0;box-shadow:0 8px 20px rgba(99,102,241,.28)}
-.send-btn svg{width:18px;height:18px}
-.typing-dots{display:flex;gap:5px;padding:4px}
-/* AI Chat Professional */
-.ai-container{display:grid;gap:14px}
-.ai-header{background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(99,102,241,.1));border:1px solid rgba(139,92,246,.25);border-radius:18px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.field-input{background:rgba(2,8,23,.6);border:1px solid rgba(59,130,246,.2);border-radius:12px;color:#e2e8f0;padding:11px 14px;outline:none;transition:border-color .2s;font-size:14px;min-width:0}
+.field-input:focus{border-color:rgba(96,165,250,.8)}
+.field-input::placeholder{color:#475569}
+.field-unit{white-space:nowrap;color:#93c5fd;font-size:12px;font-weight:700;flex-shrink:0}
+.tips{display:flex;gap:10px;align-items:flex-start;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);border-radius:14px;padding:12px 14px;color:#cbd5e1;line-height:1.8;font-size:12.5px}
+.formula-box{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.2);border-radius:16px;padding:14px}
+.formula-title{font-size:11px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.formula-step{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid rgba(148,163,184,.07)}
+.formula-step:last-child{border:none}
+.step-num{min-width:22px;height:22px;background:rgba(139,92,246,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#a78bfa;font-weight:800;flex-shrink:0;margin-top:1px}
+.step-text{font-size:12px;color:#94a3b8;margin-bottom:3px}
+.step-formula{font-family:'JetBrains Mono',monospace;color:#93c5fd;font-size:12.5px;line-height:1.5}
+.results{border-radius:20px;padding:16px;margin-top:4px}
+.results-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.results-title{font-weight:800;font-size:14px}
+.results-note{color:var(--muted);font-size:11px}
+.res-list{display:grid;gap:8px}
+.res-row{display:flex;justify-content:space-between;align-items:center;background:rgba(2,8,23,.4);border:1px solid rgba(148,163,184,.07);border-radius:12px;padding:10px 13px;gap:8px;flex-wrap:wrap}
+.res-label{color:#cbd5e1;font-size:12.5px;display:flex;align-items:center;gap:6px}
+.res-val{font-family:'JetBrains Mono',monospace;color:#f8fafc;font-size:14px;font-weight:700;flex-shrink:0}
+.smart-alert{border-radius:14px;padding:12px 14px;margin-top:8px;display:flex;gap:10px;align-items:center;font-size:12.5px;font-weight:600}
+.a-ok{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.a-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.a-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.a-info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#93c5fd}
+.empty-state{border:1px dashed rgba(148,163,184,.18);border-radius:16px;padding:20px;color:var(--muted);text-align:center;font-size:13px}
+.ai-container{display:grid;gap:13px}
+.ai-header{background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(99,102,241,.08));border:1px solid rgba(139,92,246,.22);border-radius:16px;padding:13px 15px;display:flex;justify-content:space-between;align-items:center}
 .ai-badge{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#a78bfa}
-.ai-dot{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;animation:pulse 2s ease-in-out infinite}
-.ai-info{font-size:11px;color:#64748b}
-.chat-msgs{height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:4px 2px}
-.ai-bubble{display:flex;align-items:flex-start;gap:10px}
-.ai-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#6366f1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 4px 12px rgba(139,92,246,.3)}
-.user-bubble-wrap{display:flex;align-items:flex-start;gap:10px;justify-content:flex-end}
-.user-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;flex-shrink:0}
-.bubble-ai{background:rgba(30,41,59,.95);border:1px solid rgba(139,92,246,.2);border-radius:4px 18px 18px 18px;padding:12px 16px;color:#e2e8f0;font-size:13.5px;line-height:1.9;white-space:pre-wrap;max-width:85%}
-.bubble-user{background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:18px 4px 18px 18px;padding:12px 16px;color:white;font-size:13.5px;line-height:1.7;max-width:85%}
-.suggestions{background:rgba(15,23,42,.5);border:1px solid rgba(148,163,184,.1);border-radius:16px;padding:14px}
-.sug-title{font-size:12px;color:#94a3b8;margin-bottom:10px;font-weight:600}
-.sug-grid{display:grid;gap:8px}
-.sug-btn{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:9px 14px;color:#93c5fd;font-size:12.5px;cursor:pointer;text-align:right;transition:all .2s;font-family:inherit}
-.sug-btn:hover{background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.4)}
-.ai-input{border-radius:14px!important}
-
-.dot{width:7px;height:7px;border-radius:50%;background:#3b82f6;animation:pulse 1.2s ease-in-out infinite}
-
-/* footer */
-footer{margin-top:20px;padding:10px 4px;display:flex;justify-content:space-between;
-  align-items:center;flex-wrap:wrap;gap:8px;border-top:1px solid rgba(148,163,184,.08)}
-.ft-brand{font-size:13px;color:#475569}
-.ft-author{font-size:12px;font-weight:700;background:linear-gradient(90deg,#93c5fd,#a78bfa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
-@media(max-width:700px){
-  .summary,.tabs,.grid2{grid-template-columns:repeat(2,1fr)}
-  .tabs{grid-template-columns:repeat(4,1fr)}
-  .hdr-inner{flex-direction:column;align-items:flex-start}
-  .author-badge{align-self:stretch}
-}
-@media(max-width:480px){
-  .tabs{grid-template-columns:repeat(2,1fr)}
-  .summary{grid-template-columns:repeat(3,1fr)}
-}
+.ai-dot{width:8px;height:8px;border-radius:50%;background:#10b981;animation:glow 2s ease-in-out infinite;flex-shrink:0}
+.ai-status{font-size:10px;color:#64748b}
+.chat-msgs{height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:2px}
+.msg-ai{display:flex;gap:9px;align-items:flex-start}
+.msg-user{display:flex;gap:9px;align-items:flex-start;flex-direction:row-reverse}
+.av-ai{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#8b5cf6,#6366f1);display:grid;place-items:center;font-size:10px;font-weight:800;color:white;flex-shrink:0}
+.av-user{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:grid;place-items:center;font-size:12px;font-weight:800;color:white;flex-shrink:0}
+.bbl-ai{background:rgba(30,41,59,.95);border:1px solid rgba(139,92,246,.18);border-radius:4px 16px 16px 16px;padding:11px 14px;color:#e2e8f0;font-size:13px;line-height:1.85;white-space:pre-wrap;max-width:84%}
+.bbl-user{background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:16px 4px 16px 16px;padding:11px 14px;color:white;font-size:13px;line-height:1.7;max-width:84%}
+.typing-dots{display:flex;gap:4px;padding:3px 0}
+.dot{width:7px;height:7px;border-radius:50%;background:#8b5cf6;animation:pulse 1.2s ease-in-out infinite}
+.suggestions{background:rgba(15,23,42,.5);border:1px solid rgba(148,163,184,.1);border-radius:14px;padding:13px}
+.sug-title{font-size:11px;color:#94a3b8;margin-bottom:9px;font-weight:600}
+.sug-grid{display:grid;gap:7px}
+.sug-btn{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);border-radius:10px;padding:9px 13px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:left;transition:all .2s;font-family:inherit}
+.sug-btn:hover{background:rgba(59,130,246,.14)}
+.chat-composer{display:flex;gap:9px}
+.chat-input{background:rgba(2,8,23,.6);border:1px solid rgba(59,130,246,.2);border-radius:13px;color:#e2e8f0;padding:11px 14px;outline:none;flex:1;font-size:13.5px}
+.chat-input:focus{border-color:rgba(96,165,250,.7)}
+.chat-input::placeholder{color:#475569}
+.send-btn{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white;display:grid;place-items:center;flex-shrink:0}
+.send-btn:disabled{opacity:.5}
+.ai-footer{text-align:center;font-size:10.5px;color:#334155;margin-top:4px}
+footer{margin-top:18px;padding:10px 2px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-top:1px solid rgba(148,163,184,.07)}
+.ft-l{font-size:12px;color:#475569}
+.ft-r{font-size:11px;font-weight:700;background:linear-gradient(90deg,#93c5fd,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 </style>
 </head>
 <body>
-
-<!-- HEADER -->
 <header>
-  <div class="hdr-inner">
-    <div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="font-size:22px">⚡</span>
-        <span class="logo-title">ElectroCalc Pro</span>
+  <div class="hdr">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <div>
+        <div class="logo-title">ElectroCalc Pro</div>
+        <div class="logo-sub">Calculateurs Génie Électromécanique · Assistant IA</div>
       </div>
-      <div class="logo-sub">Calculateurs Génie Électromécanique · avec Assistant IA</div>
     </div>
-    <div class="author-badge">
-      <div class="by">👤 Développé par</div>
-      <div class="name">Kouadria Nadir</div>
-      <div class="stars">★★★★★</div>
-      <div class="role">Ingénieur en Électromécanique</div>
+    <div class="author-card">
+      <div style="font-size:11px;color:#a78bfa;font-weight:700;margin-bottom:3px">Développé par</div>
+      <div class="author-name">Kouadria Nadir</div>
+      <div class="author-stars">★★★★★</div>
+      <div class="author-role">Ingénieur en Électromécanique</div>
     </div>
   </div>
 </header>
-
 <div class="shell">
-
-  <!-- SUMMARY -->
-  <div class="summary" style="margin-top:20px">
+  <div class="summary" style="margin-top:18px">
     <div class="scard"><span class="val">8</span><span class="lbl">Calculateurs</span></div>
     <div class="scard"><span class="val">AI</span><span class="lbl">Assistant IA</span></div>
-    <div class="scard"><span class="val">RTL</span><span class="lbl">Interface FR</span></div>
+    <div class="scard"><span class="val">IEC</span><span class="lbl">Normes</span></div>
   </div>
-
-  <!-- TABS -->
   <div class="tabs" id="tabs"></div>
-
-  <!-- PANEL -->
   <div class="panel" id="panel"></div>
-
-  <!-- FOOTER -->
   <footer>
-    <span class="ft-brand">⚡ ElectroCalc Pro · Résultats approximatifs pour estimation préliminaire</span>
-    <span class="ft-author">Développé par: Kouadria Nadir · Ingénieur Électromécanicien</span>
+    <span class="ft-l">ElectroCalc Pro · Résultats approximatifs</span>
+    <span class="ft-r">Kouadria Nadir · Ingénieur Électromécanicien</span>
   </footer>
 </div>
-
 <script>
-// ── helpers ──────────────────────────────────────────────────────────────
-const fmt=(v,d=2)=>Number.isFinite(v)?new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v):'—';
-const pos=v=>Number.isFinite(v)&&v>0;
-const n=v=>Number.parseFloat(v);
+var activeTab='motor', mode='engineer', loading=false;
+var chatMsgs=[{role:'ai',text:'Bonjour! Je suis votre assistant en génie électromécanique. Posez-moi vos questions techniques.'}];
+var SUGS=['Quel disjoncteur pour moteur 15kW?','Couple moteur 22kW 1450 tr/min','Section cable pour 50A moteur','Formule puissance triphasée'];
 
-// ── SVG icons ────────────────────────────────────────────────────────────
-const SVG={
-  motor:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg>`,
-  torque:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.4 16.6"/><path d="M12 2v4"/><path d="M4.6 18.6A10 10 0 0 1 12 2"/><polyline points="16 6 12 2 8 6"/></svg>`,
-  current:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
-  breaker:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/></svg>`,
-  air:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`,
-  pump:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9"/><line x1="12" y1="12" x2="12" y2="19"/><path d="M8 19h8"/><circle cx="12" cy="8" r="2"/></svg>`,
-  convert:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
-  ai:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="7.5" cy="14.5" r="1.5"/><circle cx="16.5" cy="14.5" r="1.5"/></svg>`,
-  send:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
-  info:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
-};
+function fmt(v,d){d=d||2;return Number.isFinite(v)?new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v):'--';}
+function pos(v){return Number.isFinite(v)&&v>0;}
+function N(v){return Number.parseFloat(v);}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
 
-// ── tabs config ──────────────────────────────────────────────────────────
-const TABS=[
-  {id:'motor',    label:'Puissance Moteur',    color:'#3b82f6',icon:'motor',   help:'Calculez puissance apparente, active et sortie pour moteurs mono ou triphasés.'},
-  {id:'torque',   label:'Couple',   color:'#8b5cf6',icon:'torque',  help:'Calculez le couple depuis puissance/vitesse ou force/rayon.'},
-  {id:'3phase',   label:'Courant Triphasé',color:'#06b6d4',icon:'current', help:'Estimez courant fonctionnement, tension phase et courant démarrage.'},
-  {id:'breaker',  label:'Disjoncteur',color:'#f59e0b',icon:'breaker', help:'Sélection préliminaire disjoncteur et câble selon type charge.'},
-  {id:'air',      label:'Air Comprimé',color:'#10b981',icon:'air',     help:'Calcul approximatif puissance compresseur, volume réservoir et déplacement.'},
-  {id:'pump',     label:'Pompes',       color:'#f97316',icon:'pump',    help:'Calculez puissance hydraulique, puissance arbre pompe et NPSH.'},
-  {id:'convert',  label:'Conversions',color:'#ec4899',icon:'convert', help:'Conversion rapide entre unités ingénierie les plus courantes.'},
-  {id:'ai',       label:'Assistant IA',      color:'#a78bfa',icon:'ai',      help:'Assistant IA spécialisé en génie électromécanique.'},
+var TABS=[
+  {id:'motor',   label:'Puissance Moteur',  color:'#3b82f6',icon:'⚡',help:'Puissance apparente, active et sortie pour moteurs mono/triphasés.'},
+  {id:'torque',  label:'Couple',            color:'#8b5cf6',icon:'🔧',help:'Couple depuis puissance/vitesse ou force/rayon.'},
+  {id:'3phase',  label:'Courant Triphasé',  color:'#06b6d4',icon:'🔌',help:'Courant nominal, tension phase, courant démarrage.'},
+  {id:'breaker', label:'Disjoncteur',       color:'#f59e0b',icon:'🛡️',help:'Sélection disjoncteur et câble selon type de charge.'},
+  {id:'air',     label:'Air Comprimé',      color:'#10b981',icon:'💨',help:'Puissance compresseur, réservoir, déplacement volumique.'},
+  {id:'pump',    label:'Pompes',            color:'#f97316',icon:'💧',help:'Puissance hydraulique, arbre pompe, NPSH.'},
+  {id:'convert', label:'Conversions',       color:'#ec4899',icon:'🔄',help:'Conversion rapide entre unités ingénierie.'},
+  {id:'ai',      label:'Assistant IA',      color:'#a78bfa',icon:'🤖',help:'Assistant IA spécialisé en génie électromécanique.'},
 ];
 
-// ── calc engines ─────────────────────────────────────────────────────────
-const calc={
-  motor(f){
-    const V=n(f.voltage),I=n(f.current),PF=n(f.pf)/100,eff=n(f.eff)/100,ph=parseInt(f.phases);
-    if(!pos(V)||!pos(I)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
-    const S=ph===3?Math.sqrt(3)*V*I:V*I,P=S*PF,Pout=P*eff,Q=Math.sqrt(Math.max(S**2-P**2,0));
-    return[
-      {l:'Puissance apparente',v:`${fmt(S/1000,3)} kVA`},
-      {l:'Puissance active',v:`${fmt(P/1000,3)} kW`},
-      {l:'Puissance sortie',v:`${fmt(Pout/1000,3)} kW`},
-      {l:'Puissance CV',v:`${fmt(Pout/746,2)} HP`},
-      {l:'Puissance réactive',v:`${fmt(Q/1000,3)} kVAR`},
-    ];
-  },
-  torque(f){
-    if(f.type==='power'){
-      const P=n(f.power),N=n(f.rpm);
-      if(!pos(P)||!pos(N))return null;
-      const T=9550*P/N;
-      return[{l:'Couple',v:`${fmt(T,2)} N·m`},{l:'Couple équivalent',v:`${fmt(T/9.80665,2)} kgf·m`}];
-    }
-    const F=n(f.force),R=n(f.radius);
-    if(!pos(F)||!pos(R))return null;
-    const T=F*R;
-    return[{l:'Couple',v:`${fmt(T,2)} N·m`},{l:'Couple équivalent',v:`${fmt(T/9.80665,2)} kgf·m`}];
-  },
-  threePhase(f){
-    const P=n(f.power),V=n(f.voltage),PF=n(f.pf)/100,eff=n(f.eff)/100;
-    if(!pos(P)||!pos(V)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
-    const I=(P*1000)/(Math.sqrt(3)*V*PF*eff);
-    return[
-      {l:'Courant fonctionnement',v:`${fmt(I,2)} A`},
-      {l:'Tension ligne',v:`${fmt(V,1)} V`},
-      {l:'Tension phase',v:`${fmt(V/Math.sqrt(3),1)} V`},
-      {l:'Courant démarrage DOL',v:`${fmt(I*6,1)} A`},
-    ];
-  },
-  breaker(f){
-    const I=n(f.current);
-    if(!pos(I))return null;
-    const fm={motor:1.25,general:1.25,welding:2,lighting:1.15};
-    const cm={motor:'D',general:'C',welding:'D',lighting:'B'};
-    const factor=fm[f.type]||1.25,min=I*factor;
-    const STD=[6,10,16,20,25,32,40,50,63,80,100,125,160,200,250,315,400,500,630];
-    const sel=STD.find(x=>x>=min)||STD[STD.length-1];
-    const CT=[[1.5,15],[2.5,21],[4,28],[6,36],[10,50],[16,68],[25,89],[35,110],[50,134],[70,171],[95,207],[120,239],[150,275],[185,314],[240,361]];
-    const cable=(CT.find(([,a])=>a>=I*1.25)||['>240'])[0];
-    return[
-      {l:'Disjoncteur minimum',v:`${fmt(min,1)} A`},
-      {l:'Disjoncteur proposé',v:`${sel} A`},
-      {l:'Courbe déclenchement',v:`Curve ${cm[f.type]||'C'}`},
-      {l:'Section câble',v:`${cable} mm²`},
-      {l:'Facteur sélection',v:`${fmt(factor,2)} ×`},
-    ];
-  },
-  air(f){
-    const P=n(f.pressure),Q=n(f.flow),np=n(f.pistons),N=n(f.rpm);
-    if(!pos(P)||!pos(Q))return null;
-    const kW=(P*1e5*(Q/60))/(1000*0.85),rec=Q*250;
-    const disp=(pos(np)&&pos(N))?(Q/(np*N))*1e6:null;
-    return[
-      {l:'Puissance arbre compresseur',v:`${fmt(kW,2)} kW`},
-      {l:'Puissance CV',v:`${fmt(kW/0.746,2)} HP`},
-      {l:'Volume réservoir',v:`${fmt(rec,0)} L`},
-      {l:'Déplacement/piston/tour',v:disp?`${fmt(disp,0)} cc`:'—'},
-    ];
-  },
-  pump(f){
-    const Q=n(f.flow)/3600,H=n(f.head),eff=n(f.eff)/100,rho=n(f.density);
-    if(!pos(Q)||!pos(H)||!(eff>0&&eff<=1)||!pos(rho))return null;
-    const Wh=rho*9.81*Q*H,Ws=Wh/eff;
-    return[
-      {l:'Puissance hydraulique',v:`${fmt(Wh/1000,2)} kW`},
-      {l:'Puissance arbre requise',v:`${fmt(Ws/1000,2)} kW`},
-      {l:'Puissance CV',v:`${fmt(Ws/746,2)} HP`},
-      {l:'NPSH approximatif',v:`${fmt(Math.max(2,H*0.1+2),1)} m`},
-    ];
-  },
-  convert(f){
-    const v=n(f.value);
-    if(!Number.isFinite(v)||!f.from||!f.to)return null;
-    const T={
-      power:{W:1,kW:1000,MW:1e6,HP:746,'HP(m)':735.5,'BTU/h':0.293071},
-      torque:{'N·m':1,'kN·m':1000,'kgf·m':9.80665,'lbf·ft':1.35582,'lbf·in':0.112985},
-      pressure:{Pa:1,kPa:1000,MPa:1e6,bar:1e5,psi:6894.76,atm:101325,mmHg:133.322},
-      flow:{'m³/s':1,'m³/h':1/3600,'L/s':0.001,'L/min':1/60000,GPM:6.309e-5},
-      length:{m:1,cm:0.01,mm:0.001,km:1000,ft:0.3048,in:0.0254,yd:0.9144},
-    };
-    if(f.cat==='temperature'){
-      let C=f.from==='°C'?v:f.from==='°F'?(v-32)*5/9:f.from==='K'?v-273.15:null;
-      if(C===null)return null;
-      const r=f.to==='°C'?C:f.to==='°F'?C*9/5+32:f.to==='K'?C+273.15:null;
-    return r!==null?[{l:'Valeur convertie',v:`${fmt(r,4)} ${f.to}`}]:null;
-    }
-    const tb=T[f.cat];
-    if(!tb||!tb[f.from]||!tb[f.to])return null;
-    return[{l:'Valeur convertie',v:`${fmt(v*tb[f.from]/tb[f.to],4)} ${f.to}`}];
-  },
-};
-
-const UNITS={
-  power:['W','kW','MW','HP','HP(m)','BTU/h'],
-  torque:['N·m','kN·m','kgf·m','lbf·ft','lbf·in'],
-  pressure:['Pa','kPa','MPa','bar','psi','atm','mmHg'],
-  flow:['m³/s','m³/h','L/s','L/min','GPM'],
-  length:['m','cm','mm','km','ft','in','yd'],
-  temperature:['°C','°F','K'],
-};
-
-
-function modeToggle(){
-  var eActive=mode==='engineer'?'active-eng':'';
-  var sActive=mode==='student'?'active-stu':'';
-  return '<div class="mode-toggle">'
-    +'<button class="mode-btn '+eActive+'" onclick="setMode(&quot;engineer&quot;)">🔧 Ingénieur</button>'
-    +'<button class="mode-btn '+sActive+'" onclick="setMode(&quot;student&quot;)">📚 Étudiant</button>'
-    +'</div>';
-}
-function setMode(m){mode=m;renderPanel();}
-
-const FORMULAS = {
-  motor: {
-    title: "Formules - Puissance Moteur",
-    steps: [
-      {num:1, text:"Puissance apparente (triphasé):", formula:"S = √3 × U × I  [VA]"},
-      {num:2, text:"Puissance apparente (monophasé):", formula:"S = U × I  [VA]"},
-      {num:3, text:"Puissance active:", formula:"P = S × cos(φ)  [W]"},
-      {num:4, text:"Puissance de sortie:", formula:"Pout = P × η  [W]"},
-      {num:5, text:"Puissance en CV:", formula:"P(CV) = Pout / 746"},
-      {num:6, text:"Puissance réactive:", formula:"Q = √(S² - P²)  [VAR]"},
-    ]
-  },
-  torque: {
-    title: "Formules - Couple",
-    steps: [
-      {num:1, text:"Couple depuis puissance et vitesse:", formula:"T = 9550 × P(kW) / n(tr/min)  [N·m]"},
-      {num:2, text:"Couple depuis force et rayon:", formula:"T = F × R  [N·m]"},
-      {num:3, text:"Conversion N·m → kgf·m:", formula:"T(kgf·m) = T(N·m) / 9.81"},
-    ]
-  },
-  "3phase": {
-    title: "Formules - Courant Triphasé",
-    steps: [
-      {num:1, text:"Courant de fonctionnement:", formula:"I = P / (√3 × U × cos(φ) × η)  [A]"},
-      {num:2, text:"Tension de phase:", formula:"Vph = VL / √3  [V]"},
-      {num:3, text:"Courant de démarrage DOL:", formula:"Id ≈ 6 × In  [A]"},
-    ]
-  },
-  breaker: {
-    title: "Formules - Disjoncteur & Câble",
-    steps: [
-      {num:1, text:"Courant de calcul (moteur):", formula:"Ib = In × 1.25"},
-      {num:2, text:"Calibre disjoncteur:", formula:"In_disj ≥ 1.25 × In_charge"},
-      {num:3, text:"Section câble (Iz ≥ 1.25 × Ib):", formula:"Iz(câble) ≥ 1.25 × In  [A]"},
-      {num:4, text:"Courbe D pour moteur, C pour charge générale", formula:"CEI 60947-2"},
-    ]
-  },
-  air: {
-    title: "Formules - Air Comprimé",
-    steps: [
-      {num:1, text:"Puissance arbre compresseur:", formula:"P = (p × Q) / (60 × η)  [kW]"},
-      {num:2, text:"Volume réservoir:", formula:"V = Q × 250  [L]"},
-      {num:3, text:"Déplacement volumique:", formula:"Vd = Q / (n × Np)  [m³/tour]"},
-    ]
-  },
-  pump: {
-    title: "Formules - Pompe",
-    steps: [
-      {num:1, text:"Puissance hydraulique:", formula:"Pu = ρ × g × Q × H  [W]"},
-      {num:2, text:"Puissance arbre:", formula:"P = Pu / η  [W]"},
-      {num:3, text:"NPSH disponible (approx.):", formula:"NPSHd ≈ 0.1 × H + 2  [m]"},
-    ]
-  },
-  convert: {
-    title: "Conversion d'unités",
-    steps: [
-      {num:1, text:"Méthode:", formula:"Valeur × facteur_source / facteur_cible"},
-      {num:2, text:"Température °C → °F:", formula:"T(°F) = T(°C) × 9/5 + 32"},
-      {num:3, text:"Température °C → K:", formula:"T(K) = T(°C) + 273.15"},
-    ]
-  },
-};
-
-function formulaBox(tabId){
-  const f = FORMULAS[tabId];
-  if(!f) return '';
-  return `<div class="formula-box">
-    <div class="formula-title">📐 ${f.title}</div>
-    <div class="formula-content">
-      ${f.steps.map(s=>`
-        <div class="formula-step">
-          <div class="step-num">${s.num}</div>
-          <div>
-            <div class="step-text">${s.text}</div>
-            <div class="step-formula">${s.formula}</div>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
-}
-
-// ── UI helpers ───────────────────────────────────────────────────────────
-function field(id,label,{type='number',placeholder='',unit='',options=null,value='',min='0',step='any'}={}){
-  if(options){
-    const opts=options.map(o=>`<option value="${o.v}"${o.v===value?' selected':''}>${o.l}</option>`).join('');
-    return `<label class="field"><span class="field-label">${label}</span>
-      <select class="field-input" id="${id}" onchange="onchange_${id}(this.value)">${opts}</select></label>`;
-  }
-  return `<label class="field"><span class="field-label">${label}</span>
-    <div class="field-ctrl">
-      <input class="field-input" id="${id}" type="${type}" inputmode="decimal" value="${value}"
-        placeholder="${placeholder}" min="${min}" step="${step}"
-        oninput="onchange_${id}(this.value)"/>
-      ${unit?`<span class="field-unit">${unit}</span>`:''}
-    </div></label>`;
-}
-function tips(txt){return`<div class="tips">${SVG.info}<div>${txt}</div></div>`;}
-function results(items,color,note){
-    if(!items)return`<div class="empty">Saisissez les valeurs pour afficher les résultats.</div>`;
-  return`<div class="results" style="background:linear-gradient(180deg,color-mix(in srgb,${color} 8%,rgba(15,23,42,1)),rgba(15,23,42,.82));border:1px solid color-mix(in srgb,${color} 28%,rgba(148,163,184,.12))">
-    <div class="results-hdr"><span>Résultats</span><small>${note}</small></div>
-    <div class="results-list">${items.map(it=>`<div class="res-row"><span>${it.l}</span><strong>${it.v}</strong></div>`).join('')}</div>
-  </div>`;
-}
-
-// ── state ────────────────────────────────────────────────────────────────
-let activeTab='motor';
-let loading=false;
-let suggestions=['Quel disjoncteur pour moteur 15kW?','Calculer le couple moteur 1450rpm','Section cable pour 50A','Formule puissance triphasée'];
-let mode='engineer'; // 'engineer' or 'student'
-const state={
+var state={
   motor:{voltage:'',current:'',pf:'85',eff:'90',phases:'3'},
   torque:{type:'power',power:'',rpm:'',force:'',radius:''},
   '3phase':{power:'',voltage:'380',pf:'85',eff:'90'},
@@ -484,285 +168,350 @@ const state={
   pump:{flow:'',head:'',eff:'75',density:'1000'},
   convert:{cat:'power',value:'',from:'kW',to:'HP'},
 };
-const chatMsgs=[{role:'ai',text:'Bonjour! Je suis votre assistant ingénierie. Posez-moi des questions sur les calculs en électromécanique.'}];
 
-// ── render tabs ──────────────────────────────────────────────────────────
+var UNITS={
+  power:['W','kW','MW','HP','HP(m)','BTU/h'],
+  torque:['N.m','kN.m','kgf.m','lbf.ft','lbf.in'],
+  pressure:['Pa','kPa','MPa','bar','psi','atm','mmHg'],
+  flow:['m3/s','m3/h','L/s','L/min','GPM'],
+  length:['m','cm','mm','km','ft','in','yd'],
+  temperature:['degC','degF','K'],
+};
+
+// CALC
+function calcMotor(f){
+  var V=N(f.voltage),I=N(f.current),PF=N(f.pf)/100,eff=N(f.eff)/100,ph=parseInt(f.phases);
+  if(!pos(V)||!pos(I)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
+  var S=ph===3?Math.sqrt(3)*V*I:V*I,P=S*PF,Pout=P*eff,Q=Math.sqrt(Math.max(S*S-P*P,0));
+  return{S_kVA:S/1000,P_kW:P/1000,Pout_kW:Pout/1000,hp:Pout/746,Q_kVAR:Q/1000,pf:PF,eff:eff};
+}
+function calcTorque(f){
+  if(f.type==='power'){var P=N(f.power),Nv=N(f.rpm);if(!pos(P)||!pos(Nv))return null;var T=9550*P/Nv;return{T_Nm:T,T_kgfm:T/9.80665};}
+  var F=N(f.force),R=N(f.radius);if(!pos(F)||!pos(R))return null;var T=F*R;return{T_Nm:T,T_kgfm:T/9.80665};
+}
+function calc3Phase(f){
+  var P=N(f.power),V=N(f.voltage),PF=N(f.pf)/100,eff=N(f.eff)/100;
+  if(!pos(P)||!pos(V)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
+  var I=(P*1000)/(Math.sqrt(3)*V*PF*eff);
+  return{I:I,VL:V,Vph:V/Math.sqrt(3),Istart:I*6};
+}
+function calcBreaker(f){
+  var I=N(f.current);if(!pos(I))return null;
+  var fm={motor:1.25,general:1.25,welding:2,lighting:1.15};
+  var cm={motor:'D',general:'C',welding:'D',lighting:'B'};
+  var factor=fm[f.type]||1.25,min=I*factor;
+  var STD=[6,10,16,20,25,32,40,50,63,80,100,125,160,200,250,315,400,500,630];
+  var sel=STD.filter(function(x){return x>=min;})[0]||STD[STD.length-1];
+  var CT=[[1.5,15],[2.5,21],[4,28],[6,36],[10,50],[16,68],[25,89],[35,110],[50,134],[70,171],[95,207],[120,239],[150,275],[185,314],[240,361]];
+  var cableArr=CT.filter(function(a){return a[1]>=I*1.25;});
+  var cable=cableArr.length?cableArr[0][0]:'>240';
+  return{min:min,sel:sel,cable:cable,curve:cm[f.type]||'C',factor:factor};
+}
+function calcAir(f){
+  var P=N(f.pressure),Q=N(f.flow),np=N(f.pistons),Nv=N(f.rpm);
+  if(!pos(P)||!pos(Q))return null;
+  var kW=(P*1e5*(Q/60))/(1000*0.85),rec=Q*250;
+  var disp=(pos(np)&&pos(Nv))?(Q/(np*Nv))*1e6:null;
+  return{kW:kW,hp:kW/0.746,rec:rec,disp:disp,pressure:P};
+}
+function calcPump(f){
+  var Q=N(f.flow)/3600,H=N(f.head),eff=N(f.eff)/100,rho=N(f.density);
+  if(!pos(Q)||!pos(H)||!(eff>0&&eff<=1)||!pos(rho))return null;
+  var Wh=rho*9.81*Q*H,Ws=Wh/eff;
+  return{hyd:Wh/1000,shaft:Ws/1000,hp:Ws/746,npsh:Math.max(2,H*0.1+2),head:H};
+}
+function calcConvert(f){
+  var v=N(f.value);if(!Number.isFinite(v)||!f.from||!f.to)return null;
+  var T={
+    power:{W:1,kW:1000,MW:1e6,HP:746,'HP(m)':735.5,'BTU/h':0.293071},
+    torque:{'N.m':1,'kN.m':1000,'kgf.m':9.80665,'lbf.ft':1.35582,'lbf.in':0.112985},
+    pressure:{Pa:1,kPa:1000,MPa:1e6,bar:1e5,psi:6894.76,atm:101325,mmHg:133.322},
+    flow:{'m3/s':1,'m3/h':1/3600,'L/s':0.001,'L/min':1/60000,GPM:6.309e-5},
+    length:{m:1,cm:0.01,mm:0.001,km:1000,ft:0.3048,in:0.0254,yd:0.9144},
+  };
+  if(f.cat==='temperature'){
+    var C=f.from==='degC'?v:f.from==='degF'?(v-32)*5/9:f.from==='K'?v-273.15:null;
+    if(C===null)return null;
+    var r=f.to==='degC'?C:f.to==='degF'?C*9/5+32:f.to==='K'?C+273.15:null;
+    return r!==null?{r:r}:null;
+  }
+  var tb=T[f.cat];if(!tb||!tb[f.from]||!tb[f.to])return null;
+  return{r:v*tb[f.from]/tb[f.to]};
+}
+
+// SMART ALERTS
+function alert_(cls,msg){return '<div class="smart-alert '+cls+'">'+msg+'</div>';}
+function motorAlerts(d){
+  if(!d)return '';
+  var h='';
+  if(d.pf<0.75)h+=alert_('a-warn','⚠️ Facteur de puissance faible — Compensation capacitive recommandée');
+  else if(d.pf>=0.92)h+=alert_('a-ok','✅ Excellent facteur de puissance');
+  if(d.eff<0.8)h+=alert_('a-warn','⚠️ Rendement faible — Vérifiez l\'état du moteur');
+  if(d.Pout_kW>100)h+=alert_('a-info','ℹ️ Grande puissance — Démarrage progressif recommandé');
+  return h;
+}
+function breakerAlerts(d){
+  if(!d)return '';
+  return alert_('a-ok','✅ Disjoncteur: '+d.sel+' A — Courbe '+d.curve)
+        +alert_('a-info','📋 Norme: NF C 15-100 / CEI 60947-2');
+}
+function airAlerts(d){
+  if(!d)return '';
+  var h='';
+  if(d.pressure>12)h+=alert_('a-danger','🔴 Pression très élevée — Vérifier classe pression réservoir');
+  else if(d.pressure>8)h+=alert_('a-warn','⚠️ Pression élevée — Contrôle sécurité obligatoire');
+  else h+=alert_('a-ok','✅ Pression nominale — Configuration standard');
+  h+=alert_('a-info','💡 Réservoir min recommandé: '+fmt(d.rec,0)+' L');
+  return h;
+}
+function pumpAlerts(d){
+  if(!d)return '';
+  var h='';
+  if(d.head>50)h+=alert_('a-warn','⚠️ HMT élevée — Vérifier NPSH disponible');
+  else h+=alert_('a-ok','✅ HMT acceptable pour pompe centrifuge standard');
+  h+=alert_('a-info','💡 NPSH estimé: '+fmt(d.npsh,1)+' m — Vérifier avec fabricant');
+  return h;
+}
+
+// FORMULAS
+var FORMULAS={
+  motor:[['Puissance apparente (3ph):','S = √3 × U × I [VA]'],['Puissance active:','P = S × cos(φ) [W]'],['Puissance sortie:','Pout = P × η [W]'],['En CV:','CV = Pout / 746']],
+  torque:[['Couple (P,n):','T = 9550 × P(kW) / n(tr/min) [N.m]'],['Couple (F,R):','T = F × R [N.m]'],['Conversion:','T(kgf.m) = T(N.m) / 9.81']],
+  '3phase':[['Courant nominal:','In = P / (√3 × U × cosφ × η) [A]'],['Tension phase:','Vph = VL / √3 [V]'],['Courant DOL:','Id ≈ 6 × In [A]']],
+  breaker:[['Calibre min:','In_disj ≥ 1.25 × In (moteur)'],['Section câble:','Iz ≥ 1.25 × Ib [A]'],['Normes:','NF C 15-100 / CEI 60947-2']],
+  air:[['Puissance:','P = (p × Q) / (60 × η) [kW]'],['Réservoir:','V ≥ Q × 250 [L]'],['Déplacement:','Vd = Q / (n × Np) [m3/tour]']],
+  pump:[['Puissance hydraulique:','Pu = ρ × g × Q × H [W]'],['Puissance arbre:','Pa = Pu / η [W]'],['NPSH approx.:','NPSHd ≈ 0.1 × H + 2 [m]']],
+};
+function formulaBox(id){
+  var steps=FORMULAS[id];if(!steps)return '';
+  return '<div class="formula-box"><div class="formula-title">📐 Formules appliquées</div>'
+    +steps.map(function(s,i){return '<div class="formula-step"><div class="step-num">'+(i+1)+'</div><div><div class="step-text">'+s[0]+'</div><div class="step-formula">'+s[1]+'</div></div></div>';}).join('')
+    +'</div>';
+}
+
+// UI HELPERS
+function field(id,label,icon,opts){
+  opts=opts||{};
+  var type=opts.type||'number',placeholder=opts.placeholder||'',unit=opts.unit||'',options=opts.options||null,value=opts.value||'',min=opts.min||'0',step=opts.step||'any';
+  var lbl='<label class="field"><span class="field-label"><span>'+icon+'</span>'+label+'</span>';
+  if(options){
+    var sel=options.map(function(o){return '<option value="'+o.v+'"'+(o.v===value?' selected':'')+'>'+o.l+'</option>';}).join('');
+    return lbl+'<select class="field-input" id="'+id+'" onchange="FC_'+id+'(this.value)">'+sel+'</select></label>';
+  }
+  return lbl+'<div class="field-ctrl"><input class="field-input" id="'+id+'" type="'+type+'" inputmode="decimal" value="'+value+'" placeholder="'+placeholder+'" min="'+min+'" step="'+step+'" oninput="FC_'+id+'(this.value)"/>'+(unit?'<span class="field-unit">'+unit+'</span>':'')+'</div></label>';
+}
+function results(items,color,note){
+  if(!items)return '<div class="empty-state">Saisissez les valeurs pour afficher les résultats.</div>';
+  return '<div class="results" style="background:linear-gradient(180deg,color-mix(in srgb,'+color+' 8%,rgba(15,23,42,1)),rgba(15,23,42,.8));border:1px solid color-mix(in srgb,'+color+' 22%,rgba(148,163,184,.1))">'
+    +'<div class="results-hdr"><span class="results-title">Résultats</span><span class="results-note">'+note+'</span></div>'
+    +'<div class="res-list">'+items.map(function(it){return '<div class="res-row"><span class="res-label">'+it.icon+' '+it.l+'</span><span class="res-val">'+it.v+'</span></div>';}).join('')+'</div>'
+    +'</div>';
+}
+function tips(icon,txt){return '<div class="tips"><span>'+icon+'</span><span>'+txt+'</span></div>';}
+function modeToggle(){
+  var ec='mode-btn'+(mode==='engineer'?' eng-active':'');
+  var sc='mode-btn'+(mode==='student'?' stu-active':'');
+  return '<div class="mode-toggle"><button class="'+ec+'" onclick="setMode(\'engineer\')">🔧 Ingénieur</button><button class="'+sc+'" onclick="setMode(\'student\')">📚 Étudiant</button></div>';
+}
+function setMode(m){mode=m;renderPanel();}
+
+// CONTENT BUILDERS
+function motorContent(){
+  var s=state.motor,r=calcMotor(s);
+  var items=r?[{icon:'⚡',l:'Puissance apparente',v:fmt(r.S_kVA,3)+' kVA'},{icon:'✅',l:'Puissance active',v:fmt(r.P_kW,3)+' kW'},{icon:'🔋',l:'Puissance sortie',v:fmt(r.Pout_kW,3)+' kW'},{icon:'🐎',l:'Puissance CV',v:fmt(r.hp,2)+' HP'},{icon:'📊',l:'Puissance réactive',v:fmt(r.Q_kVAR,3)+' kVAR'}]:null;
+  return '<div class="stack">'+(mode==='student'?formulaBox('motor'):'')
+    +'<div class="grid2">'+field('motor_phases','Alimentation','🔌',{options:[{v:'3',l:'Triphasé (3φ)'},{v:'1',l:'Monophasé (1φ)'}],value:s.phases})+field('motor_voltage','Tension','⚡',{placeholder:'380',unit:'V',value:s.voltage})+'</div>'
+    +'<div class="grid2">'+field('motor_current','Courant','🔌',{placeholder:'10',unit:'A',value:s.current})+field('motor_pf','Facteur puissance','📐',{placeholder:'85',unit:'%',value:s.pf})+'</div>'
+    +field('motor_eff','Rendement','⚙️',{placeholder:'90',unit:'%',value:s.eff})
+    +tips('ℹ️','Valeurs nominales. Pour grands moteurs, consultez la plaque signalétique.')
+    +results(items,'#3b82f6','NF C 15-100')+(r?motorAlerts(r):'')+'</div>';
+}
+function torqueContent(){
+  var s=state.torque,r=calcTorque(s);
+  var items=r?[{icon:'🔧',l:'Couple',v:fmt(r.T_Nm,2)+' N.m'},{icon:'⚖️',l:'Couple équivalent',v:fmt(r.T_kgfm,2)+' kgf.m'}]:null;
+  return '<div class="stack">'+(mode==='student'?formulaBox('torque'):'')
+    +field('torque_type','Méthode','🔧',{options:[{v:'power',l:'Puissance + Vitesse'},{v:'force',l:'Force + Rayon'}],value:s.type})
+    +(s.type==='power'?'<div class="grid2">'+field('torque_power','Puissance','⚡',{placeholder:'5.5',unit:'kW',value:s.power})+field('torque_rpm','Vitesse','🌀',{placeholder:'1450',unit:'tr/min',value:s.rpm})+'</div>'
+      :'<div class="grid2">'+field('torque_force','Force','💪',{placeholder:'500',unit:'N',value:s.force})+field('torque_radius','Rayon','📏',{placeholder:'0.5',unit:'m',value:s.radius})+'</div>')
+    +tips('📐','T = 9550 × P(kW) / n(tr/min)')
+    +results(items,'#8b5cf6','Couple calculé')+'</div>';
+}
+function threephaseContent(){
+  var s=state['3phase'],r=calc3Phase(s);
+  var items=r?[{icon:'⚡',l:'Courant nominal',v:fmt(r.I,2)+' A'},{icon:'🔌',l:'Tension de ligne',v:fmt(r.VL,1)+' V'},{icon:'📐',l:'Tension de phase',v:fmt(r.Vph,1)+' V'},{icon:'🚀',l:'Courant DOL',v:fmt(r.Istart,1)+' A'}]:null;
+  return '<div class="stack">'+(mode==='student'?formulaBox('3phase'):'')
+    +'<div class="grid2">'+field('3p_power','Puissance charge','⚡',{placeholder:'7.5',unit:'kW',value:s.power})+field('3p_voltage','Tension réseau L-L','🔌',{placeholder:'380',unit:'V',value:s.voltage})+'</div>'
+    +'<div class="grid2">'+field('3p_pf','Facteur puissance','📐',{placeholder:'85',unit:'%',value:s.pf})+field('3p_eff','Rendement','⚙️',{placeholder:'90',unit:'%',value:s.eff})+'</div>'
+    +tips('ℹ️','Courant DOL ≈ 6×In. Valeur approximative pour démarrage direct.')
+    +results(items,'#06b6d4','CEI 60034')+'</div>';
+}
+function breakerContent(){
+  var s=state.breaker,r=calcBreaker(s);
+  var items=r?[{icon:'⚡',l:'Calibre minimum',v:fmt(r.min,1)+' A'},{icon:'🛡️',l:'Disjoncteur proposé',v:r.sel+' A'},{icon:'📋',l:'Courbe',v:'Courbe '+r.curve},{icon:'🔌',l:'Section câble',v:r.cable+' mm²'},{icon:'✖️',l:'Facteur sélection',v:fmt(r.factor,2)+'×'}]:null;
+  return '<div class="stack">'+(mode==='student'?formulaBox('breaker'):'')
+    +'<div class="grid2">'+field('br_current','Courant charge','⚡',{placeholder:'25',unit:'A',value:s.current})+field('br_type','Type charge','🏭',{options:[{v:'motor',l:'Moteur électrique'},{v:'general',l:'Charge générale'},{v:'welding',l:'Poste soudure'},{v:'lighting',l:'Eclairage'}],value:s.type})+'</div>'
+    +tips('ℹ️','Sélection préliminaire. Vérifiez mode de pose, température, chute de tension.')
+    +results(items,'#f59e0b','NF C 15-100')+(r?breakerAlerts(r):'')+'</div>';
+}
+function airContent(){
+  var s=state.air,r=calcAir(s);
+  var items=r?[{icon:'💨',l:'Puissance compresseur',v:fmt(r.kW,2)+' kW'},{icon:'🐎',l:'Puissance CV',v:fmt(r.hp,2)+' HP'},{icon:'🗄️',l:'Volume réservoir',v:fmt(r.rec,0)+' L'},{icon:'🔩',l:'Déplacement/piston',v:r.disp?fmt(r.disp,0)+' cc':'--'}]:null;
+  return '<div class="stack">'+(mode==='student'?formulaBox('air'):'')
+    +'<div class="grid2">'+field('air_pressure','Pression service','💪',{placeholder:'8',unit:'bar',value:s.pressure})+field('air_flow','Débit requis','💨',{placeholder:'5',unit:'m3/min',value:s.flow})+'</div>'
+    +'<div class="grid2">'+field('air_pistons','Nb pistons','🔩',{placeholder:'2',value:s.pistons,step:'1',min:'1'})+field('air_rpm','Vitesse rotation','🌀',{placeholder:'900',unit:'tr/min',value:s.rpm,step:'1'})+'</div>'
+    +tips('ℹ️','Rendement estimé 85%. Règle réservoir: 250 L par m3/min.')
+    +results(items,'#10b981','ISO 1217')+(r?airAlerts(r):'')+'</div>';
+}
+function pumpContent(){
+  var s=state.pump,r=calcPump(s);
+  var items=r?[{icon:'💧',l:'Puissance hydraulique',v:fmt(r.hyd,2)+' kW'},{icon:'⚙️',l:'Puissance arbre',v:fmt(r.shaft,2)+' kW'},{icon:'🐎',l:'Puissance CV',v:fmt(r.hp,2)+' HP'},{icon:'📏',l:'NPSH approx.',v:fmt(r.npsh,1)+' m'}]:null;
+  return '<div class="stack">'+(mode==='student'?formulaBox('pump'):'')
+    +'<div class="grid2">'+field('pump_flow','Débit','💧',{placeholder:'50',unit:'m3/h',value:s.flow})+field('pump_head','Hauteur HMT','📏',{placeholder:'30',unit:'m',value:s.head})+'</div>'
+    +'<div class="grid2">'+field('pump_eff','Rendement pompe','⚙️',{placeholder:'75',unit:'%',value:s.eff})+field('pump_density','Densité fluide','⚗️',{placeholder:'1000',unit:'kg/m3',value:s.density})+'</div>'
+    +tips('ℹ️','NPSH approx. Vérifiez avec données fabricant.')
+    +results(items,'#f97316','ISO 9906')+(r?pumpAlerts(r):'')+'</div>';
+}
+function convertContent(){
+  var cv=state.convert;
+  var catOpts=[{v:'power',l:'⚡ Puissance'},{v:'torque',l:'🔧 Couple'},{v:'pressure',l:'💪 Pression'},{v:'flow',l:'💧 Débit'},{v:'length',l:'📏 Longueur'},{v:'temperature',l:'🌡 Température'}];
+  var unitOpts=(UNITS[cv.cat]||[]).map(function(u){return{v:u,l:u};});
+  var r=calcConvert(cv);
+  var items=r?[{icon:'🔄',l:'Valeur convertie',v:fmt(r.r,4)+' '+cv.to}]:null;
+  return '<div class="stack">'
+    +field('cv_cat','Catégorie','🔄',{options:catOpts,value:cv.cat})
+    +field('cv_value','Valeur','🔢',{placeholder:'100',value:cv.value})
+    +'<div class="grid2">'+field('cv_from','De','↗',{options:unitOpts,value:cv.from})+field('cv_to','Vers','↙',{options:unitOpts,value:cv.to})+'</div>'
+    +results(items,'#ec4899','Coefficients ISO/SI')+'</div>';
+}
+function aiContent(){
+  var msgs=chatMsgs.map(function(m){
+    if(m.typing)return '<div class="msg-ai"><div class="av-ai">AI</div><div class="bbl-ai"><div class="typing-dots"><div class="dot" style="animation-delay:0s"></div><div class="dot" style="animation-delay:.2s"></div><div class="dot" style="animation-delay:.4s"></div></div></div></div>';
+    if(m.role==='user')return '<div class="msg-user"><div class="av-user">N</div><div class="bbl-user">'+esc(m.text)+'</div></div>';
+    return '<div class="msg-ai"><div class="av-ai">AI</div><div class="bbl-ai">'+esc(m.text)+'</div></div>';
+  }).join('');
+  var showSug=chatMsgs.length<=1;
+  return '<div class="ai-container">'
+    +'<div class="ai-header"><div class="ai-badge"><div class="ai-dot"></div>Assistant IA Electromécanique</div><div class="ai-status">Précis · Professionnel</div></div>'
+    +'<div class="chat-msgs" id="chatMsgs">'+msgs+'</div>'
+    +(showSug?'<div class="suggestions"><div class="sug-title">Questions fréquentes:</div><div class="sug-grid">'
+      +'<button class="sug-btn" onclick="setSug(0)">'+SUGS[0]+'</button>'
+      +'<button class="sug-btn" onclick="setSug(1)">'+SUGS[1]+'</button>'
+      +'<button class="sug-btn" onclick="setSug(2)">'+SUGS[2]+'</button>'
+      +'<button class="sug-btn" onclick="setSug(3)">'+SUGS[3]+'</button>'
+      +'</div></div>':'')
+    +'<div class="chat-composer"><input class="chat-input" id="chatInput" placeholder="Posez votre question technique..." onkeydown="if(event.key===\'Enter\')sendChat()"/>'
+    +'<button class="send-btn" id="sendBtn" onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>'
+    +'<div class="ai-footer">Powered by Claude AI · Développé par Kouadria Nadir</div>'
+    +'</div>';
+}
+
+function setSug(i){var inp=document.getElementById('chatInput');if(inp){inp.value=SUGS[i];inp.focus();}}
+
+function buildContent(){
+  var m={motor:motorContent,torque:torqueContent,'3phase':threephaseContent,breaker:breakerContent,air:airContent,pump:pumpContent,convert:convertContent,ai:aiContent};
+  return(m[activeTab]||motorContent)();
+}
+
 function renderTabs(){
-  document.getElementById('tabs').innerHTML=TABS.map(t=>`
-    <button class="tab-btn${t.id===activeTab?' active':''}" onclick="setTab('${t.id}')"
-      style="${t.id===activeTab?`background:color-mix(in srgb,${t.color} 15%,rgba(15,23,42,1));border:1.5px solid color-mix(in srgb,${t.color} 50%,transparent);box-shadow:0 12px 24px color-mix(in srgb,${t.color} 18%,transparent)`:''}">
-      <span style="color:${t.id===activeTab?t.color:'#64748b'};width:21px;height:21px;display:inline-flex">${SVG[t.icon]}</span>
-      <span class="tlbl" style="color:${t.id===activeTab?t.color:'#64748b'}">${t.label}</span>
-    </button>`).join('');
+  document.getElementById('tabs').innerHTML=TABS.map(function(t){
+    var sel=t.id===activeTab;
+    return '<button class="tab-btn'+(sel?' active':'')+'" onclick="setTab(\''+t.id+'\')" style="'+(sel?'background:color-mix(in srgb,'+t.color+' 14%,rgba(15,23,42,1));border:1.5px solid color-mix(in srgb,'+t.color+' 40%,transparent)':'')+'"><span class="ticon" style="color:'+(sel?t.color:'#64748b')+'">'+t.icon+'</span><span class="tlbl" style="color:'+(sel?t.color:'#64748b')+'">'+t.label+'</span></button>';
+  }).join('');
+}
+
+function renderPanel(){
+  var t=TABS.filter(function(x){return x.id===activeTab;})[0]||TABS[0];
+  var panel=document.getElementById('panel');
+  panel.style.border='1px solid color-mix(in srgb,'+t.color+' 22%,rgba(148,163,184,.1))';
+  panel.style.boxShadow='0 16px 40px color-mix(in srgb,'+t.color+' 10%,rgba(2,8,23,.5))';
+  panel.innerHTML='<div class="panel-hdr"><div class="panel-icon" style="background:color-mix(in srgb,'+t.color+' 12%,rgba(15,23,42,1));border:1px solid color-mix(in srgb,'+t.color+' 22%,transparent)">'+t.icon+'</div><div><h2>'+t.label+'</h2><p>'+t.help+'</p></div></div>'
+    +(activeTab!=='ai'&&activeTab!=='convert'?modeToggle():'')
+    +buildContent();
+  bindInputs();
+  if(activeTab==='ai')scrollChat();
 }
 
 function setTab(id){activeTab=id;renderTabs();renderPanel();}
 
-// ── render panel ─────────────────────────────────────────────────────────
-function renderPanel(){
-  const t=TABS.find(x=>x.id===activeTab);
-  const content=buildContent();
-  document.getElementById('panel').style.border=`1px solid color-mix(in srgb,${t.color} 28%,rgba(148,163,184,.1))`;
-  document.getElementById('panel').style.boxShadow=`0 20px 48px color-mix(in srgb,${t.color} 12%,rgba(2,8,23,.5))`;
-  document.getElementById('panel').innerHTML=`
-    <div class="panel-hdr">
-      <div class="panel-icon" style="background:color-mix(in srgb,${t.color} 14%,rgba(15,23,42,1));border:1px solid color-mix(in srgb,${t.color} 28%,transparent);color:${t.color}">
-        ${SVG[t.icon]}
-      </div>
-      <div><h2>${t.label}</h2><p>${t.help}</p></div>
-    </div>
-    <div class="mode-toggle">
-     ${modeToggle()}
-    ${content}`;
-  bindInputs();
-}
-
-// ── content builders ─────────────────────────────────────────────────────
-function buildContent(){
-  const tab=activeTab, s=state;
-  if(tab==='motor'){
-    const r=calc.motor(s.motor);
-    return`<div class="stack">
-      <div class="grid2">
-        ${field('motor_phases','Type alimentation',{options:[{v:'3',l:'Triphasé'},{v:'1',l:'Monophasé'}],value:s.motor.phases})}
-        ${field('motor_voltage','Tension',{placeholder:'380',unit:'V',value:s.motor.voltage})}
-      </div>
-      <div class="grid2">
-        ${field('motor_current','Courant',{placeholder:'10',unit:'A',value:s.motor.current})}
-        ${field('motor_pf','Facteur puissance',{placeholder:'85',unit:'%',value:s.motor.pf})}
-      </div>
-      ${field('motor_eff','Rendement',{placeholder:'90',unit:'%',value:s.motor.eff})}
-      ${mode==='student'?formulaBox('motor'):''}
-      ${tips('Ce calculateur utilise des valeurs nominales. Pour grands moteurs, consultez la plaque signalétique.')}
-      ${results(r,'#3b82f6','Résultats approximatifs usage préliminaire')}
-    </div>`;
-  }
-  if(tab==='torque'){
-    const r=calc.torque(s.torque);
-    return`<div class="stack">
-      ${field('torque_type','Méthode calcul',{options:[{v:'power',l:'Puissance et vitesse'},{v:'force',l:'Force et rayon'}],value:s.torque.type})}
-      ${s.torque.type==='power'?
-        `<div class="grid2">${field('torque_power','Puissance',{placeholder:'5.5',unit:'kW',value:s.torque.power})}${field('torque_rpm','Vitesse',{placeholder:'1450',unit:'RPM',value:s.torque.rpm})}</div>`:
-        `<div class="grid2">${field('torque_force','Force',{placeholder:'500',unit:'N',value:s.torque.force})}${field('torque_radius','Rayon',{placeholder:'0.5',unit:'m',value:s.torque.radius})}</div>`}
-      ${mode==='student'?formulaBox('torque'):''}
-      ${tips('Formule de base: T = 9550 x P / n avec P en kW et n en tr/min.')}
-      ${results(r,'#8b5cf6','Couple calculé avec valeurs nominales')}
-    </div>`;
-  }
-  if(tab==='3phase'){
-    const r=calc.threePhase(s['3phase']);
-    return`<div class="stack">
-      <div class="grid2">
-        ${field('3p_power','Puissance charge',{placeholder:'7.5',unit:'kW',value:s['3phase'].power})}
-        ${field('3p_voltage','Tension réseau (L-L)',{placeholder:'380',unit:'V',value:s['3phase'].voltage})}
-      </div>
-      <div class="grid2">
-        ${field('3p_pf','Facteur puissance',{placeholder:'85',unit:'%',value:s['3phase'].pf})}
-        ${field('3p_eff','Rendement',{placeholder:'90',unit:'%',value:s['3phase'].eff})}
-      </div>
-      ${mode==='student'?formulaBox('3phase'):''}
-      ${tips('Courant démarrage estimé à 6x courant nominal, valeur approx. pour démarrage direct DOL.')}
-      ${results(r,'#06b6d4','Basé sur facteur puissance et rendement saisis')}
-    </div>`;
-  }
-  if(tab==='breaker'){
-    const r=calc.breaker(s.breaker);
-    return`<div class="stack">
-      <div class="grid2">
-        ${field('br_current','Courant charge',{placeholder:'25',unit:'A',value:s.breaker.current})}
-        ${field('br_type','Type charge',{options:[{v:'motor',l:'Moteur électrique'},{v:'general',l:'Charge générale'},{v:'welding',l:'Poste soudure'},{v:'lighting',l:'Éclairage'}],value:s.breaker.type})}
-      </div>
-      ${mode==='student'?formulaBox('breaker'):''}
-      ${tips('Résultat préliminaire. Vérifiez mode pose, température, chute tension et norme protection.')}
-      ${results(r,'#f59e0b','Sélection préliminaire disjoncteur câble')}
-    </div>`;
-  }
-  if(tab==='air'){
-    const r=calc.air(s.air);
-    return`<div class="stack">
-      <div class="grid2">
-        ${field('air_pressure','Pression service',{placeholder:'8',unit:'bar',value:s.air.pressure})}
-        ${field('air_flow','Débit requis',{placeholder:'5',unit:'m³/min',value:s.air.flow})}
-      </div>
-      <div class="grid2">
-        ${field('air_pistons','Nombre pistons',{placeholder:'2',value:s.air.pistons,step:'1',min:'1'})}
-        ${field('air_rpm','Vitesse rotation',{placeholder:'900',unit:'RPM',value:s.air.rpm,step:'1'})}
-      </div>
-      ${mode==='student'?formulaBox('air'):''}
-      ${tips('Valeurs basées sur rendement 85% et règle réservoir 250 L par m³/min.')}
-      ${results(r,'#10b981','Estimation préliminaire compresseur')}
-    </div>`;
-  }
-  if(tab==='pump'){
-    const r=calc.pump(s.pump);
-    return`<div class="stack">
-      <div class="grid2">
-        ${field('pump_flow','Débit',{placeholder:'50',unit:'m³/h',value:s.pump.flow})}
-        ${field('pump_head','Hauteur HMT',{placeholder:'30',unit:'m',value:s.pump.head})}
-      </div>
-      <div class="grid2">
-        ${field('pump_eff','Rendement',{placeholder:'75',unit:'%',value:s.pump.eff})}
-        ${field('pump_density','Densité fluide',{placeholder:'1000',unit:'kg/m³',value:s.pump.density})}
-      </div>
-      ${mode==='student'?formulaBox('pump'):''}
-      ${tips('Valeur NPSH approximative. Ne remplace pas données fabricant et analyse aspiration.')}
-      ${results(r,'#f97316','Puissances calculées selon rendement saisi')}
-    </div>`;
-  }
-  if(tab==='convert'){
-    const cv=s.convert;
-    const catOpts=[{v:'power',l:'Puissance'},{v:'torque',l:'Couple'},{v:'pressure',l:'Pression'},{v:'flow',l:'Débit'},{v:'length',l:'Longueur'},{v:'temperature',l:'Température'}];
-    const unitOpts=UNITS[cv.cat]||[];
-    const r=calc.convert(cv);
-    return`<div class="stack">
-      ${field('cv_cat','Catégorie',{options:catOpts,value:cv.cat})}
-      ${field('cv_value','Valeur',{placeholder:'100',value:cv.value})}
-      <div class="grid2">
-        ${field('cv_from','De',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.from})}
-        ${field('cv_to','Vers',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.to})}
-      </div>
-      ${mode==='student'?formulaBox('convert'):''}
-      ${results(r,'#ec4899','Conversion coefficients standards internationaux')}
-    </div>`;
-  }
-  if(tab==='ai'){return buildAITab();}
-  return '';
-}
-
-// ── bind dynamic onchange ─────────────────────────────────────────────────
 function bindInputs(){
-  const m=state.motor,t=state.torque,tp=state['3phase'],br=state.breaker,air=state.air,p=state.pump,cv=state.convert;
-  window.onchange_motor_phases=v=>{m.phases=v;renderPanel()};
-  window.onchange_motor_voltage=v=>{m.voltage=v;renderPanel()};
-  window.onchange_motor_current=v=>{m.current=v;renderPanel()};
-  window.onchange_motor_pf=v=>{m.pf=v;renderPanel()};
-  window.onchange_motor_eff=v=>{m.eff=v;renderPanel()};
-  window.onchange_torque_type=v=>{t.type=v;renderPanel()};
-  window.onchange_torque_power=v=>{t.power=v;renderPanel()};
-  window.onchange_torque_rpm=v=>{t.rpm=v;renderPanel()};
-  window.onchange_torque_force=v=>{t.force=v;renderPanel()};
-  window.onchange_torque_radius=v=>{t.radius=v;renderPanel()};
-  window.onchange_3p_power=v=>{tp.power=v;renderPanel()};
-  window.onchange_3p_voltage=v=>{tp.voltage=v;renderPanel()};
-  window.onchange_3p_pf=v=>{tp.pf=v;renderPanel()};
-  window.onchange_3p_eff=v=>{tp.eff=v;renderPanel()};
-  window.onchange_br_current=v=>{br.current=v;renderPanel()};
-  window.onchange_br_type=v=>{br.type=v;renderPanel()};
-  window.onchange_air_pressure=v=>{air.pressure=v;renderPanel()};
-  window.onchange_air_flow=v=>{air.flow=v;renderPanel()};
-  window.onchange_air_pistons=v=>{air.pistons=v;renderPanel()};
-  window.onchange_air_rpm=v=>{air.rpm=v;renderPanel()};
-  window.onchange_pump_flow=v=>{p.flow=v;renderPanel()};
-  window.onchange_pump_head=v=>{p.head=v;renderPanel()};
-  window.onchange_pump_eff=v=>{p.eff=v;renderPanel()};
-  window.onchange_pump_density=v=>{p.density=v;renderPanel()};
-  window.onchange_cv_cat=v=>{cv.cat=v;const u=UNITS[v]||[];cv.from=u[0];cv.to=u[1]||u[0];renderPanel()};
-  window.onchange_cv_value=v=>{cv.value=v;renderPanel()};
-  window.onchange_cv_from=v=>{cv.from=v;renderPanel()};
-  window.onchange_cv_to=v=>{cv.to=v;renderPanel()};
+  var m=state.motor,t=state.torque,tp=state['3phase'],br=state.breaker,air=state.air,p=state.pump,cv=state.convert;
+  window.FC_motor_phases=function(v){m.phases=v;renderPanel();};
+  window.FC_motor_voltage=function(v){m.voltage=v;renderPanel();};
+  window.FC_motor_current=function(v){m.current=v;renderPanel();};
+  window.FC_motor_pf=function(v){m.pf=v;renderPanel();};
+  window.FC_motor_eff=function(v){m.eff=v;renderPanel();};
+  window.FC_torque_type=function(v){t.type=v;renderPanel();};
+  window.FC_torque_power=function(v){t.power=v;renderPanel();};
+  window.FC_torque_rpm=function(v){t.rpm=v;renderPanel();};
+  window.FC_torque_force=function(v){t.force=v;renderPanel();};
+  window.FC_torque_radius=function(v){t.radius=v;renderPanel();};
+  window.FC_3p_power=function(v){tp.power=v;renderPanel();};
+  window.FC_3p_voltage=function(v){tp.voltage=v;renderPanel();};
+  window.FC_3p_pf=function(v){tp.pf=v;renderPanel();};
+  window.FC_3p_eff=function(v){tp.eff=v;renderPanel();};
+  window.FC_br_current=function(v){br.current=v;renderPanel();};
+  window.FC_br_type=function(v){br.type=v;renderPanel();};
+  window.FC_air_pressure=function(v){air.pressure=v;renderPanel();};
+  window.FC_air_flow=function(v){air.flow=v;renderPanel();};
+  window.FC_air_pistons=function(v){air.pistons=v;renderPanel();};
+  window.FC_air_rpm=function(v){air.rpm=v;renderPanel();};
+  window.FC_pump_flow=function(v){p.flow=v;renderPanel();};
+  window.FC_pump_head=function(v){p.head=v;renderPanel();};
+  window.FC_pump_eff=function(v){p.eff=v;renderPanel();};
+  window.FC_pump_density=function(v){p.density=v;renderPanel();};
+  window.FC_cv_cat=function(v){cv.cat=v;var u=UNITS[v]||[];cv.from=u[0];cv.to=u[1]||u[0];renderPanel();};
+  window.FC_cv_value=function(v){cv.value=v;renderPanel();};
+  window.FC_cv_from=function(v){cv.from=v;renderPanel();};
+  window.FC_cv_to=function(v){cv.to=v;renderPanel();};
 }
 
-// ── AI tab ───────────────────────────────────────────────────────────────
-function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
-
-function buildAITab(){
-  const msgs=chatMsgs.map(m=>{
-    if(m.typing) return`<div class="ai-bubble"><div class="ai-avatar">AI</div><div class="bubble bubble-ai"><div class="typing-dots"><div class="dot" style="animation-delay:0s"></div><div class="dot" style="animation-delay:.2s"></div><div class="dot" style="animation-delay:.4s"></div></div></div></div>`;
-    if(m.role==='user') return`<div class="user-bubble-wrap"><div class="bubble bubble-user">${escHtml(m.text)}</div><div class="user-avatar">N</div></div>`;
-    return`<div class="ai-bubble"><div class="ai-avatar">AI</div><div class="bubble bubble-ai">${escHtml(m.text)}</div></div>`;
-  }).join('');
-
-  const suggestions=[
-    "Quel disjoncteur pour moteur 15kW?",
-    "Calculer le couple moteur 1450rpm",
-    "Section cable pour 50A",
-    "Formule puissance triphasée",
-  ];
-
-  return`<div class="ai-container">
-    <div class="ai-header">
-      <div class="ai-badge">
-        <span class="ai-dot"></span>
-        <span>Assistant IA Électromécanique</span>
-      </div>
-      <div class="ai-info">Spécialisé · Précis · Professionnel</div>
-    </div>
-
-    <div class="chat-msgs" id="chatMsgs">${msgs}</div>
-
-    ${chatMsgs.length<=1?`<div class="suggestions">
-      <div class="sug-title">💡 Questions fréquentes:</div>
-      <div class="sug-grid">
-        ${suggestions.map((s,i)=>`<button class="sug-btn" onclick="setSuggestion(suggestions[${i}])">${s}</button>`).join('')}
-      </div>
-    </div>`:''}
-
-    <div class="chat-composer">
-      <input class="field-input ai-input" id="chatInput"
-        placeholder="Posez votre question technique..."
-        style="flex:1" onkeydown="if(event.key==='Enter')sendChat()"/>
-      <button class="send-btn" onclick="sendChat()">${SVG.send}</button>
-    </div>
-    <div style="text-align:center;font-size:11px;color:#475569;margin-top:8px">
-      ⚡ Powered by Claude AI · Développé par Kouadria Nadir
-    </div>
-  </div>`;}
-
-function setSuggestion(txt){
-  const inp=document.getElementById('chatInput');
-  if(inp){inp.value=txt;inp.focus();}
-}
-
-
-async function sendChat(){
-  const inp=document.getElementById('chatInput');
-  if(!inp) return;
-  const txt=inp.value.trim();
-  if(!txt||loading) return;
-  inp.value='';
-  chatMsgs.push({role:'user',text:txt});
-  chatMsgs.push({role:'ai',text:'···',typing:true});
-  loading=true;
-  renderChatOnly();
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:400,
-        system:`Ingénieur électromécanicien expert. Répondez en français, concis (max 3 paragraphes). Donnez formules + unités. Citez normes si nécessaire. Développé par Kouadria Nadir.`,
-        messages:[{role:'user',content:txt}]
-      })
-    });
-    const data=await res.json();
-    const reply=data.content?.map(c=>c.text||'').join('')||'Erreur de connexion.';
-    chatMsgs.splice(chatMsgs.findIndex(m=>m.typing),1);
-    chatMsgs.push({role:'ai',text:reply});
-  }catch{
-    chatMsgs.splice(chatMsgs.findIndex(m=>m.typing),1);
-    chatMsgs.push({role:'ai',text:'⚠️ Connexion impossible. Vérifiez votre connexion et réessayez.'});
-  }
-  loading=false;
-  renderChatOnly();
-}
-
-function setSuggestion(txt){
-  const inp=document.getElementById('chatInput');
-  if(inp){inp.value=txt;inp.focus();}
-}
-
+function scrollChat(){var c=document.getElementById('chatMsgs');if(c)c.scrollTop=c.scrollHeight;}
 function renderChatOnly(){
-  const c=document.getElementById('chatMsgs');
-  if(!c)return;
-  c.innerHTML=chatMsgs.map(m=>{
-    if(m.typing)return`<div class="bubble bubble-ai"><div class="typing-dots"><div class="dot" style="animation-delay:0s"></div><div class="dot" style="animation-delay:.2s"></div><div class="dot" style="animation-delay:.4s"></div></div></div>`;
-    return`<div class="bubble bubble-${m.role}">${escHtml(m.text)}</div>`;
+  var c=document.getElementById('chatMsgs');if(!c)return;
+  c.innerHTML=chatMsgs.map(function(m){
+    if(m.typing)return '<div class="msg-ai"><div class="av-ai">AI</div><div class="bbl-ai"><div class="typing-dots"><div class="dot" style="animation-delay:0s"></div><div class="dot" style="animation-delay:.2s"></div><div class="dot" style="animation-delay:.4s"></div></div></div></div>';
+    if(m.role==='user')return '<div class="msg-user"><div class="av-user">N</div><div class="bbl-user">'+esc(m.text)+'</div></div>';
+    return '<div class="msg-ai"><div class="av-ai">AI</div><div class="bbl-ai">'+esc(m.text)+'</div></div>';
   }).join('');
   scrollChat();
 }
 
-// ── init ──────────────────────────────────────────────────────────────────
+async function sendChat(){
+  var inp=document.getElementById('chatInput');
+  var btn=document.getElementById('sendBtn');
+  if(!inp)return;
+  var txt=inp.value.trim();
+  if(!txt||loading)return;
+  inp.value='';
+  chatMsgs.push({role:'user',text:txt});
+  chatMsgs.push({role:'ai',text:'',typing:true});
+  loading=true;
+  if(btn)btn.disabled=true;
+  renderChatOnly();
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        system:'Ingenieur electromecanicien expert. Repondez en francais technique. Max 4 paragraphes. Donnez formules avec unites. Citez normes si pertinent. Soyez precis et pratique. App par Kouadria Nadir.',
+        messages:[{role:'user',content:txt}]
+      })
+    });
+    var data=await res.json();
+    var reply=data.content?data.content.map(function(c){return c.text||'';}).join(''):'Erreur de reponse.';
+    chatMsgs.splice(chatMsgs.findIndex(function(m){return m.typing;}),1);
+    chatMsgs.push({role:'ai',text:reply});
+  }catch(e){
+    chatMsgs.splice(chatMsgs.findIndex(function(m){return m.typing;}),1);
+    chatMsgs.push({role:'ai',text:'Connexion impossible. Verifiez votre connexion et reessayez.'});
+  }
+  loading=false;
+  if(btn)btn.disabled=false;
+  renderChatOnly();
+}
+
 renderTabs();
 renderPanel();
 </script>
