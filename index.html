@@ -29,6 +29,20 @@ input,select{width:100%}
 @keyframes pulse{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 select option{background:#0f172a;color:#e2e8f0}
+/* Mode Toggle */
+.mode-toggle{display:flex;gap:0;background:rgba(2,8,23,.6);border:1px solid rgba(148,163,184,.15);border-radius:12px;padding:3px;margin-bottom:18px}
+.mode-btn{flex:1;padding:9px 14px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:#64748b;font-family:inherit}
+.mode-btn.active-eng{background:linear-gradient(135deg,#3b82f6,#6366f1);color:white;box-shadow:0 4px 12px rgba(59,130,246,.3)}
+.mode-btn.active-stu{background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;box-shadow:0 4px 12px rgba(139,92,246,.3)}
+.formula-box{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.25);border-radius:16px;padding:16px;margin-bottom:14px}
+.formula-title{font-size:11px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.formula-content{font-family:'JetBrains Mono',monospace;font-size:14px;color:#e2e8f0;line-height:2}
+.formula-step{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid rgba(148,163,184,.08)}
+.formula-step:last-child{border-bottom:none}
+.step-num{width:20px;height:20px;background:rgba(139,92,246,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#a78bfa;font-weight:800;flex-shrink:0}
+.step-text{font-size:13px;color:#cbd5e1;font-family:inherit}
+.step-formula{font-family:'JetBrains Mono',monospace;color:#93c5fd;font-size:13px}
+
 
 /* layout */
 .shell{max-width:860px;margin:0 auto;padding:20px 16px 48px}
@@ -115,6 +129,26 @@ header{background:linear-gradient(135deg,rgba(15,23,42,.95),rgba(12,26,58,.9));
   color:white;display:grid;place-items:center;flex-shrink:0;box-shadow:0 8px 20px rgba(99,102,241,.28)}
 .send-btn svg{width:18px;height:18px}
 .typing-dots{display:flex;gap:5px;padding:4px}
+/* AI Chat Professional */
+.ai-container{display:grid;gap:14px}
+.ai-header{background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(99,102,241,.1));border:1px solid rgba(139,92,246,.25);border-radius:18px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.ai-badge{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#a78bfa}
+.ai-dot{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;animation:pulse 2s ease-in-out infinite}
+.ai-info{font-size:11px;color:#64748b}
+.chat-msgs{height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:4px 2px}
+.ai-bubble{display:flex;align-items:flex-start;gap:10px}
+.ai-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#6366f1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 4px 12px rgba(139,92,246,.3)}
+.user-bubble-wrap{display:flex;align-items:flex-start;gap:10px;justify-content:flex-end}
+.user-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;flex-shrink:0}
+.bubble-ai{background:rgba(30,41,59,.95);border:1px solid rgba(139,92,246,.2);border-radius:4px 18px 18px 18px;padding:12px 16px;color:#e2e8f0;font-size:13.5px;line-height:1.9;white-space:pre-wrap;max-width:85%}
+.bubble-user{background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:18px 4px 18px 18px;padding:12px 16px;color:white;font-size:13.5px;line-height:1.7;max-width:85%}
+.suggestions{background:rgba(15,23,42,.5);border:1px solid rgba(148,163,184,.1);border-radius:16px;padding:14px}
+.sug-title{font-size:12px;color:#94a3b8;margin-bottom:10px;font-weight:600}
+.sug-grid{display:grid;gap:8px}
+.sug-btn{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:9px 14px;color:#93c5fd;font-size:12.5px;cursor:pointer;text-align:right;transition:all .2s;font-family:inherit}
+.sug-btn:hover{background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.4)}
+.ai-input{border-radius:14px!important}
+
 .dot{width:7px;height:7px;border-radius:50%;background:#3b82f6;animation:pulse 1.2s ease-in-out infinite}
 
 /* footer */
@@ -175,13 +209,13 @@ footer{margin-top:20px;padding:10px 4px;display:flex;justify-content:space-betwe
   <!-- FOOTER -->
   <footer>
     <span class="ft-brand">⚡ ElectroCalc Pro · Résultats approximatifs pour estimation préliminaire</span>
-    <span class="ft-author">إعداد: Kouadria Nadir · مهندس إلكتروميكانيك</span>
+    <span class="ft-author">Développé par: Kouadria Nadir · Ingénieur Électromécanicien</span>
   </footer>
 </div>
 
 <script>
 // ── helpers ──────────────────────────────────────────────────────────────
-const fmt=(v,d=2)=>Number.isFinite(v)?new Intl.NumberFormat('ar-EG',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v):'—';
+const fmt=(v,d=2)=>Number.isFinite(v)?new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v):'—';
 const pos=v=>Number.isFinite(v)&&v>0;
 const n=v=>Number.parseFloat(v);
 
@@ -201,13 +235,13 @@ const SVG={
 
 // ── tabs config ──────────────────────────────────────────────────────────
 const TABS=[
-  {id:'motor',    label:'Puissance Moteur',    color:'#3b82f6',icon:'motor',   help:'Calculez la puissance apparente, active et la puissance de sortie pour moteurs mono ou triphasés.'},
-  {id:'torque',   label:'Couple',   color:'#8b5cf6',icon:'torque',  help:'Calculez le couple à partir de la puissance et vitesse, ou de la force et rayon.'},
-  {id:'3phase',   label:'Courant Triphasé',color:'#06b6d4',icon:'current', help:'Estimez le courant de fonctionnement, tension de phase et courant de démarrage.'},
-  {id:'breaker',  label:'Disjoncteur/Câble',color:'#f59e0b',icon:'breaker', help:'Sélection préliminaire du disjoncteur et section de câble selon le type de charge.'},
-  {id:'air',      label:'Air Comprimé',color:'#10b981',icon:'air',     help:'Calcul approximatif de la puissance du compresseur, volume du réservoir et déplacement.'},
-  {id:'pump',     label:'Pompes',       color:'#f97316',icon:'pump',    help:'Calculez la puissance hydraulique, puissance arbre de pompe et estimation NPSH.'},
-  {id:'convert',  label:'Conversion Unités',color:'#ec4899',icon:'convert', help:'Conversion rapide entre les unités d'ingénierie les plus courantes.'},
+  {id:'motor',    label:'Puissance Moteur',    color:'#3b82f6',icon:'motor',   help:'Calculez puissance apparente, active et sortie pour moteurs mono ou triphasés.'},
+  {id:'torque',   label:'Couple',   color:'#8b5cf6',icon:'torque',  help:'Calculez le couple depuis puissance/vitesse ou force/rayon.'},
+  {id:'3phase',   label:'Courant Triphasé',color:'#06b6d4',icon:'current', help:'Estimez courant fonctionnement, tension phase et courant démarrage.'},
+  {id:'breaker',  label:'Disjoncteur',color:'#f59e0b',icon:'breaker', help:'Sélection préliminaire disjoncteur et câble selon type charge.'},
+  {id:'air',      label:'Air Comprimé',color:'#10b981',icon:'air',     help:'Calcul approximatif puissance compresseur, volume réservoir et déplacement.'},
+  {id:'pump',     label:'Pompes',       color:'#f97316',icon:'pump',    help:'Calculez puissance hydraulique, puissance arbre pompe et NPSH.'},
+  {id:'convert',  label:'Conversions',color:'#ec4899',icon:'convert', help:'Conversion rapide entre unités ingénierie les plus courantes.'},
   {id:'ai',       label:'Assistant IA',      color:'#a78bfa',icon:'ai',      help:'Assistant IA spécialisé en génie électromécanique.'},
 ];
 
@@ -218,11 +252,11 @@ const calc={
     if(!pos(V)||!pos(I)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
     const S=ph===3?Math.sqrt(3)*V*I:V*I,P=S*PF,Pout=P*eff,Q=Math.sqrt(Math.max(S**2-P**2,0));
     return[
-      {l:'Puissance الظاهرية',v:`${fmt(S/1000,3)} kVA`},
-      {l:'Puissance الفعالة',v:`${fmt(P/1000,3)} kW`},
-      {l:'Puissance الخرج',v:`${fmt(Pout/1000,3)} kW`},
-      {l:'Puissance بالحصان',v:`${fmt(Pout/746,2)} HP`},
-      {l:'Puissance غير الفعالة',v:`${fmt(Q/1000,3)} kVAR`},
+      {l:'Puissance apparente',v:`${fmt(S/1000,3)} kVA`},
+      {l:'Puissance active',v:`${fmt(P/1000,3)} kW`},
+      {l:'Puissance sortie',v:`${fmt(Pout/1000,3)} kW`},
+      {l:'Puissance CV',v:`${fmt(Pout/746,2)} HP`},
+      {l:'Puissance réactive',v:`${fmt(Q/1000,3)} kVAR`},
     ];
   },
   torque(f){
@@ -230,22 +264,22 @@ const calc={
       const P=n(f.power),N=n(f.rpm);
       if(!pos(P)||!pos(N))return null;
       const T=9550*P/N;
-      return[{l:'الCouple',v:`${fmt(T,2)} N·m`},{l:'الCouple المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
+      return[{l:'Couple',v:`${fmt(T,2)} N·m`},{l:'Couple équivalent',v:`${fmt(T/9.80665,2)} kgf·m`}];
     }
     const F=n(f.force),R=n(f.radius);
     if(!pos(F)||!pos(R))return null;
     const T=F*R;
-    return[{l:'الCouple',v:`${fmt(T,2)} N·m`},{l:'الCouple المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
+    return[{l:'Couple',v:`${fmt(T,2)} N·m`},{l:'Couple équivalent',v:`${fmt(T/9.80665,2)} kgf·m`}];
   },
   threePhase(f){
     const P=n(f.power),V=n(f.voltage),PF=n(f.pf)/100,eff=n(f.eff)/100;
     if(!pos(P)||!pos(V)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
     const I=(P*1000)/(Math.sqrt(3)*V*PF*eff);
     return[
-      {l:'Courant de fonctionnement',v:`${fmt(I,2)} A`},
-      {l:'Tension de ligne',v:`${fmt(V,1)} V`},
-      {l:'Tension de phase',v:`${fmt(V/Math.sqrt(3),1)} V`},
-      {l:'Courant démarrage DOL (approx.)',v:`${fmt(I*6,1)} A`},
+      {l:'Courant fonctionnement',v:`${fmt(I,2)} A`},
+      {l:'Tension ligne',v:`${fmt(V,1)} V`},
+      {l:'Tension phase',v:`${fmt(V/Math.sqrt(3),1)} V`},
+      {l:'Courant démarrage DOL',v:`${fmt(I*6,1)} A`},
     ];
   },
   breaker(f){
@@ -259,11 +293,11 @@ const calc={
     const CT=[[1.5,15],[2.5,21],[4,28],[6,36],[10,50],[16,68],[25,89],[35,110],[50,134],[70,171],[95,207],[120,239],[150,275],[185,314],[240,361]];
     const cable=(CT.find(([,a])=>a>=I*1.25)||['>240'])[0];
     return[
-      {l:'Disjoncteur minimum requis',v:`${fmt(min,1)} A`},
+      {l:'Disjoncteur minimum',v:`${fmt(min,1)} A`},
       {l:'Disjoncteur proposé',v:`${sel} A`},
-      {l:'Deحنى الفصل',v:`Curve ${cm[f.type]||'C'}`},
-      {l:'Section câble préliminaire',v:`${cable} mm²`},
-      {l:'Facteur de sélection',v:`${fmt(factor,2)} ×`},
+      {l:'Courbe déclenchement',v:`Curve ${cm[f.type]||'C'}`},
+      {l:'Section câble',v:`${cable} mm²`},
+      {l:'Facteur sélection',v:`${fmt(factor,2)} ×`},
     ];
   },
   air(f){
@@ -272,9 +306,9 @@ const calc={
     const kW=(P*1e5*(Q/60))/(1000*0.85),rec=Q*250;
     const disp=(pos(np)&&pos(N))?(Q/(np*N))*1e6:null;
     return[
-      {l:'Puissance عمود الضاغط',v:`${fmt(kW,2)} kW`},
-      {l:'Puissance بالحصان',v:`${fmt(kW/0.746,2)} HP`},
-      {l:'Volume réservoir proposé',v:`${fmt(rec,0)} L`},
+      {l:'Puissance arbre compresseur',v:`${fmt(kW,2)} kW`},
+      {l:'Puissance CV',v:`${fmt(kW/0.746,2)} HP`},
+      {l:'Volume réservoir',v:`${fmt(rec,0)} L`},
       {l:'Déplacement/piston/tour',v:disp?`${fmt(disp,0)} cc`:'—'},
     ];
   },
@@ -283,9 +317,9 @@ const calc={
     if(!pos(Q)||!pos(H)||!(eff>0&&eff<=1)||!pos(rho))return null;
     const Wh=rho*9.81*Q*H,Ws=Wh/eff;
     return[
-      {l:'Puissance الهيدروليكية',v:`${fmt(Wh/1000,2)} kW`},
-      {l:'Puissance العمود المطلوبة',v:`${fmt(Ws/1000,2)} kW`},
-      {l:'Puissance بالحصان',v:`${fmt(Ws/746,2)} HP`},
+      {l:'Puissance hydraulique',v:`${fmt(Wh/1000,2)} kW`},
+      {l:'Puissance arbre requise',v:`${fmt(Ws/1000,2)} kW`},
+      {l:'Puissance CV',v:`${fmt(Ws/746,2)} HP`},
       {l:'NPSH approximatif',v:`${fmt(Math.max(2,H*0.1+2),1)} m`},
     ];
   },
@@ -303,11 +337,11 @@ const calc={
       let C=f.from==='°C'?v:f.from==='°F'?(v-32)*5/9:f.from==='K'?v-273.15:null;
       if(C===null)return null;
       const r=f.to==='°C'?C:f.to==='°F'?C*9/5+32:f.to==='K'?C+273.15:null;
-      return r!==null?[{l:'Valeur المحولة',v:`${fmt(r,4)} ${f.to}`}]:null;
+    return r!==null?[{l:'Valeur convertie',v:`${fmt(r,4)} ${f.to}`}]:null;
     }
     const tb=T[f.cat];
     if(!tb||!tb[f.from]||!tb[f.to])return null;
-    return[{l:'Valeur المحولة',v:`${fmt(v*tb[f.from]/tb[f.to],4)} ${f.to}`}];
+    return[{l:'Valeur convertie',v:`${fmt(v*tb[f.from]/tb[f.to],4)} ${f.to}`}];
   },
 };
 
@@ -319,6 +353,98 @@ const UNITS={
   length:['m','cm','mm','km','ft','in','yd'],
   temperature:['°C','°F','K'],
 };
+
+
+function modeToggle(){
+  var eActive=mode==='engineer'?'active-eng':'';
+  var sActive=mode==='student'?'active-stu':'';
+  return '<div class="mode-toggle">'
+    +'<button class="mode-btn '+eActive+'" onclick="setMode(&quot;engineer&quot;)">🔧 Ingénieur</button>'
+    +'<button class="mode-btn '+sActive+'" onclick="setMode(&quot;student&quot;)">📚 Étudiant</button>'
+    +'</div>';
+}
+function setMode(m){mode=m;renderPanel();}
+
+const FORMULAS = {
+  motor: {
+    title: "Formules - Puissance Moteur",
+    steps: [
+      {num:1, text:"Puissance apparente (triphasé):", formula:"S = √3 × U × I  [VA]"},
+      {num:2, text:"Puissance apparente (monophasé):", formula:"S = U × I  [VA]"},
+      {num:3, text:"Puissance active:", formula:"P = S × cos(φ)  [W]"},
+      {num:4, text:"Puissance de sortie:", formula:"Pout = P × η  [W]"},
+      {num:5, text:"Puissance en CV:", formula:"P(CV) = Pout / 746"},
+      {num:6, text:"Puissance réactive:", formula:"Q = √(S² - P²)  [VAR]"},
+    ]
+  },
+  torque: {
+    title: "Formules - Couple",
+    steps: [
+      {num:1, text:"Couple depuis puissance et vitesse:", formula:"T = 9550 × P(kW) / n(tr/min)  [N·m]"},
+      {num:2, text:"Couple depuis force et rayon:", formula:"T = F × R  [N·m]"},
+      {num:3, text:"Conversion N·m → kgf·m:", formula:"T(kgf·m) = T(N·m) / 9.81"},
+    ]
+  },
+  "3phase": {
+    title: "Formules - Courant Triphasé",
+    steps: [
+      {num:1, text:"Courant de fonctionnement:", formula:"I = P / (√3 × U × cos(φ) × η)  [A]"},
+      {num:2, text:"Tension de phase:", formula:"Vph = VL / √3  [V]"},
+      {num:3, text:"Courant de démarrage DOL:", formula:"Id ≈ 6 × In  [A]"},
+    ]
+  },
+  breaker: {
+    title: "Formules - Disjoncteur & Câble",
+    steps: [
+      {num:1, text:"Courant de calcul (moteur):", formula:"Ib = In × 1.25"},
+      {num:2, text:"Calibre disjoncteur:", formula:"In_disj ≥ 1.25 × In_charge"},
+      {num:3, text:"Section câble (Iz ≥ 1.25 × Ib):", formula:"Iz(câble) ≥ 1.25 × In  [A]"},
+      {num:4, text:"Courbe D pour moteur, C pour charge générale", formula:"CEI 60947-2"},
+    ]
+  },
+  air: {
+    title: "Formules - Air Comprimé",
+    steps: [
+      {num:1, text:"Puissance arbre compresseur:", formula:"P = (p × Q) / (60 × η)  [kW]"},
+      {num:2, text:"Volume réservoir:", formula:"V = Q × 250  [L]"},
+      {num:3, text:"Déplacement volumique:", formula:"Vd = Q / (n × Np)  [m³/tour]"},
+    ]
+  },
+  pump: {
+    title: "Formules - Pompe",
+    steps: [
+      {num:1, text:"Puissance hydraulique:", formula:"Pu = ρ × g × Q × H  [W]"},
+      {num:2, text:"Puissance arbre:", formula:"P = Pu / η  [W]"},
+      {num:3, text:"NPSH disponible (approx.):", formula:"NPSHd ≈ 0.1 × H + 2  [m]"},
+    ]
+  },
+  convert: {
+    title: "Conversion d'unités",
+    steps: [
+      {num:1, text:"Méthode:", formula:"Valeur × facteur_source / facteur_cible"},
+      {num:2, text:"Température °C → °F:", formula:"T(°F) = T(°C) × 9/5 + 32"},
+      {num:3, text:"Température °C → K:", formula:"T(K) = T(°C) + 273.15"},
+    ]
+  },
+};
+
+function formulaBox(tabId){
+  const f = FORMULAS[tabId];
+  if(!f) return '';
+  return `<div class="formula-box">
+    <div class="formula-title">📐 ${f.title}</div>
+    <div class="formula-content">
+      ${f.steps.map(s=>`
+        <div class="formula-step">
+          <div class="step-num">${s.num}</div>
+          <div>
+            <div class="step-text">${s.text}</div>
+            <div class="step-formula">${s.formula}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
 
 // ── UI helpers ───────────────────────────────────────────────────────────
 function field(id,label,{type='number',placeholder='',unit='',options=null,value='',min='0',step='any'}={}){
@@ -337,7 +463,7 @@ function field(id,label,{type='number',placeholder='',unit='',options=null,value
 }
 function tips(txt){return`<div class="tips">${SVG.info}<div>${txt}</div></div>`;}
 function results(items,color,note){
-  if(!items)return`<div class="empty">أدخل القيم المطلوبة لعرض Résultats.</div>`;
+    if(!items)return`<div class="empty">Saisissez les valeurs pour afficher les résultats.</div>`;
   return`<div class="results" style="background:linear-gradient(180deg,color-mix(in srgb,${color} 8%,rgba(15,23,42,1)),rgba(15,23,42,.82));border:1px solid color-mix(in srgb,${color} 28%,rgba(148,163,184,.12))">
     <div class="results-hdr"><span>Résultats</span><small>${note}</small></div>
     <div class="results-list">${items.map(it=>`<div class="res-row"><span>${it.l}</span><strong>${it.v}</strong></div>`).join('')}</div>
@@ -346,6 +472,9 @@ function results(items,color,note){
 
 // ── state ────────────────────────────────────────────────────────────────
 let activeTab='motor';
+let loading=false;
+let suggestions=['Quel disjoncteur pour moteur 15kW?','Calculer le couple moteur 1450rpm','Section cable pour 50A','Formule puissance triphasée'];
+let mode='engineer'; // 'engineer' or 'student'
 const state={
   motor:{voltage:'',current:'',pf:'85',eff:'90',phases:'3'},
   torque:{type:'power',power:'',rpm:'',force:'',radius:''},
@@ -355,7 +484,7 @@ const state={
   pump:{flow:'',head:'',eff:'75',density:'1000'},
   convert:{cat:'power',value:'',from:'kW',to:'HP'},
 };
-const chatMsgs=[{role:'ai',text:'Bonjour! Je suis votre assistant en ingénierie. Posez-moi des questions sur les calculs en électromécanique.'}];
+const chatMsgs=[{role:'ai',text:'Bonjour! Je suis votre assistant ingénierie. Posez-moi des questions sur les calculs en électromécanique.'}];
 
 // ── render tabs ──────────────────────────────────────────────────────────
 function renderTabs(){
@@ -382,6 +511,8 @@ function renderPanel(){
       </div>
       <div><h2>${t.label}</h2><p>${t.help}</p></div>
     </div>
+    <div class="mode-toggle">
+     ${modeToggle()}
     ${content}`;
   bindInputs();
 }
@@ -393,68 +524,73 @@ function buildContent(){
     const r=calc.motor(s.motor);
     return`<div class="stack">
       <div class="grid2">
-        ${field('motor_phases','Type d'alimentation',{options:[{v:'3',l:'Triphasé'},{v:'1',l:'Monophasé'}],value:s.motor.phases})}
+        ${field('motor_phases','Type alimentation',{options:[{v:'3',l:'Triphasé'},{v:'1',l:'Monophasé'}],value:s.motor.phases})}
         ${field('motor_voltage','Tension',{placeholder:'380',unit:'V',value:s.motor.voltage})}
       </div>
       <div class="grid2">
         ${field('motor_current','Courant',{placeholder:'10',unit:'A',value:s.motor.current})}
-        ${field('motor_pf','Facteur de puissance',{placeholder:'85',unit:'%',value:s.motor.pf})}
+        ${field('motor_pf','Facteur puissance',{placeholder:'85',unit:'%',value:s.motor.pf})}
       </div>
       ${field('motor_eff','Rendement',{placeholder:'90',unit:'%',value:s.motor.eff})}
-      ${tips('هذه الحاسبة تعتمد على قيم اسمية. للمحركات الكبيرة يُفضَّل الرجوع Vers لوحة البيانات أو كتالوج المصنع.')}
-      ${results(r,'#3b82f6','Résultats approximatifs pour usage préliminaire')}
+      ${mode==='student'?formulaBox('motor'):''}
+      ${tips('Ce calculateur utilise des valeurs nominales. Pour grands moteurs, consultez la plaque signalétique.')}
+      ${results(r,'#3b82f6','Résultats approximatifs usage préliminaire')}
     </div>`;
   }
   if(tab==='torque'){
     const r=calc.torque(s.torque);
     return`<div class="stack">
-      ${field('torque_type','Méthode de calcul',{options:[{v:'power',l:'De la puissance et vitesse'},{v:'force',l:'De la force et rayon'}],value:s.torque.type})}
+      ${field('torque_type','Méthode calcul',{options:[{v:'power',l:'Puissance et vitesse'},{v:'force',l:'Force et rayon'}],value:s.torque.type})}
       ${s.torque.type==='power'?
         `<div class="grid2">${field('torque_power','Puissance',{placeholder:'5.5',unit:'kW',value:s.torque.power})}${field('torque_rpm','Vitesse',{placeholder:'1450',unit:'RPM',value:s.torque.rpm})}</div>`:
         `<div class="grid2">${field('torque_force','Force',{placeholder:'500',unit:'N',value:s.torque.force})}${field('torque_radius','Rayon',{placeholder:'0.5',unit:'m',value:s.torque.radius})}</div>`}
-      ${tips('المعادلة الأساسية: T = 9550 × P / n عندما تكون Puissance بالكيلوواط وVitesse بالدورة/الدقيقة.')}
-      ${results(r,'#8b5cf6','الCouple محسوب بقيم اسمية')}
+      ${mode==='student'?formulaBox('torque'):''}
+      ${tips('Formule de base: T = 9550 x P / n avec P en kW et n en tr/min.')}
+      ${results(r,'#8b5cf6','Couple calculé avec valeurs nominales')}
     </div>`;
   }
   if(tab==='3phase'){
     const r=calc.threePhase(s['3phase']);
     return`<div class="stack">
       <div class="grid2">
-        ${field('3p_power','Puissance de charge',{placeholder:'7.5',unit:'kW',value:s['3phase'].power})}
+        ${field('3p_power','Puissance charge',{placeholder:'7.5',unit:'kW',value:s['3phase'].power})}
         ${field('3p_voltage','Tension réseau (L-L)',{placeholder:'380',unit:'V',value:s['3phase'].voltage})}
       </div>
       <div class="grid2">
-        ${field('3p_pf','Facteur de puissance',{placeholder:'85',unit:'%',value:s['3phase'].pf})}
+        ${field('3p_pf','Facteur puissance',{placeholder:'85',unit:'%',value:s['3phase'].pf})}
         ${field('3p_eff','Rendement',{placeholder:'90',unit:'%',value:s['3phase'].eff})}
       </div>
-      ${tips('تيار الإقلاع مقدَّر بـ 6× Courant de fonctionnement، وهي قيمة تقريبية للمحركات ذات الإقلاع المباشر DOL.')}
-      ${results(r,'#06b6d4','يعتمد على معامل Puissance وكفاءة مدخلين')}
+      ${mode==='student'?formulaBox('3phase'):''}
+      ${tips('Courant démarrage estimé à 6x courant nominal, valeur approx. pour démarrage direct DOL.')}
+      ${results(r,'#06b6d4','Basé sur facteur puissance et rendement saisis')}
     </div>`;
   }
   if(tab==='breaker'){
     const r=calc.breaker(s.breaker);
     return`<div class="stack">
       <div class="grid2">
-        ${field('br_current','Courant de charge',{placeholder:'25',unit:'A',value:s.breaker.current})}
-        ${field('br_type','Type de charge',{options:[{v:'motor',l:'Moteur électrique'},{v:'general',l:'Charge générale'},{v:'welding',l:'Poste à souder'},{v:'lighting',l:'Éclairage'}],value:s.breaker.type})}
+        ${field('br_current','Courant charge',{placeholder:'25',unit:'A',value:s.breaker.current})}
+        ${field('br_type','Type charge',{options:[{v:'motor',l:'Moteur électrique'},{v:'general',l:'Charge générale'},{v:'welding',l:'Poste soudure'},{v:'lighting',l:'Éclairage'}],value:s.breaker.type})}
       </div>
-      ${tips('النتيجة هنا اختيار مبدئي فقط. يجب مراجعة طريقة التمديد، درجة الحرارة، الهبوط في Tension، ومعيار الحماية المعتمد.')}
-      ${results(r,'#f59e0b','Sélection préliminaire disjoncteur et câble')}
+      ${mode==='student'?formulaBox('breaker'):''}
+      ${tips('Résultat préliminaire. Vérifiez mode pose, température, chute tension et norme protection.')}
+      ${results(r,'#f59e0b','Sélection préliminaire disjoncteur câble')}
     </div>`;
   }
   if(tab==='air'){
     const r=calc.air(s.air);
     return`<div class="stack">
       <div class="grid2">
-        ${field('air_pressure','Pression de service',{placeholder:'8',unit:'bar',value:s.air.pressure})}
+        ${field('air_pressure','Pression service',{placeholder:'8',unit:'bar',value:s.air.pressure})}
         ${field('air_flow','Débit requis',{placeholder:'5',unit:'m³/min',value:s.air.flow})}
       </div>
       <div class="grid2">
-        ${field('air_pistons','Nombre de pistons',{placeholder:'2',value:s.air.pistons,step:'1',min:'1'})}
-        ${field('air_rpm','Vitesse de rotation',{placeholder:'900',unit:'RPM',value:s.air.rpm,step:'1'})}
+        ${field('air_pistons','Nombre pistons',{placeholder:'2',value:s.air.pistons,step:'1',min:'1'})}
+        ${field('air_rpm','Vitesse rotation',{placeholder:'900',unit:'RPM',value:s.air.rpm,step:'1'})}
       </div>
-      ${tips('Les valeurs supposent un rendement de 85% et une règle de réservoir de 250 L par m³/min.')}
-      ${results(r,'#10b981','Estimation préliminaire compresseur et réservoir')}
+      ${mode==='student'?formulaBox('air'):''}
+      ${tips('Valeurs basées sur rendement 85% et règle réservoir 250 L par m³/min.')}
+      ${results(r,'#10b981','Estimation préliminaire compresseur')}
     </div>`;
   }
   if(tab==='pump'){
@@ -462,14 +598,15 @@ function buildContent(){
     return`<div class="stack">
       <div class="grid2">
         ${field('pump_flow','Débit',{placeholder:'50',unit:'m³/h',value:s.pump.flow})}
-        ${field('pump_head','Hauteur manométrique (HMT)',{placeholder:'30',unit:'m',value:s.pump.head})}
+        ${field('pump_head','Hauteur HMT',{placeholder:'30',unit:'m',value:s.pump.head})}
       </div>
       <div class="grid2">
         ${field('pump_eff','Rendement',{placeholder:'75',unit:'%',value:s.pump.eff})}
-        ${field('pump_density','Densité du fluide',{placeholder:'1000',unit:'kg/m³',value:s.pump.density})}
+        ${field('pump_density','Densité fluide',{placeholder:'1000',unit:'kg/m³',value:s.pump.density})}
       </div>
-      ${tips('قيمة NPSH approximatifة لأغراض أولية فقط، ولا تغني عن الرجوع Vers بيانات المصنع وتحليل خط السحب الفعلي.')}
-      ${results(r,'#f97316','القدرات محسوبة اعتماداً على Rendement المدخلة')}
+      ${mode==='student'?formulaBox('pump'):''}
+      ${tips('Valeur NPSH approximative. Ne remplace pas données fabricant et analyse aspiration.')}
+      ${results(r,'#f97316','Puissances calculées selon rendement saisi')}
     </div>`;
   }
   if(tab==='convert'){
@@ -484,7 +621,8 @@ function buildContent(){
         ${field('cv_from','De',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.from})}
         ${field('cv_to','Vers',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.to})}
       </div>
-      ${results(r,'#ec4899','Conversion selon coefficients standards internationaux')}
+      ${mode==='student'?formulaBox('convert'):''}
+      ${results(r,'#ec4899','Conversion coefficients standards internationaux')}
     </div>`;
   }
   if(tab==='ai'){return buildAITab();}
@@ -525,32 +663,66 @@ function bindInputs(){
 }
 
 // ── AI tab ───────────────────────────────────────────────────────────────
+function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+
 function buildAITab(){
-  const msgs=chatMsgs.map(m=>`<div class="bubble bubble-${m.role}">${escHtml(m.text)}</div>`).join('');
-  return`<div class="stack">
+  const msgs=chatMsgs.map(m=>{
+    if(m.typing) return`<div class="ai-bubble"><div class="ai-avatar">AI</div><div class="bubble bubble-ai"><div class="typing-dots"><div class="dot" style="animation-delay:0s"></div><div class="dot" style="animation-delay:.2s"></div><div class="dot" style="animation-delay:.4s"></div></div></div></div>`;
+    if(m.role==='user') return`<div class="user-bubble-wrap"><div class="bubble bubble-user">${escHtml(m.text)}</div><div class="user-avatar">N</div></div>`;
+    return`<div class="ai-bubble"><div class="ai-avatar">AI</div><div class="bubble bubble-ai">${escHtml(m.text)}</div></div>`;
+  }).join('');
+
+  const suggestions=[
+    "Quel disjoncteur pour moteur 15kW?",
+    "Calculer le couple moteur 1450rpm",
+    "Section cable pour 50A",
+    "Formule puissance triphasée",
+  ];
+
+  return`<div class="ai-container">
+    <div class="ai-header">
+      <div class="ai-badge">
+        <span class="ai-dot"></span>
+        <span>Assistant IA Électromécanique</span>
+      </div>
+      <div class="ai-info">Spécialisé · Précis · Professionnel</div>
+    </div>
+
     <div class="chat-msgs" id="chatMsgs">${msgs}</div>
+
+    ${chatMsgs.length<=1?`<div class="suggestions">
+      <div class="sug-title">💡 Questions fréquentes:</div>
+      <div class="sug-grid">
+        ${suggestions.map((s,i)=>`<button class="sug-btn" onclick="setSuggestion(suggestions[${i}])">${s}</button>`).join('')}
+      </div>
+    </div>`:''}
+
     <div class="chat-composer">
-      <input class="field-input" id="chatInput" placeholder="مثال: ما حجم القاطع الDeاسب لمحرك 15 كيلوواط؟"
+      <input class="field-input ai-input" id="chatInput"
+        placeholder="Posez votre question technique..."
         style="flex:1" onkeydown="if(event.key==='Enter')sendChat()"/>
       <button class="send-btn" onclick="sendChat()">${SVG.send}</button>
     </div>
-    ${tips('L'assistant fonctionne avec une IA spécialisée en génie électromécanique et répond à vos questions avec précision.')}
-  </div>`;
+    <div style="text-align:center;font-size:11px;color:#475569;margin-top:8px">
+      ⚡ Powered by Claude AI · Développé par Kouadria Nadir
+    </div>
+  </div>`;}
+
+function setSuggestion(txt){
+  const inp=document.getElementById('chatInput');
+  if(inp){inp.value=txt;inp.focus();}
 }
 
-function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
-
-function scrollChat(){const c=document.getElementById('chatMsgs');if(c)c.scrollTop=c.scrollHeight;}
 
 async function sendChat(){
   const inp=document.getElementById('chatInput');
-  if(!inp)return;
+  if(!inp) return;
   const txt=inp.value.trim();
-  if(!txt)return;
+  if(!txt||loading) return;
   inp.value='';
   chatMsgs.push({role:'user',text:txt});
-  // add typing indicator
   chatMsgs.push({role:'ai',text:'···',typing:true});
+  loading=true;
   renderChatOnly();
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
@@ -558,20 +730,26 @@ async function sendChat(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:`أنت مهندس إلكتروميكانيك خبير. متخصص في: حسابات المحركات الكهربائية، Couple، Courant Triphasé، اختيار القواطع والكابلات، أنظمة Air Comprimé، وPompes. أجب بالعربية دائماً. كن دقيقاً ومختصراً. استخدم المعادلات مع الوحدات. هذا التطبيق De إعداد Kouadria Nadir Ingénieur en Électromécanique.`,
+        max_tokens:400,
+        system:`Ingénieur électromécanicien expert. Répondez en français, concis (max 3 paragraphes). Donnez formules + unités. Citez normes si nécessaire. Développé par Kouadria Nadir.`,
         messages:[{role:'user',content:txt}]
       })
     });
     const data=await res.json();
-    const reply=data.content?.map(c=>c.text||'').join('')||'حدث خطأ في الاستجابة.';
+    const reply=data.content?.map(c=>c.text||'').join('')||'Erreur de connexion.';
     chatMsgs.splice(chatMsgs.findIndex(m=>m.typing),1);
     chatMsgs.push({role:'ai',text:reply});
   }catch{
     chatMsgs.splice(chatMsgs.findIndex(m=>m.typing),1);
-    chatMsgs.push({role:'ai',text:'⚠️ تعذّر الاتصال. تحقق De اتصالك وحاول مجدداً.'});
+    chatMsgs.push({role:'ai',text:'⚠️ Connexion impossible. Vérifiez votre connexion et réessayez.'});
   }
+  loading=false;
   renderChatOnly();
+}
+
+function setSuggestion(txt){
+  const inp=document.getElementById('chatInput');
+  if(inp){inp.value=txt;inp.focus();}
 }
 
 function renderChatOnly(){
