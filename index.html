@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
-<link rel="manifest" href="manifest.json"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>ElectroCalc Pro · قوادرية نذير</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<title>ElectroCalc Pro · Kouadria Nadir</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --bg: #020817;
@@ -16,7 +15,7 @@
   --subtle: #64748b;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100%;font-family:'Cairo',system-ui,sans-serif;direction:rtl}
+html,body{min-height:100%;font-family:'Roboto',system-ui,sans-serif;direction:ltr}
 body{background:radial-gradient(circle at top right,rgba(168,85,247,.16),transparent 24%),
   radial-gradient(circle at top left,rgba(59,130,246,.15),transparent 18%),
   linear-gradient(180deg,#020817 0%,#081022 100%);
@@ -147,13 +146,13 @@ footer{margin-top:20px;padding:10px 4px;display:flex;justify-content:space-betwe
         <span style="font-size:22px">⚡</span>
         <span class="logo-title">ElectroCalc Pro</span>
       </div>
-      <div class="logo-sub">حاسبات الهندسة الإلكتروميكانيكية · مع مساعد ذكاء اصطناعي</div>
+      <div class="logo-sub">Calculateurs Génie Électromécanique · avec Assistant IA</div>
     </div>
     <div class="author-badge">
-      <div class="by">👤 تم إعداده بواسطة</div>
-      <div class="name">قوادرية نذير</div>
+      <div class="by">👤 Développé par</div>
+      <div class="name">Kouadria Nadir</div>
       <div class="stars">★★★★★</div>
-      <div class="role">مهندس في الإلكتروميكانيك</div>
+      <div class="role">Ingénieur en Électromécanique</div>
     </div>
   </div>
 </header>
@@ -162,9 +161,9 @@ footer{margin-top:20px;padding:10px 4px;display:flex;justify-content:space-betwe
 
   <!-- SUMMARY -->
   <div class="summary" style="margin-top:20px">
-    <div class="scard"><span class="val">8</span><span class="lbl">حاسبات هندسية</span></div>
-    <div class="scard"><span class="val">AI</span><span class="lbl">مساعد ذكي</span></div>
-    <div class="scard"><span class="val">RTL</span><span class="lbl">واجهة عربية</span></div>
+    <div class="scard"><span class="val">8</span><span class="lbl">Calculateurs</span></div>
+    <div class="scard"><span class="val">AI</span><span class="lbl">Assistant IA</span></div>
+    <div class="scard"><span class="val">RTL</span><span class="lbl">Interface FR</span></div>
   </div>
 
   <!-- TABS -->
@@ -175,8 +174,8 @@ footer{margin-top:20px;padding:10px 4px;display:flex;justify-content:space-betwe
 
   <!-- FOOTER -->
   <footer>
-    <span class="ft-brand">⚡ ElectroCalc Pro · نتائج تقريبية للتقدير الأولي</span>
-    <span class="ft-author">إعداد: قوادرية نذير · مهندس إلكتروميكانيك</span>
+    <span class="ft-brand">⚡ ElectroCalc Pro · Résultats approximatifs pour estimation préliminaire</span>
+    <span class="ft-author">إعداد: Kouadria Nadir · مهندس إلكتروميكانيك</span>
   </footer>
 </div>
 
@@ -202,14 +201,14 @@ const SVG={
 
 // ── tabs config ──────────────────────────────────────────────────────────
 const TABS=[
-  {id:'motor',    label:'قدرة المحرك',    color:'#3b82f6',icon:'motor',   help:'احسب القدرة الظاهرية والفعالة وقدرة الخرج للمحركات أحادية أو ثلاثية الطور.'},
-  {id:'torque',   label:'عزم الدوران',   color:'#8b5cf6',icon:'torque',  help:'احسب العزم من القدرة والسرعة أو من القوة ونصف القطر.'},
-  {id:'3phase',   label:'التيار الثلاثي',color:'#06b6d4',icon:'current', help:'قدّر تيار التشغيل والجهد الطوري وتيار الإقلاع لمحرك ثلاثي الطور.'},
-  {id:'breaker',  label:'القاطع والكابل',color:'#f59e0b',icon:'breaker', help:'اختيار مبدئي للقاطع ومقطع الكابل بناءً على نوع الحمل والتيار.'},
-  {id:'air',      label:'الهواء المضغوط',color:'#10b981',icon:'air',     help:'حساب تقريبي لقدرة الضاغط وحجم الخزان والإزاحة الحجمية.'},
-  {id:'pump',     label:'المضخات',       color:'#f97316',icon:'pump',    help:'احسب القدرة الهيدروليكية وقدرة عمود المضخة وتقدير NPSH.'},
-  {id:'convert',  label:'تحويل الوحدات',color:'#ec4899',icon:'convert', help:'تحويل سريع بين أشهر الوحدات الهندسية.'},
-  {id:'ai',       label:'مساعد AI',      color:'#a78bfa',icon:'ai',      help:'مساعد ذكاء اصطناعي متخصص في الهندسة الإلكتروميكانيكية.'},
+  {id:'motor',    label:'Puissance Moteur',    color:'#3b82f6',icon:'motor',   help:'Calculez la puissance apparente, active et la puissance de sortie pour moteurs mono ou triphasés.'},
+  {id:'torque',   label:'Couple',   color:'#8b5cf6',icon:'torque',  help:'Calculez le couple à partir de la puissance et vitesse, ou de la force et rayon.'},
+  {id:'3phase',   label:'Courant Triphasé',color:'#06b6d4',icon:'current', help:'Estimez le courant de fonctionnement, tension de phase et courant de démarrage.'},
+  {id:'breaker',  label:'Disjoncteur/Câble',color:'#f59e0b',icon:'breaker', help:'Sélection préliminaire du disjoncteur et section de câble selon le type de charge.'},
+  {id:'air',      label:'Air Comprimé',color:'#10b981',icon:'air',     help:'Calcul approximatif de la puissance du compresseur, volume du réservoir et déplacement.'},
+  {id:'pump',     label:'Pompes',       color:'#f97316',icon:'pump',    help:'Calculez la puissance hydraulique, puissance arbre de pompe et estimation NPSH.'},
+  {id:'convert',  label:'Conversion Unités',color:'#ec4899',icon:'convert', help:'Conversion rapide entre les unités d'ingénierie les plus courantes.'},
+  {id:'ai',       label:'Assistant IA',      color:'#a78bfa',icon:'ai',      help:'Assistant IA spécialisé en génie électromécanique.'},
 ];
 
 // ── calc engines ─────────────────────────────────────────────────────────
@@ -219,11 +218,11 @@ const calc={
     if(!pos(V)||!pos(I)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
     const S=ph===3?Math.sqrt(3)*V*I:V*I,P=S*PF,Pout=P*eff,Q=Math.sqrt(Math.max(S**2-P**2,0));
     return[
-      {l:'القدرة الظاهرية',v:`${fmt(S/1000,3)} kVA`},
-      {l:'القدرة الفعالة',v:`${fmt(P/1000,3)} kW`},
-      {l:'قدرة الخرج',v:`${fmt(Pout/1000,3)} kW`},
-      {l:'القدرة بالحصان',v:`${fmt(Pout/746,2)} HP`},
-      {l:'القدرة غير الفعالة',v:`${fmt(Q/1000,3)} kVAR`},
+      {l:'Puissance الظاهرية',v:`${fmt(S/1000,3)} kVA`},
+      {l:'Puissance الفعالة',v:`${fmt(P/1000,3)} kW`},
+      {l:'Puissance الخرج',v:`${fmt(Pout/1000,3)} kW`},
+      {l:'Puissance بالحصان',v:`${fmt(Pout/746,2)} HP`},
+      {l:'Puissance غير الفعالة',v:`${fmt(Q/1000,3)} kVAR`},
     ];
   },
   torque(f){
@@ -231,22 +230,22 @@ const calc={
       const P=n(f.power),N=n(f.rpm);
       if(!pos(P)||!pos(N))return null;
       const T=9550*P/N;
-      return[{l:'العزم',v:`${fmt(T,2)} N·m`},{l:'العزم المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
+      return[{l:'الCouple',v:`${fmt(T,2)} N·m`},{l:'الCouple المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
     }
     const F=n(f.force),R=n(f.radius);
     if(!pos(F)||!pos(R))return null;
     const T=F*R;
-    return[{l:'العزم',v:`${fmt(T,2)} N·m`},{l:'العزم المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
+    return[{l:'الCouple',v:`${fmt(T,2)} N·m`},{l:'الCouple المكافئ',v:`${fmt(T/9.80665,2)} kgf·m`}];
   },
   threePhase(f){
     const P=n(f.power),V=n(f.voltage),PF=n(f.pf)/100,eff=n(f.eff)/100;
     if(!pos(P)||!pos(V)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
     const I=(P*1000)/(Math.sqrt(3)*V*PF*eff);
     return[
-      {l:'تيار التشغيل',v:`${fmt(I,2)} A`},
-      {l:'جهد الخط',v:`${fmt(V,1)} V`},
-      {l:'جهد الطور',v:`${fmt(V/Math.sqrt(3),1)} V`},
-      {l:'تيار إقلاع DOL (تقريبي)',v:`${fmt(I*6,1)} A`},
+      {l:'Courant de fonctionnement',v:`${fmt(I,2)} A`},
+      {l:'Tension de ligne',v:`${fmt(V,1)} V`},
+      {l:'Tension de phase',v:`${fmt(V/Math.sqrt(3),1)} V`},
+      {l:'Courant démarrage DOL (approx.)',v:`${fmt(I*6,1)} A`},
     ];
   },
   breaker(f){
@@ -260,11 +259,11 @@ const calc={
     const CT=[[1.5,15],[2.5,21],[4,28],[6,36],[10,50],[16,68],[25,89],[35,110],[50,134],[70,171],[95,207],[120,239],[150,275],[185,314],[240,361]];
     const cable=(CT.find(([,a])=>a>=I*1.25)||['>240'])[0];
     return[
-      {l:'أقل قاطع مطلوب',v:`${fmt(min,1)} A`},
-      {l:'القاطع المقترح',v:`${sel} A`},
-      {l:'منحنى الفصل',v:`Curve ${cm[f.type]||'C'}`},
-      {l:'مقطع الكابل المبدئي',v:`${cable} mm²`},
-      {l:'معامل الاختيار',v:`${fmt(factor,2)} ×`},
+      {l:'Disjoncteur minimum requis',v:`${fmt(min,1)} A`},
+      {l:'Disjoncteur proposé',v:`${sel} A`},
+      {l:'Deحنى الفصل',v:`Curve ${cm[f.type]||'C'}`},
+      {l:'Section câble préliminaire',v:`${cable} mm²`},
+      {l:'Facteur de sélection',v:`${fmt(factor,2)} ×`},
     ];
   },
   air(f){
@@ -273,10 +272,10 @@ const calc={
     const kW=(P*1e5*(Q/60))/(1000*0.85),rec=Q*250;
     const disp=(pos(np)&&pos(N))?(Q/(np*N))*1e6:null;
     return[
-      {l:'قدرة عمود الضاغط',v:`${fmt(kW,2)} kW`},
-      {l:'القدرة بالحصان',v:`${fmt(kW/0.746,2)} HP`},
-      {l:'حجم الخزان المقترح',v:`${fmt(rec,0)} L`},
-      {l:'الإزاحة/مكبس/لفة',v:disp?`${fmt(disp,0)} cc`:'—'},
+      {l:'Puissance عمود الضاغط',v:`${fmt(kW,2)} kW`},
+      {l:'Puissance بالحصان',v:`${fmt(kW/0.746,2)} HP`},
+      {l:'Volume réservoir proposé',v:`${fmt(rec,0)} L`},
+      {l:'Déplacement/piston/tour',v:disp?`${fmt(disp,0)} cc`:'—'},
     ];
   },
   pump(f){
@@ -284,10 +283,10 @@ const calc={
     if(!pos(Q)||!pos(H)||!(eff>0&&eff<=1)||!pos(rho))return null;
     const Wh=rho*9.81*Q*H,Ws=Wh/eff;
     return[
-      {l:'القدرة الهيدروليكية',v:`${fmt(Wh/1000,2)} kW`},
-      {l:'قدرة العمود المطلوبة',v:`${fmt(Ws/1000,2)} kW`},
-      {l:'القدرة بالحصان',v:`${fmt(Ws/746,2)} HP`},
-      {l:'NPSH تقريبي',v:`${fmt(Math.max(2,H*0.1+2),1)} m`},
+      {l:'Puissance الهيدروليكية',v:`${fmt(Wh/1000,2)} kW`},
+      {l:'Puissance العمود المطلوبة',v:`${fmt(Ws/1000,2)} kW`},
+      {l:'Puissance بالحصان',v:`${fmt(Ws/746,2)} HP`},
+      {l:'NPSH approximatif',v:`${fmt(Math.max(2,H*0.1+2),1)} m`},
     ];
   },
   convert(f){
@@ -304,11 +303,11 @@ const calc={
       let C=f.from==='°C'?v:f.from==='°F'?(v-32)*5/9:f.from==='K'?v-273.15:null;
       if(C===null)return null;
       const r=f.to==='°C'?C:f.to==='°F'?C*9/5+32:f.to==='K'?C+273.15:null;
-      return r!==null?[{l:'القيمة المحولة',v:`${fmt(r,4)} ${f.to}`}]:null;
+      return r!==null?[{l:'Valeur المحولة',v:`${fmt(r,4)} ${f.to}`}]:null;
     }
     const tb=T[f.cat];
     if(!tb||!tb[f.from]||!tb[f.to])return null;
-    return[{l:'القيمة المحولة',v:`${fmt(v*tb[f.from]/tb[f.to],4)} ${f.to}`}];
+    return[{l:'Valeur المحولة',v:`${fmt(v*tb[f.from]/tb[f.to],4)} ${f.to}`}];
   },
 };
 
@@ -338,9 +337,9 @@ function field(id,label,{type='number',placeholder='',unit='',options=null,value
 }
 function tips(txt){return`<div class="tips">${SVG.info}<div>${txt}</div></div>`;}
 function results(items,color,note){
-  if(!items)return`<div class="empty">أدخل القيم المطلوبة لعرض النتائج.</div>`;
+  if(!items)return`<div class="empty">أدخل القيم المطلوبة لعرض Résultats.</div>`;
   return`<div class="results" style="background:linear-gradient(180deg,color-mix(in srgb,${color} 8%,rgba(15,23,42,1)),rgba(15,23,42,.82));border:1px solid color-mix(in srgb,${color} 28%,rgba(148,163,184,.12))">
-    <div class="results-hdr"><span>النتائج</span><small>${note}</small></div>
+    <div class="results-hdr"><span>Résultats</span><small>${note}</small></div>
     <div class="results-list">${items.map(it=>`<div class="res-row"><span>${it.l}</span><strong>${it.v}</strong></div>`).join('')}</div>
   </div>`;
 }
@@ -356,7 +355,7 @@ const state={
   pump:{flow:'',head:'',eff:'75',density:'1000'},
   convert:{cat:'power',value:'',from:'kW',to:'HP'},
 };
-const chatMsgs=[{role:'ai',text:'مرحباً! أنا مساعدك الهندسي. اسألني عن أي حساب في الإلكتروميكانيك.'}];
+const chatMsgs=[{role:'ai',text:'Bonjour! Je suis votre assistant en ingénierie. Posez-moi des questions sur les calculs en électromécanique.'}];
 
 // ── render tabs ──────────────────────────────────────────────────────────
 function renderTabs(){
@@ -394,98 +393,98 @@ function buildContent(){
     const r=calc.motor(s.motor);
     return`<div class="stack">
       <div class="grid2">
-        ${field('motor_phases','نوع التغذية',{options:[{v:'3',l:'ثلاثي الطور'},{v:'1',l:'أحادي الطور'}],value:s.motor.phases})}
-        ${field('motor_voltage','الجهد',{placeholder:'380',unit:'V',value:s.motor.voltage})}
+        ${field('motor_phases','Type d'alimentation',{options:[{v:'3',l:'Triphasé'},{v:'1',l:'Monophasé'}],value:s.motor.phases})}
+        ${field('motor_voltage','Tension',{placeholder:'380',unit:'V',value:s.motor.voltage})}
       </div>
       <div class="grid2">
-        ${field('motor_current','التيار',{placeholder:'10',unit:'A',value:s.motor.current})}
-        ${field('motor_pf','معامل القدرة',{placeholder:'85',unit:'%',value:s.motor.pf})}
+        ${field('motor_current','Courant',{placeholder:'10',unit:'A',value:s.motor.current})}
+        ${field('motor_pf','Facteur de puissance',{placeholder:'85',unit:'%',value:s.motor.pf})}
       </div>
-      ${field('motor_eff','الكفاءة',{placeholder:'90',unit:'%',value:s.motor.eff})}
-      ${tips('هذه الحاسبة تعتمد على قيم اسمية. للمحركات الكبيرة يُفضَّل الرجوع إلى لوحة البيانات أو كتالوج المصنع.')}
-      ${results(r,'#3b82f6','نتائج تقريبية للاستخدام الأولي')}
+      ${field('motor_eff','Rendement',{placeholder:'90',unit:'%',value:s.motor.eff})}
+      ${tips('هذه الحاسبة تعتمد على قيم اسمية. للمحركات الكبيرة يُفضَّل الرجوع Vers لوحة البيانات أو كتالوج المصنع.')}
+      ${results(r,'#3b82f6','Résultats approximatifs pour usage préliminaire')}
     </div>`;
   }
   if(tab==='torque'){
     const r=calc.torque(s.torque);
     return`<div class="stack">
-      ${field('torque_type','طريقة الحساب',{options:[{v:'power',l:'من القدرة والسرعة'},{v:'force',l:'من القوة ونصف القطر'}],value:s.torque.type})}
+      ${field('torque_type','Méthode de calcul',{options:[{v:'power',l:'De la puissance et vitesse'},{v:'force',l:'De la force et rayon'}],value:s.torque.type})}
       ${s.torque.type==='power'?
-        `<div class="grid2">${field('torque_power','القدرة',{placeholder:'5.5',unit:'kW',value:s.torque.power})}${field('torque_rpm','السرعة',{placeholder:'1450',unit:'RPM',value:s.torque.rpm})}</div>`:
-        `<div class="grid2">${field('torque_force','القوة',{placeholder:'500',unit:'N',value:s.torque.force})}${field('torque_radius','نصف القطر',{placeholder:'0.5',unit:'m',value:s.torque.radius})}</div>`}
-      ${tips('المعادلة الأساسية: T = 9550 × P / n عندما تكون القدرة بالكيلوواط والسرعة بالدورة/الدقيقة.')}
-      ${results(r,'#8b5cf6','العزم محسوب بقيم اسمية')}
+        `<div class="grid2">${field('torque_power','Puissance',{placeholder:'5.5',unit:'kW',value:s.torque.power})}${field('torque_rpm','Vitesse',{placeholder:'1450',unit:'RPM',value:s.torque.rpm})}</div>`:
+        `<div class="grid2">${field('torque_force','Force',{placeholder:'500',unit:'N',value:s.torque.force})}${field('torque_radius','Rayon',{placeholder:'0.5',unit:'m',value:s.torque.radius})}</div>`}
+      ${tips('المعادلة الأساسية: T = 9550 × P / n عندما تكون Puissance بالكيلوواط وVitesse بالدورة/الدقيقة.')}
+      ${results(r,'#8b5cf6','الCouple محسوب بقيم اسمية')}
     </div>`;
   }
   if(tab==='3phase'){
     const r=calc.threePhase(s['3phase']);
     return`<div class="stack">
       <div class="grid2">
-        ${field('3p_power','قدرة الحمل',{placeholder:'7.5',unit:'kW',value:s['3phase'].power})}
-        ${field('3p_voltage','جهد الشبكة (L-L)',{placeholder:'380',unit:'V',value:s['3phase'].voltage})}
+        ${field('3p_power','Puissance de charge',{placeholder:'7.5',unit:'kW',value:s['3phase'].power})}
+        ${field('3p_voltage','Tension réseau (L-L)',{placeholder:'380',unit:'V',value:s['3phase'].voltage})}
       </div>
       <div class="grid2">
-        ${field('3p_pf','معامل القدرة',{placeholder:'85',unit:'%',value:s['3phase'].pf})}
-        ${field('3p_eff','الكفاءة',{placeholder:'90',unit:'%',value:s['3phase'].eff})}
+        ${field('3p_pf','Facteur de puissance',{placeholder:'85',unit:'%',value:s['3phase'].pf})}
+        ${field('3p_eff','Rendement',{placeholder:'90',unit:'%',value:s['3phase'].eff})}
       </div>
-      ${tips('تيار الإقلاع مقدَّر بـ 6× تيار التشغيل، وهي قيمة تقريبية للمحركات ذات الإقلاع المباشر DOL.')}
-      ${results(r,'#06b6d4','يعتمد على معامل قدرة وكفاءة مدخلين')}
+      ${tips('تيار الإقلاع مقدَّر بـ 6× Courant de fonctionnement، وهي قيمة تقريبية للمحركات ذات الإقلاع المباشر DOL.')}
+      ${results(r,'#06b6d4','يعتمد على معامل Puissance وكفاءة مدخلين')}
     </div>`;
   }
   if(tab==='breaker'){
     const r=calc.breaker(s.breaker);
     return`<div class="stack">
       <div class="grid2">
-        ${field('br_current','تيار الحمل',{placeholder:'25',unit:'A',value:s.breaker.current})}
-        ${field('br_type','نوع الحمل',{options:[{v:'motor',l:'محرك كهربائي'},{v:'general',l:'حمل عام'},{v:'welding',l:'جهاز لحام'},{v:'lighting',l:'إنارة'}],value:s.breaker.type})}
+        ${field('br_current','Courant de charge',{placeholder:'25',unit:'A',value:s.breaker.current})}
+        ${field('br_type','Type de charge',{options:[{v:'motor',l:'Moteur électrique'},{v:'general',l:'Charge générale'},{v:'welding',l:'Poste à souder'},{v:'lighting',l:'Éclairage'}],value:s.breaker.type})}
       </div>
-      ${tips('النتيجة هنا اختيار مبدئي فقط. يجب مراجعة طريقة التمديد، درجة الحرارة، الهبوط في الجهد، ومعيار الحماية المعتمد.')}
-      ${results(r,'#f59e0b','اختيار مبدئي للقاطع والكابل')}
+      ${tips('النتيجة هنا اختيار مبدئي فقط. يجب مراجعة طريقة التمديد، درجة الحرارة، الهبوط في Tension، ومعيار الحماية المعتمد.')}
+      ${results(r,'#f59e0b','Sélection préliminaire disjoncteur et câble')}
     </div>`;
   }
   if(tab==='air'){
     const r=calc.air(s.air);
     return`<div class="stack">
       <div class="grid2">
-        ${field('air_pressure','ضغط التشغيل',{placeholder:'8',unit:'bar',value:s.air.pressure})}
-        ${field('air_flow','التدفق المطلوب',{placeholder:'5',unit:'m³/min',value:s.air.flow})}
+        ${field('air_pressure','Pression de service',{placeholder:'8',unit:'bar',value:s.air.pressure})}
+        ${field('air_flow','Débit requis',{placeholder:'5',unit:'m³/min',value:s.air.flow})}
       </div>
       <div class="grid2">
-        ${field('air_pistons','عدد المكابس',{placeholder:'2',value:s.air.pistons,step:'1',min:'1'})}
-        ${field('air_rpm','سرعة الدوران',{placeholder:'900',unit:'RPM',value:s.air.rpm,step:'1'})}
+        ${field('air_pistons','Nombre de pistons',{placeholder:'2',value:s.air.pistons,step:'1',min:'1'})}
+        ${field('air_rpm','Vitesse de rotation',{placeholder:'900',unit:'RPM',value:s.air.rpm,step:'1'})}
       </div>
-      ${tips('القيم تعتمد على كفاءة تقديرية 85% وقاعدة خزان مبدئية 250 لتر لكل m³/min.')}
-      ${results(r,'#10b981','تقدير مبدئي للضاغط والخزان')}
+      ${tips('Les valeurs supposent un rendement de 85% et une règle de réservoir de 250 L par m³/min.')}
+      ${results(r,'#10b981','Estimation préliminaire compresseur et réservoir')}
     </div>`;
   }
   if(tab==='pump'){
     const r=calc.pump(s.pump);
     return`<div class="stack">
       <div class="grid2">
-        ${field('pump_flow','التدفق',{placeholder:'50',unit:'m³/h',value:s.pump.flow})}
-        ${field('pump_head','الرفع الكلي (Head)',{placeholder:'30',unit:'m',value:s.pump.head})}
+        ${field('pump_flow','Débit',{placeholder:'50',unit:'m³/h',value:s.pump.flow})}
+        ${field('pump_head','Hauteur manométrique (HMT)',{placeholder:'30',unit:'m',value:s.pump.head})}
       </div>
       <div class="grid2">
-        ${field('pump_eff','الكفاءة',{placeholder:'75',unit:'%',value:s.pump.eff})}
-        ${field('pump_density','كثافة السائل',{placeholder:'1000',unit:'kg/m³',value:s.pump.density})}
+        ${field('pump_eff','Rendement',{placeholder:'75',unit:'%',value:s.pump.eff})}
+        ${field('pump_density','Densité du fluide',{placeholder:'1000',unit:'kg/m³',value:s.pump.density})}
       </div>
-      ${tips('قيمة NPSH تقريبية لأغراض أولية فقط، ولا تغني عن الرجوع إلى بيانات المصنع وتحليل خط السحب الفعلي.')}
-      ${results(r,'#f97316','القدرات محسوبة اعتماداً على الكفاءة المدخلة')}
+      ${tips('قيمة NPSH approximatifة لأغراض أولية فقط، ولا تغني عن الرجوع Vers بيانات المصنع وتحليل خط السحب الفعلي.')}
+      ${results(r,'#f97316','القدرات محسوبة اعتماداً على Rendement المدخلة')}
     </div>`;
   }
   if(tab==='convert'){
     const cv=s.convert;
-    const catOpts=[{v:'power',l:'قدرة'},{v:'torque',l:'عزم'},{v:'pressure',l:'ضغط'},{v:'flow',l:'تدفق'},{v:'length',l:'طول'},{v:'temperature',l:'درجة حرارة'}];
+    const catOpts=[{v:'power',l:'Puissance'},{v:'torque',l:'Couple'},{v:'pressure',l:'Pression'},{v:'flow',l:'Débit'},{v:'length',l:'Longueur'},{v:'temperature',l:'Température'}];
     const unitOpts=UNITS[cv.cat]||[];
     const r=calc.convert(cv);
     return`<div class="stack">
-      ${field('cv_cat','فئة التحويل',{options:catOpts,value:cv.cat})}
-      ${field('cv_value','القيمة',{placeholder:'100',value:cv.value})}
+      ${field('cv_cat','Catégorie',{options:catOpts,value:cv.cat})}
+      ${field('cv_value','Valeur',{placeholder:'100',value:cv.value})}
       <div class="grid2">
-        ${field('cv_from','من',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.from})}
-        ${field('cv_to','إلى',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.to})}
+        ${field('cv_from','De',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.from})}
+        ${field('cv_to','Vers',{options:unitOpts.map(u=>({v:u,l:u})),value:cv.to})}
       </div>
-      ${results(r,'#ec4899','التحويل وفق معاملات قياسية دولية')}
+      ${results(r,'#ec4899','Conversion selon coefficients standards internationaux')}
     </div>`;
   }
   if(tab==='ai'){return buildAITab();}
@@ -531,11 +530,11 @@ function buildAITab(){
   return`<div class="stack">
     <div class="chat-msgs" id="chatMsgs">${msgs}</div>
     <div class="chat-composer">
-      <input class="field-input" id="chatInput" placeholder="مثال: ما حجم القاطع المناسب لمحرك 15 كيلوواط؟"
+      <input class="field-input" id="chatInput" placeholder="مثال: ما حجم القاطع الDeاسب لمحرك 15 كيلوواط؟"
         style="flex:1" onkeydown="if(event.key==='Enter')sendChat()"/>
       <button class="send-btn" onclick="sendChat()">${SVG.send}</button>
     </div>
-    ${tips('المساعد يعمل بذكاء اصطناعي متخصص في الهندسة الإلكتروميكانيكية ويجيب على أسئلتك بدقة.')}
+    ${tips('L'assistant fonctionne avec une IA spécialisée en génie électromécanique et répond à vos questions avec précision.')}
   </div>`;
 }
 
@@ -560,7 +559,7 @@ async function sendChat(){
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
         max_tokens:1000,
-        system:`أنت مهندس إلكتروميكانيك خبير. متخصص في: حسابات المحركات الكهربائية، عزم الدوران، التيار الثلاثي، اختيار القواطع والكابلات، أنظمة الهواء المضغوط، والمضخات. أجب بالعربية دائماً. كن دقيقاً ومختصراً. استخدم المعادلات مع الوحدات. هذا التطبيق من إعداد قوادرية نذير مهندس في الإلكتروميكانيك.`,
+        system:`أنت مهندس إلكتروميكانيك خبير. متخصص في: حسابات المحركات الكهربائية، Couple، Courant Triphasé، اختيار القواطع والكابلات، أنظمة Air Comprimé، وPompes. أجب بالعربية دائماً. كن دقيقاً ومختصراً. استخدم المعادلات مع الوحدات. هذا التطبيق De إعداد Kouadria Nadir Ingénieur en Électromécanique.`,
         messages:[{role:'user',content:txt}]
       })
     });
@@ -570,7 +569,7 @@ async function sendChat(){
     chatMsgs.push({role:'ai',text:reply});
   }catch{
     chatMsgs.splice(chatMsgs.findIndex(m=>m.typing),1);
-    chatMsgs.push({role:'ai',text:'⚠️ تعذّر الاتصال. تحقق من اتصالك وحاول مجدداً.'});
+    chatMsgs.push({role:'ai',text:'⚠️ تعذّر الاتصال. تحقق De اتصالك وحاول مجدداً.'});
   }
   renderChatOnly();
 }
