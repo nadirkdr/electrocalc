@@ -7,318 +7,421 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#020817;--panel:rgba(15,23,42,.95);--border:rgba(148,163,184,.12);--text:#e2e8f0;--muted:#94a3b8}
-html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(circle at top right,rgba(168,85,247,.14),transparent 30%),radial-gradient(circle at bottom left,rgba(59,130,246,.12),transparent 30%),linear-gradient(180deg,#020817,#060f1e);color:var(--text)}
+:root{
+  --bg:#020817;--panel:rgba(15,23,42,.95);--border:rgba(148,163,184,.12);
+  --text:#e2e8f0;--muted:#94a3b8;--subtle:#64748b;
+  --card:#0f172a;--input-bg:rgba(2,8,23,.6);
+}
+.light{
+  --bg:#f0f4ff;--panel:rgba(255,255,255,.95);--border:rgba(59,130,246,.15);
+  --text:#1e293b;--muted:#64748b;--subtle:#94a3b8;
+  --card:#ffffff;--input-bg:rgba(241,245,249,.8);
+}
+html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);transition:background .3s,color .3s}
+body{background:radial-gradient(circle at top right,rgba(168,85,247,.14),transparent 30%),
+  radial-gradient(circle at bottom left,rgba(59,130,246,.12),transparent 30%),var(--bg);}
+.light body,body.light{background:radial-gradient(circle at top right,rgba(59,130,246,.08),transparent 30%),
+  radial-gradient(circle at bottom left,rgba(139,92,246,.06),transparent 30%),var(--bg);}
 button,input,select{font:inherit}button{border:0;cursor:pointer}input,select{width:100%}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0f172a}::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:4px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--card)}
+::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:4px}
+select option{background:var(--card);color:var(--text)}
+
+/* ANIMATIONS */
 @keyframes pulse{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes glow{0%,100%{box-shadow:0 0 8px rgba(59,130,246,.4)}50%{box-shadow:0 0 20px rgba(59,130,246,.7)}}
-select option{background:#0f172a;color:#e2e8f0}
-/* ── SPLASH SCREEN ─────────────────────────────────── */
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
 @keyframes splashFadeIn{from{opacity:0}to{opacity:1}}
 @keyframes splashFadeOut{from{opacity:1}to{opacity:0;pointer-events:none}}
 @keyframes logoZoom{0%{transform:scale(0.4);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
 @keyframes titleSlide{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes subtitleSlide{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}
 @keyframes badgePop{0%{opacity:0;transform:scale(0.7)}100%{opacity:1;transform:scale(1)}}
-@keyframes particle{0%{transform:translateY(0) translateX(0) scale(1);opacity:.7}100%{transform:translateY(-120vh) translateX(var(--dx)) scale(0);opacity:0}}
+@keyframes particle{0%{transform:translateY(0) translateX(0);opacity:.7}100%{transform:translateY(-120vh) translateX(var(--dx));opacity:0}}
 @keyframes orbit{from{transform:rotate(0deg) translateX(90px) rotate(0deg)}to{transform:rotate(360deg) translateX(90px) rotate(-360deg)}}
 @keyframes orbit2{from{transform:rotate(180deg) translateX(130px) rotate(-180deg)}to{transform:rotate(540deg) translateX(130px) rotate(-540deg)}}
-@keyframes orbit3{from{transform:rotate(90deg) translateX(60px) rotate(-90deg)}to{transform:rotate(450deg) translateX(60px) rotate(-450deg)}}
 @keyframes progressBar{from{width:0%}to{width:100%}}
-@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
-@keyframes sloganIn{0%{opacity:0;transform:translateY(10px) scale(0.95)}100%{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes sloganPulse{0%,100%{opacity:1}50%{opacity:.7}}
-.sp-slogan{
-  margin-top:20px;
-  font-size:20px;font-weight:800;
-  color:#f1f5f9;
-  letter-spacing:0.04em;
-  animation:sloganIn .7s ease 1.4s both, sloganPulse 2.5s ease 2.1s infinite;
-  position:relative;z-index:1;
-  text-align:center;
-}
-.sp-slogan-quote{
-  font-size:28px;color:#3b82f6;
-  line-height:0.5;
-  display:inline-block;
-  vertical-align:middle;
-}
-.sp-slogan-highlight{
-  background:linear-gradient(90deg,#3b82f6,#a78bfa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
+@keyframes selFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardPulseEng{0%,100%{box-shadow:0 0 20px rgba(59,130,246,.2)}50%{box-shadow:0 0 35px rgba(59,130,246,.5)}}
+@keyframes cardPulseStu{0%,100%{box-shadow:0 0 20px rgba(139,92,246,.2)}50%{box-shadow:0 0 35px rgba(139,92,246,.5)}}
+@keyframes gaugeAnim{from{stroke-dashoffset:251}to{stroke-dashoffset:var(--target)}}
+@keyframes histSlide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
 
-#splash{
-  position:fixed;inset:0;z-index:9999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.2) 0%,transparent 50%),
-             radial-gradient(ellipse at 70% 80%,rgba(139,92,246,.2) 0%,transparent 50%),
-             linear-gradient(135deg,#020817 0%,#060f1e 50%,#020817 100%);
-  animation:splashFadeIn .4s ease;
-  overflow:hidden;
-}
+/* ── SPLASH ─────────────────────────────── */
+#splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;overflow:hidden;
+  background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.2),transparent 50%),
+    radial-gradient(ellipse at 70% 80%,rgba(139,92,246,.2),transparent 50%),
+    linear-gradient(135deg,#020817,#060f1e);
+  animation:splashFadeIn .4s ease;}
 #splash.hide{animation:splashFadeOut .6s ease forwards;}
-
-/* Particles */
-.sp-particle{
-  position:absolute;border-radius:50%;
-  animation:particle linear infinite;
-  pointer-events:none;
-}
-
-/* Orbit rings */
-.sp-orbit-ring{
-  position:absolute;width:260px;height:260px;
-  border-radius:50%;border:1px solid rgba(59,130,246,.12);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-}
-.sp-orbit-ring-2{
-  position:absolute;width:360px;height:360px;
-  border-radius:50%;border:1px dashed rgba(139,92,246,.08);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-}
-.sp-dot{
-  width:10px;height:10px;border-radius:50%;
-  position:absolute;top:50%;left:50%;margin:-5px;
-}
-.sp-dot-1{background:#3b82f6;box-shadow:0 0 10px #3b82f6;animation:orbit 4s linear infinite;}
-.sp-dot-2{background:#a78bfa;box-shadow:0 0 10px #a78bfa;animation:orbit2 6s linear infinite;}
-.sp-dot-3{background:#06b6d4;box-shadow:0 0 8px #06b6d4;animation:orbit3 3s linear infinite;}
-
-/* Logo */
-.sp-logo{
-  width:100px;height:100px;
-  background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-  border-radius:28px;
-  display:grid;place-items:center;
-  font-size:48px;
+.sp-particle{position:absolute;border-radius:50%;animation:particle linear infinite;pointer-events:none;}
+.sp-ring{position:absolute;width:260px;height:260px;border-radius:50%;
+  border:1px solid rgba(59,130,246,.12);top:50%;left:50%;transform:translate(-50%,-50%);}
+.sp-ring2{position:absolute;width:360px;height:360px;border-radius:50%;
+  border:1px dashed rgba(139,92,246,.08);top:50%;left:50%;transform:translate(-50%,-50%);}
+.sp-dot{width:10px;height:10px;border-radius:50%;position:absolute;top:50%;left:50%;margin:-5px;}
+.sp-dot1{background:#3b82f6;box-shadow:0 0 10px #3b82f6;animation:orbit 4s linear infinite;}
+.sp-dot2{background:#a78bfa;box-shadow:0 0 10px #a78bfa;animation:orbit2 6s linear infinite;}
+.sp-logo{width:100px;height:100px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+  border-radius:28px;display:grid;place-items:center;font-size:48px;
   box-shadow:0 0 40px rgba(59,130,246,.5),0 0 80px rgba(139,92,246,.3);
-  animation:logoZoom .8s cubic-bezier(0.34,1.56,0.64,1) .2s both;
-  margin-bottom:24px;position:relative;z-index:1;
-}
-
-/* Title */
-.sp-title{
-  font-size:36px;font-weight:900;
-  background:linear-gradient(90deg,#93c5fd,#a78bfa,#93c5fd);
-  background-size:200% auto;
+  animation:logoZoom .8s cubic-bezier(0.34,1.56,0.64,1) .2s both;margin-bottom:20px;z-index:1;}
+.sp-title{font-size:36px;font-weight:900;
+  background:linear-gradient(90deg,#93c5fd,#a78bfa,#93c5fd);background-size:200% auto;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:titleSlide .6s ease .7s both, shimmer 3s linear infinite;
-  letter-spacing:-0.02em;position:relative;z-index:1;
-}
+  animation:titleSlide .6s ease .7s both,shimmer 3s linear infinite;z-index:1;}
+.sp-sub{font-size:12px;color:#64748b;margin-top:6px;animation:titleSlide .6s ease .85s both;z-index:1;}
+.sp-slogan{margin-top:16px;font-size:18px;font-weight:800;color:#f1f5f9;
+  animation:badgePop .6s ease 1s both;z-index:1;text-align:center;}
+.sp-slogan span{background:linear-gradient(90deg,#3b82f6,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sp-badge{margin-top:20px;background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(139,92,246,.12));
+  border:1px solid rgba(167,139,250,.3);border-radius:16px;padding:12px 22px;text-align:center;
+  animation:badgePop .5s cubic-bezier(0.34,1.56,0.64,1) 1.2s both;z-index:1;}
+.sp-badge-by{font-size:10px;color:#a78bfa;font-weight:700;letter-spacing:.08em;margin-bottom:4px;}
+.sp-badge-name{font-size:16px;font-weight:900;color:#f1f5f9;margin-bottom:3px;}
+.sp-badge-role{font-size:10px;color:#94a3b8;}
+.sp-progress-wrap{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(148,163,184,.1);}
+.sp-progress{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6,#06b6d4);animation:progressBar 2.4s ease forwards;}
 
-/* Subtitle */
-.sp-subtitle{
-  font-size:13px;color:#64748b;
-  margin-top:8px;
-  animation:subtitleSlide .6s ease .9s both;
-  position:relative;z-index:1;
-  letter-spacing:0.05em;
-}
+/* ── SELECTION ───────────────────────────── */
+#sel-screen{position:fixed;inset:0;z-index:9998;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(ellipse at 20% 30%,rgba(59,130,246,.15),transparent 50%),
+    radial-gradient(ellipse at 80% 70%,rgba(139,92,246,.15),transparent 50%),
+    linear-gradient(135deg,#020817,#060f1e);
+  animation:selFadeIn .5s ease;overflow:hidden;}
+#sel-screen.show{display:flex;}
+.sel-heading{font-size:26px;font-weight:900;color:#f1f5f9;text-align:center;margin-bottom:6px;}
+.sel-sub{font-size:12px;color:#64748b;text-align:center;margin-bottom:28px;}
+.sel-cards{display:flex;gap:16px;width:100%;max-width:560px;}
+.sel-card{flex:1;border-radius:22px;padding:26px 18px;text-align:center;cursor:pointer;
+  border:2px solid transparent;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;}
+.sel-card:active{transform:scale(0.97)!important;}
+.sel-eng{background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(9,20,46,.9));border-color:rgba(59,130,246,.35);}
+.sel-eng:hover{transform:translateY(-6px);animation:cardPulseEng 2s ease infinite;}
+.sel-stu{background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(20,9,46,.9));border-color:rgba(139,92,246,.35);}
+.sel-stu:hover{transform:translateY(-6px);animation:cardPulseStu 2s ease infinite;}
+.sel-icon{font-size:44px;display:block;margin-bottom:12px;}
+.sel-name-eng{font-size:20px;font-weight:900;color:#93c5fd;margin-bottom:6px;}
+.sel-name-stu{font-size:20px;font-weight:900;color:#c4b5fd;margin-bottom:6px;}
+.sel-desc{font-size:11px;color:#64748b;line-height:1.7;margin-bottom:14px;}
+.sel-feats{text-align:left;margin-bottom:14px;}
+.sel-feat{font-size:10.5px;color:#94a3b8;padding:2px 0;display:flex;align-items:center;gap:5px;}
+.sel-badge-eng{display:inline-block;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);
+  border-radius:20px;padding:5px 14px;font-size:10px;font-weight:700;color:#93c5fd;}
+.sel-badge-stu{display:inline-block;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);
+  border-radius:20px;padding:5px 14px;font-size:10px;font-weight:700;color:#c4b5fd;}
+.sel-or{display:flex;align-items:center;justify-content:center;width:36px;flex-shrink:0;}
+.sel-or-inner{background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.15);
+  border-radius:50%;width:32px;height:32px;display:grid;place-items:center;font-size:10px;font-weight:700;color:#475569;}
+.sel-footer{margin-top:22px;font-size:10px;color:#334155;text-align:center;}
+@media(max-width:460px){.sel-cards{flex-direction:column;}.sel-or{display:none;}}
 
-/* Author badge */
-.sp-badge{
-  margin-top:32px;
-  background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(139,92,246,.12));
-  border:1px solid rgba(167,139,250,.3);
-  border-radius:16px;padding:14px 24px;text-align:center;
-  animation:badgePop .5s cubic-bezier(0.34,1.56,0.64,1) 1.1s both;
-  position:relative;z-index:1;
-}
-.sp-badge-by{font-size:10px;color:#a78bfa;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;}
-.sp-badge-name{font-size:17px;font-weight:900;color:#f1f5f9;margin-bottom:4px;}
-.sp-badge-stars{color:#fbbf24;font-size:14px;margin-bottom:3px;}
-.sp-badge-role{font-size:11px;color:#94a3b8;}
+/* ── LAYOUT ───────────────────────────────── */
+.shell{max-width:860px;margin:0 auto;padding:14px 12px 48px}
+header{background:linear-gradient(135deg,rgba(15,23,42,.97),rgba(9,20,46,.95));
+  border-bottom:1px solid rgba(59,130,246,.18);padding:0 16px;transition:background .3s;}
+.light header{background:linear-gradient(135deg,rgba(255,255,255,.97),rgba(241,245,249,.95));
+  border-bottom-color:rgba(59,130,246,.15);}
+.hdr{max-width:860px;margin:0 auto;padding:14px 0;display:flex;align-items:center;
+  justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+  border-radius:11px;display:grid;place-items:center;font-size:18px;flex-shrink:0;}
+.logo-title{font-size:19px;font-weight:900;background:linear-gradient(90deg,#93c5fd,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo-sub{font-size:10px;color:var(--muted);margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:8px;}
+.author-card{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(139,92,246,.1));
+  border:1px solid rgba(167,139,250,.25);border-radius:12px;padding:8px 12px;text-align:center;}
+.author-name{font-weight:800;font-size:12px;color:#f1f5f9;}
+.author-stars{color:#fbbf24;font-size:11px;margin:1px 0;}
+.author-role{font-size:9px;color:#94a3b8;}
 
-/* Progress bar */
-.sp-progress-wrap{
-  position:absolute;bottom:0;left:0;right:0;height:3px;
-  background:rgba(148,163,184,.1);
-}
-.sp-progress{
-  height:100%;
-  background:linear-gradient(90deg,#3b82f6,#8b5cf6,#06b6d4);
-  animation:progressBar 2.2s ease forwards;
-}
+/* Theme toggle */
+.theme-btn{width:38px;height:38px;border-radius:11px;background:var(--card);
+  border:1px solid var(--border);color:var(--text);display:grid;place-items:center;
+  font-size:18px;transition:all .2s;flex-shrink:0;}
+.theme-btn:hover{transform:rotate(20deg);}
 
-/* Version */
-.sp-version{
-  position:absolute;bottom:16px;right:16px;
-  font-size:10px;color:#334155;
-  animation:splashFadeIn 1s ease 1.5s both;
-}
+/* Profile badge */
+.profile-badge{display:flex;align-items:center;gap:6px;background:var(--card);
+  border:1px solid var(--border);border-radius:10px;padding:6px 10px;font-size:11px;
+  font-weight:700;cursor:pointer;transition:all .2s;color:var(--text);}
+.profile-badge:hover{opacity:.8;}
 
-.shell{max-width:860px;margin:0 auto;padding:16px 12px 48px}
-header{background:linear-gradient(135deg,rgba(15,23,42,.97),rgba(9,20,46,.95));border-bottom:1px solid rgba(59,130,246,.18);padding:0 16px}
-.hdr{max-width:860px;margin:0 auto;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:12px;display:grid;place-items:center;font-size:20px;flex-shrink:0}
-.logo-title{font-size:20px;font-weight:900;background:linear-gradient(90deg,#93c5fd,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.logo-sub{font-size:11px;color:#64748b;margin-top:2px}
-.author-card{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(139,92,246,.1));border:1px solid rgba(167,139,250,.25);border-radius:14px;padding:10px 14px;text-align:center}
-.author-name{font-weight:800;font-size:13px;color:#f1f5f9}
-.author-stars{color:#fbbf24;font-size:12px;margin:2px 0}
-.author-role{font-size:10px;color:#94a3b8}
-.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
-.scard{background:rgba(15,23,42,.85);border:1px solid var(--border);border-radius:16px;padding:14px 12px}
-.scard .val{font-size:20px;font-weight:900;color:#f8fafc;display:block}
-.scard .lbl{font-size:10px;color:var(--muted);margin-top:2px;display:block}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
-.tab-btn{background:rgba(15,23,42,.8);border:1px solid var(--border);border-radius:14px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;color:#64748b;transition:all .2s}
-.ticon{font-size:20px;line-height:1}
-.tlbl{font-size:10px;font-weight:700;text-align:center;line-height:1.3}
-.tab-btn.active{color:white}
-.panel{background:var(--panel);border-radius:24px;padding:20px;backdrop-filter:blur(12px);animation:fadeUp .3s ease}
-.panel-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(148,163,184,.08)}
-.panel-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;flex-shrink:0;font-size:22px}
-.panel-hdr h2{font-size:16px;font-weight:800;color:#f1f5f9}
-.panel-hdr p{font-size:11px;color:#94a3b8;margin-top:3px;line-height:1.6}
-.mode-toggle{display:flex;gap:0;background:rgba(2,8,23,.6);border:1px solid rgba(148,163,184,.12);border-radius:12px;padding:3px;margin-bottom:16px}
-.mode-btn{flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:#64748b;font-family:inherit}
-.eng-active{background:linear-gradient(135deg,#3b82f6,#6366f1)!important;color:white!important;box-shadow:0 4px 12px rgba(59,130,246,.3)}
-.stu-active{background:linear-gradient(135deg,#8b5cf6,#a78bfa)!important;color:white!important;box-shadow:0 4px 12px rgba(139,92,246,.3)}
-.stack{display:grid;gap:13px}
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+/* Summary */
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.scard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 10px;}
+.scard .val{font-size:18px;font-weight:900;color:var(--text);display:block;}
+.scard .lbl{font-size:9px;color:var(--muted);margin-top:2px;display:block;}
+
+/* Tabs */
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;}
+.tab-btn{background:var(--card);border:1px solid var(--border);border-radius:13px;
+  padding:11px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;
+  color:var(--subtle);transition:all .2s;}
+.ticon{font-size:19px;line-height:1;}
+.tlbl{font-size:9.5px;font-weight:700;text-align:center;line-height:1.3;color:var(--subtle);}
+.tab-btn.active .tlbl,.tab-btn.active .ticon{color:white;}
+
+/* Panel */
+.panel{background:var(--panel);border-radius:22px;padding:18px;
+  backdrop-filter:blur(12px);animation:fadeUp .3s ease;}
+.panel-hdr{display:flex;align-items:center;gap:11px;margin-bottom:14px;
+  padding-bottom:12px;border-bottom:1px solid var(--border);}
+.panel-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:11px;flex-shrink:0;font-size:20px;}
+.panel-hdr h2{font-size:15px;font-weight:800;color:var(--text);}
+.panel-hdr p{font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.5;}
+
+/* Fields */
+.stack{display:grid;gap:12px;}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;}
 @media(max-width:480px){.grid2{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,1fr)}}
-.field{display:grid;gap:6px}
-.field-label{color:#cbd5e1;font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px}
-.field-ctrl{display:flex;gap:8px;align-items:center}
-.field-input{background:rgba(2,8,23,.6);border:1px solid rgba(59,130,246,.2);border-radius:12px;color:#e2e8f0;padding:11px 14px;outline:none;transition:border-color .2s;font-size:14px;min-width:0}
-.field-input:focus{border-color:rgba(96,165,250,.8)}
-.field-input::placeholder{color:#475569}
-.field-unit{white-space:nowrap;color:#93c5fd;font-size:12px;font-weight:700;flex-shrink:0}
-.tips{display:flex;gap:10px;align-items:flex-start;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);border-radius:14px;padding:12px 14px;color:#cbd5e1;line-height:1.8;font-size:12.5px}
-.formula-box{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.2);border-radius:16px;padding:14px}
-.formula-title{font-size:11px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-.formula-step{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid rgba(148,163,184,.07)}
-.formula-step:last-child{border:none}
-.step-num{min-width:22px;height:22px;background:rgba(139,92,246,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#a78bfa;font-weight:800;flex-shrink:0;margin-top:1px}
-.step-text{font-size:12px;color:#94a3b8;margin-bottom:3px}
-.step-formula{font-family:'JetBrains Mono',monospace;color:#93c5fd;font-size:12.5px;line-height:1.5}
-.results{border-radius:20px;padding:16px;margin-top:4px}
-.results-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.results-title{font-weight:800;font-size:14px}
-.results-note{color:var(--muted);font-size:11px}
-.res-list{display:grid;gap:8px}
-.res-row{display:flex;justify-content:space-between;align-items:center;background:rgba(2,8,23,.4);border:1px solid rgba(148,163,184,.07);border-radius:12px;padding:10px 13px;gap:8px;flex-wrap:wrap}
-.res-label{color:#cbd5e1;font-size:12.5px;display:flex;align-items:center;gap:6px}
-.res-val{font-family:'JetBrains Mono',monospace;color:#f8fafc;font-size:14px;font-weight:700;flex-shrink:0}
-.smart-alert{border-radius:14px;padding:12px 14px;margin-top:8px;display:flex;gap:10px;align-items:center;font-size:12.5px;font-weight:600}
-.a-ok{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.a-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.a-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.a-info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#93c5fd}
-.empty-state{border:1px dashed rgba(148,163,184,.18);border-radius:16px;padding:20px;color:var(--muted);text-align:center;font-size:13px}
-.ai-container{display:grid;gap:13px}
-.ai-header{background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(99,102,241,.08));border:1px solid rgba(139,92,246,.22);border-radius:16px;padding:13px 15px;display:flex;justify-content:space-between;align-items:center}
-.ai-badge{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#a78bfa}
-.ai-dot{width:8px;height:8px;border-radius:50%;background:#10b981;animation:glow 2s ease-in-out infinite;flex-shrink:0}
-.ai-status{font-size:10px;color:#64748b}
-.chat-msgs{height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:2px}
-.msg-ai{display:flex;gap:9px;align-items:flex-start}
-.msg-user{display:flex;gap:9px;align-items:flex-start;flex-direction:row-reverse}
-.av-ai{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#8b5cf6,#6366f1);display:grid;place-items:center;font-size:10px;font-weight:800;color:white;flex-shrink:0}
-.av-user{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:grid;place-items:center;font-size:12px;font-weight:800;color:white;flex-shrink:0}
-.bbl-ai{background:rgba(30,41,59,.95);border:1px solid rgba(139,92,246,.18);border-radius:4px 16px 16px 16px;padding:11px 14px;color:#e2e8f0;font-size:13px;line-height:1.85;white-space:pre-wrap;max-width:84%}
-.bbl-user{background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:16px 4px 16px 16px;padding:11px 14px;color:white;font-size:13px;line-height:1.7;max-width:84%}
-.typing-dots{display:flex;gap:4px;padding:3px 0}
-.dot{width:7px;height:7px;border-radius:50%;background:#8b5cf6;animation:pulse 1.2s ease-in-out infinite}
-.suggestions{background:rgba(15,23,42,.5);border:1px solid rgba(148,163,184,.1);border-radius:14px;padding:13px}
-.sug-title{font-size:11px;color:#94a3b8;margin-bottom:9px;font-weight:600}
-.sug-grid{display:grid;gap:7px}
-.sug-btn{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);border-radius:10px;padding:9px 13px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:left;transition:all .2s;font-family:inherit}
-.sug-btn:hover{background:rgba(59,130,246,.14)}
-.chat-composer{display:flex;gap:9px}
-.chat-input{background:rgba(2,8,23,.6);border:1px solid rgba(59,130,246,.2);border-radius:13px;color:#e2e8f0;padding:11px 14px;outline:none;flex:1;font-size:13.5px}
-.chat-input:focus{border-color:rgba(96,165,250,.7)}
-.chat-input::placeholder{color:#475569}
-.send-btn{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white;display:grid;place-items:center;flex-shrink:0}
-.send-btn:disabled{opacity:.5}
-.ai-footer{text-align:center;font-size:10.5px;color:#334155;margin-top:4px}
-footer{margin-top:18px;padding:10px 2px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-top:1px solid rgba(148,163,184,.07)}
-.ft-l{font-size:12px;color:#475569}
-.ft-r{font-size:11px;font-weight:700;background:linear-gradient(90deg,#93c5fd,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.field{display:grid;gap:5px;}
+.field-label{color:var(--text);font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:5px;opacity:.85;}
+.field-ctrl{display:flex;gap:7px;align-items:center;}
+.field-input{background:var(--input-bg);border:1px solid rgba(59,130,246,.2);border-radius:11px;
+  color:var(--text);padding:10px 13px;outline:none;transition:border-color .2s;font-size:13.5px;min-width:0;}
+.field-input:focus{border-color:rgba(96,165,250,.8);box-shadow:0 0 0 3px rgba(59,130,246,.08);}
+.field-input::placeholder{color:var(--subtle);}
+.field-unit{white-space:nowrap;color:#93c5fd;font-size:11px;font-weight:700;flex-shrink:0;}
+
+/* Tips */
+.tips{display:flex;gap:9px;align-items:flex-start;background:rgba(59,130,246,.07);
+  border:1px solid rgba(59,130,246,.15);border-radius:13px;padding:11px 13px;
+  color:var(--text);line-height:1.8;font-size:12px;opacity:.9;}
+
+/* Formulas */
+.formula-box{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.2);
+  border-radius:14px;padding:13px;}
+.formula-title{font-size:10px;font-weight:800;color:#a78bfa;text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:9px;}
+.formula-step{display:flex;gap:9px;align-items:flex-start;padding:6px 0;
+  border-bottom:1px solid rgba(148,163,184,.07);}
+.formula-step:last-child{border:none;}
+.step-num{min-width:20px;height:20px;background:rgba(139,92,246,.25);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:9px;color:#a78bfa;font-weight:800;flex-shrink:0;}
+.step-text{font-size:11px;color:var(--muted);margin-bottom:2px;}
+.step-formula{font-family:'JetBrains Mono',monospace;color:#93c5fd;font-size:11.5px;}
+
+/* Results */
+.results{border-radius:18px;padding:14px;margin-top:4px;}
+.results-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.results-title{font-weight:800;font-size:13px;color:var(--text);}
+.results-note{color:var(--muted);font-size:10px;}
+.res-list{display:grid;gap:7px;}
+.res-row{display:flex;justify-content:space-between;align-items:center;
+  background:rgba(2,8,23,.3);border:1px solid rgba(148,163,184,.07);
+  border-radius:11px;padding:9px 12px;gap:8px;flex-wrap:wrap;}
+.light .res-row{background:rgba(241,245,249,.6);}
+.res-label{color:var(--text);font-size:12px;display:flex;align-items:center;gap:5px;opacity:.85;}
+.res-val{font-family:'JetBrains Mono',monospace;color:var(--text);font-size:13.5px;font-weight:700;flex-shrink:0;}
+
+/* GAUGE */
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0 4px;}
+.gauge-title{font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:600;}
+.gauge-svg{overflow:visible;}
+.gauge-track{fill:none;stroke:rgba(148,163,184,.15);stroke-width:12;stroke-linecap:round;}
+.gauge-bar{fill:none;stroke-width:12;stroke-linecap:round;
+  stroke-dasharray:251;animation:gaugeAnim 1.2s ease .3s both;transform-origin:center;transform:rotate(-90deg);}
+.gauge-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:900;fill:var(--text);}
+.gauge-lbl{font-size:10px;fill:var(--muted);}
+
+/* Smart alerts */
+.smart-alert{border-radius:12px;padding:10px 13px;margin-top:7px;
+  display:flex;gap:9px;align-items:center;font-size:12px;font-weight:600;}
+.a-ok{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#34d399;}
+.a-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fbbf24;}
+.a-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;}
+.a-info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#93c5fd;}
+.empty-state{border:1px dashed rgba(148,163,184,.18);border-radius:14px;padding:18px;
+  color:var(--muted);text-align:center;font-size:12px;}
+
+/* Share button */
+.share-btn{display:flex;align-items:center;justify-content:center;gap:7px;
+  background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(6,182,212,.15));
+  border:1px solid rgba(16,185,129,.3);border-radius:11px;
+  padding:10px 16px;color:#34d399;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .2s;margin-top:8px;width:100%;}
+.share-btn:hover{background:linear-gradient(135deg,rgba(16,185,129,.25),rgba(6,182,212,.25));}
+
+/* HISTORY */
+.hist-btn{display:flex;align-items:center;gap:6px;background:var(--card);
+  border:1px solid var(--border);border-radius:10px;padding:7px 12px;
+  font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;
+  transition:all .2s;margin-bottom:10px;}
+.hist-btn:hover{color:var(--text);}
+.hist-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:12px;margin-bottom:12px;display:none;}
+.hist-panel.open{display:block;}
+.hist-title{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px;
+  text-transform:uppercase;letter-spacing:.06em;}
+.hist-item{display:flex;align-items:center;justify-content:space-between;
+  padding:7px 0;border-bottom:1px solid var(--border);
+  animation:histSlide .3s ease;cursor:pointer;}
+.hist-item:last-child{border:none;}
+.hist-item:hover .hist-item-lbl{color:#3b82f6;}
+.hist-item-lbl{font-size:11.5px;color:var(--text);flex:1;}
+.hist-item-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:#93c5fd;margin:0 8px;}
+.hist-item-time{font-size:10px;color:var(--subtle);}
+.hist-empty{font-size:11px;color:var(--subtle);text-align:center;padding:8px;}
+.hist-clear{font-size:10px;color:var(--subtle);cursor:pointer;float:right;margin-top:-22px;}
+.hist-clear:hover{color:#ef4444;}
+
+/* Voltage drop calc */
+.vdrop-result{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:900;
+  text-align:center;padding:12px;border-radius:12px;margin-top:4px;}
+
+/* AI */
+.ai-container{display:grid;gap:12px;}
+.ai-header{background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(99,102,241,.08));
+  border:1px solid rgba(139,92,246,.22);border-radius:14px;padding:11px 13px;
+  display:flex;justify-content:space-between;align-items:center;}
+.ai-badge{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#a78bfa;}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:#10b981;animation:glow 2s ease-in-out infinite;flex-shrink:0;}
+.ai-status{font-size:10px;color:#64748b;}
+.chat-msgs{height:270px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:2px;}
+.msg-ai{display:flex;gap:8px;align-items:flex-start;}
+.msg-user{display:flex;gap:8px;align-items:flex-start;flex-direction:row-reverse;}
+.av-ai{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#8b5cf6,#6366f1);
+  display:grid;place-items:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;}
+.av-user{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#06b6d4);
+  display:grid;place-items:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;}
+.bbl-ai{background:rgba(30,41,59,.95);border:1px solid rgba(139,92,246,.18);
+  border-radius:4px 14px 14px 14px;padding:10px 13px;color:#e2e8f0;
+  font-size:12.5px;line-height:1.85;white-space:pre-wrap;max-width:84%;}
+.light .bbl-ai{background:rgba(241,245,249,.95);color:#1e293b;border-color:rgba(139,92,246,.2);}
+.bbl-user{background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:14px 4px 14px 14px;
+  padding:10px 13px;color:white;font-size:12.5px;line-height:1.7;max-width:84%;}
+.typing-dots{display:flex;gap:4px;padding:3px 0;}
+.dot{width:6px;height:6px;border-radius:50%;background:#8b5cf6;animation:pulse 1.2s ease-in-out infinite;}
+.suggestions{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:12px;}
+.sug-title{font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;}
+.sug-grid{display:grid;gap:6px;}
+.sug-btn{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);
+  border-radius:9px;padding:8px 12px;color:#93c5fd;font-size:11.5px;cursor:pointer;
+  text-align:left;transition:all .2s;font-family:inherit;}
+.sug-btn:hover{background:rgba(59,130,246,.14);}
+.chat-composer{display:flex;gap:8px;}
+.chat-input{background:var(--input-bg);border:1px solid rgba(59,130,246,.2);border-radius:12px;
+  color:var(--text);padding:10px 13px;outline:none;flex:1;font-size:13px;transition:border-color .2s;}
+.chat-input:focus{border-color:rgba(96,165,250,.7);}
+.chat-input::placeholder{color:var(--subtle);}
+.send-btn{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+  color:white;display:grid;place-items:center;flex-shrink:0;}
+.send-btn:disabled{opacity:.5;}
+.ai-footer{text-align:center;font-size:10px;color:#334155;margin-top:3px;}
+
+/* Footer */
+footer{margin-top:16px;padding:8px 2px;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:6px;border-top:1px solid var(--border);}
+.ft-l{font-size:11px;color:var(--subtle);}
+.ft-r{font-size:10px;font-weight:700;background:linear-gradient(90deg,#93c5fd,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid rgba(59,130,246,.3);
+  border-radius:12px;padding:12px 20px;color:#f1f5f9;font-size:13px;font-weight:600;
+  z-index:9990;transition:transform .3s ease;box-shadow:0 8px 24px rgba(0,0,0,.4);}
+.toast.show{transform:translateX(-50%) translateY(0);}
 </style>
 </head>
-<body>
+<body id="body">
 
-<!-- ══ SPLASH SCREEN ══════════════════════════════════════ -->
+<!-- SPLASH -->
 <div id="splash">
-
-  <!-- Particles -->
-  <div class="sp-particle" style="width:4px;height:4px;background:#3b82f6;left:15%;bottom:-10px;--dx:30px;animation-duration:8s;animation-delay:0s;opacity:.6"></div>
-  <div class="sp-particle" style="width:3px;height:3px;background:#a78bfa;left:25%;bottom:-10px;--dx:-20px;animation-duration:10s;animation-delay:1s;opacity:.5"></div>
-  <div class="sp-particle" style="width:5px;height:5px;background:#06b6d4;left:60%;bottom:-10px;--dx:40px;animation-duration:7s;animation-delay:0.5s;opacity:.4"></div>
-  <div class="sp-particle" style="width:3px;height:3px;background:#f59e0b;left:75%;bottom:-10px;--dx:-30px;animation-duration:9s;animation-delay:2s;opacity:.5"></div>
-  <div class="sp-particle" style="width:4px;height:4px;background:#10b981;left:85%;bottom:-10px;--dx:10px;animation-duration:11s;animation-delay:0.3s;opacity:.4"></div>
-  <div class="sp-particle" style="width:2px;height:2px;background:#ec4899;left:40%;bottom:-10px;--dx:-40px;animation-duration:6s;animation-delay:1.5s;opacity:.6"></div>
-  <div class="sp-particle" style="width:4px;height:4px;background:#3b82f6;left:50%;bottom:-10px;--dx:25px;animation-duration:12s;animation-delay:0.8s;opacity:.3"></div>
-  <div class="sp-particle" style="width:3px;height:3px;background:#a78bfa;left:90%;bottom:-10px;--dx:-15px;animation-duration:8.5s;animation-delay:2.5s;opacity:.5"></div>
-
-  <!-- Orbit rings -->
-  <div class="sp-orbit-ring">
-    <div class="sp-dot sp-dot-1"></div>
-  </div>
-  <div class="sp-orbit-ring-2">
-    <div class="sp-dot sp-dot-2"></div>
-    <div class="sp-dot sp-dot-3"></div>
-  </div>
-
-  <!-- Logo -->
+  <div class="sp-particle" style="width:4px;height:4px;background:#3b82f6;left:15%;bottom:-10px;--dx:30px;animation-duration:8s"></div>
+  <div class="sp-particle" style="width:3px;height:3px;background:#a78bfa;left:28%;bottom:-10px;--dx:-20px;animation-duration:10s;animation-delay:1s"></div>
+  <div class="sp-particle" style="width:5px;height:5px;background:#06b6d4;left:60%;bottom:-10px;--dx:40px;animation-duration:7s;animation-delay:.5s"></div>
+  <div class="sp-particle" style="width:3px;height:3px;background:#f59e0b;left:78%;bottom:-10px;--dx:-30px;animation-duration:9s;animation-delay:2s"></div>
+  <div class="sp-particle" style="width:4px;height:4px;background:#10b981;left:88%;bottom:-10px;--dx:10px;animation-duration:11s;animation-delay:.3s"></div>
+  <div class="sp-ring"><div class="sp-dot sp-dot1"></div></div>
+  <div class="sp-ring2"><div class="sp-dot sp-dot2"></div></div>
   <div class="sp-logo">⚡</div>
-
-  <!-- App name -->
   <div class="sp-title">ElectroCalc Pro</div>
-  <div class="sp-subtitle">Calculateur · Génie Électromécanique</div>
-
-  <!-- Author badge -->
+  <div class="sp-sub">Calculateur · Génie Électromécanique</div>
+  <div class="sp-slogan">" <span>Travaillons</span> Ensemble "</div>
   <div class="sp-badge">
     <div class="sp-badge-by">✦ Développé par</div>
     <div class="sp-badge-name">Kouadria Nadir</div>
-    <div class="sp-badge-stars">★★★★★</div>
+    <div style="color:#fbbf24;font-size:12px;margin:2px 0">★★★★★</div>
     <div class="sp-badge-role">Ingénieur en Électromécanique</div>
   </div>
-
-  <!-- Slogan -->
-  <div class="sp-slogan">
-    <span class="sp-slogan-quote">"</span>
-    <span class="sp-slogan-highlight">Travaillons</span> Ensemble
-    <span class="sp-slogan-quote">"</span>
-  </div>
-
-  <!-- Progress bar -->
-  <div class="sp-progress-wrap">
-    <div class="sp-progress"></div>
-  </div>
-
-  <!-- Version -->
-  <div class="sp-version">v1.0</div>
+  <div class="sp-progress-wrap"><div class="sp-progress"></div></div>
 </div>
-<!-- ═══════════════════════════════════════════════════════ -->
 
+<!-- SELECTION -->
+<div id="sel-screen">
+  <div class="sp-particle" style="width:3px;height:3px;background:#3b82f6;left:10%;bottom:-10px;--dx:20px;animation-duration:9s"></div>
+  <div class="sp-particle" style="width:4px;height:4px;background:#a78bfa;left:85%;bottom:-10px;--dx:-25px;animation-duration:11s;animation-delay:1s"></div>
+  <div style="font-size:11px;font-weight:700;color:#a78bfa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;animation:selFadeIn .5s ease .1s both">⚡ ElectroCalc Pro</div>
+  <div class="sel-heading">Qui êtes-vous?</div>
+  <div class="sel-sub">Choisissez votre profil pour une expérience personnalisée</div>
+  <div class="sel-cards">
+    <div class="sel-card sel-eng" onclick="selectProfile('engineer')">
+      <span class="sel-icon">🔧</span>
+      <div class="sel-name-eng">Ingénieur</div>
+      <div class="sel-desc">Professionnel sur le terrain</div>
+      <div class="sel-feats">
+        <div class="sel-feat"><span style="color:#3b82f6">▸</span>Résultats immédiats</div>
+        <div class="sel-feat"><span style="color:#3b82f6">▸</span>Alertes intelligentes</div>
+        <div class="sel-feat"><span style="color:#3b82f6">▸</span>Normes IEC/NF</div>
+        <div class="sel-feat"><span style="color:#3b82f6">▸</span>Jauge visuelle</div>
+      </div>
+      <div class="sel-badge-eng">Mode Professionnel</div>
+    </div>
+    <div class="sel-or"><div class="sel-or-inner">OU</div></div>
+    <div class="sel-card sel-stu" onclick="selectProfile('student')">
+      <span class="sel-icon">📚</span>
+      <div class="sel-name-stu">Étudiant</div>
+      <div class="sel-desc">En apprentissage du génie</div>
+      <div class="sel-feats">
+        <div class="sel-feat"><span style="color:#8b5cf6">▸</span>Formules affichées</div>
+        <div class="sel-feat"><span style="color:#8b5cf6">▸</span>Étapes détaillées</div>
+        <div class="sel-feat"><span style="color:#8b5cf6">▸</span>Explications claires</div>
+        <div class="sel-feat"><span style="color:#8b5cf6">▸</span>Idéal pour TDs</div>
+      </div>
+      <div class="sel-badge-stu">Mode Pédagogique</div>
+    </div>
+  </div>
+  <div class="sel-footer">Développé par <strong style="color:#a78bfa">Kouadria Nadir</strong> · Ingénieur Électromécanicien</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
 <header>
   <div class="hdr">
     <div class="logo">
       <div class="logo-icon">⚡</div>
       <div>
         <div class="logo-title">ElectroCalc Pro</div>
-        <div class="logo-sub">Calculateurs Génie Électromécanique · Assistant IA</div>
+        <div class="logo-sub" id="profile-sub">Calculateurs · Génie Électromécanique</div>
       </div>
     </div>
-    <div class="author-card">
-      <div style="font-size:11px;color:#a78bfa;font-weight:700;margin-bottom:3px">Développé par</div>
-      <div class="author-name">Kouadria Nadir</div>
-      <div class="author-stars">★★★★★</div>
-      <div class="author-role">Ingénieur en Électromécanique</div>
+    <div class="hdr-right">
+      <div class="profile-badge" id="profile-badge" onclick="changeProfil()">🔧 <span id="profile-lbl">Ingénieur</span></div>
+      <button class="theme-btn" id="lang-btn" onclick="toggleLang()" title="Language">🇫🇷</button>
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Changer thème">🌙</button>
+      <div class="author-card">
+        <div class="author-name">Kouadria Nadir</div>
+        <div class="author-stars">★★★★★</div>
+        <div class="author-role">Ingénieur Électromécanicien</div>
+      </div>
     </div>
   </div>
 </header>
+
 <div class="shell">
-  <div class="summary" style="margin-top:18px">
+  <div class="summary" style="margin-top:16px">
     <div class="scard"><span class="val">8</span><span class="lbl">Calculateurs</span></div>
-    <div class="scard"><span class="val">AI</span><span class="lbl">Assistant IA</span></div>
+    <div class="scard"><span class="val" id="hist-count">0</span><span class="lbl">Historique</span></div>
     <div class="scard"><span class="val">IEC</span><span class="lbl">Normes</span></div>
   </div>
   <div class="tabs" id="tabs"></div>
@@ -328,37 +431,228 @@ footer{margin-top:18px;padding:10px 2px;display:flex;justify-content:space-betwe
     <span class="ft-r">Kouadria Nadir · Ingénieur Électromécanicien</span>
   </footer>
 </div>
-<script>
-var activeTab='motor', mode='engineer', loading=false;
-var chatMsgs=[{role:'ai',text:'Bonjour! Je suis votre assistant en génie électromécanique. Posez-moi vos questions techniques.'}];
-var SUGS=['Quel disjoncteur pour moteur 15kW?','Couple moteur 22kW 1450 tr/min','Section cable pour 50A moteur','Formule puissance triphasée'];
 
+<script>
+
+// ── LANGUAGE ──────────────────────────────────────────────
+var lang = localStorage.getItem('ec_lang') || 'fr';
+
+var T = {
+  fr: {
+    subtitle: 'Calculateurs · Génie Électromécanique',
+    devBy: 'Développé par',
+    role: 'Ingénieur en Électromécanique',
+    calcCount: 'Calculateurs',
+    histCount: 'Historique',
+    norms: 'Normes',
+    whoAreYou: 'Qui êtes-vous?',
+    chooseProfil: 'Choisissez votre profil pour une expérience personnalisée',
+    engineer: 'Ingénieur',
+    student: 'Étudiant',
+    proMode: 'Mode Professionnel',
+    pedMode: 'Mode Pédagogique',
+    engDesc: 'Professionnel sur le terrain',
+    stuDesc: 'En apprentissage du génie',
+    engF1: 'Résultats immédiats', engF2: 'Alertes intelligentes', engF3: 'Normes IEC/NF', engF4: 'Jauge visuelle',
+    stuF1: 'Formules affichées', stuF2: 'Étapes détaillées', stuF3: 'Explications claires', stuF4: 'Idéal pour TDs',
+    results: 'Résultats', approx: 'Résultats approximatifs',
+    share: '📤 Partager ce résultat',
+    history: '🕐 Historique',
+    lastCalcs: 'Derniers calculs',
+    noHistory: 'Aucun calcul enregistré',
+    engActive: '🔧 Mode Ingénieur activé',
+    stuActive: '📚 Mode Étudiant activé',
+    copied: '📋 Résultat copié!',
+    histCleared: '🗑️ Historique effacé',
+    empty: 'Saisissez les valeurs pour afficher les résultats.',
+    formulasTitle: '📐 Formules appliquées',
+    connError: 'Connexion impossible. Réessayez.',
+    aiPlaceholder: 'Posez votre question technique...',
+    aiFooter: 'Powered by Claude AI · Développé par Kouadria Nadir',
+    profSub_eng: 'Mode Professionnel · IEC/NF',
+    profSub_stu: 'Mode Pédagogique · Formules',
+    tabs: ['Puissance Moteur','Couple','Courant Triphasé','Disjoncteur','Chute Tension','Transformateur','Conversions','Assistant IA'],
+    tabHelp: [
+      'Puissance apparente, active et sortie pour moteurs mono/triphasés.',
+      'Couple depuis puissance/vitesse ou force/rayon.',
+      'Courant nominal, tension phase, courant démarrage.',
+      'Sélection disjoncteur et câble selon type de charge.',
+      'Calcul chute de tension selon NF C 15-100.',
+      'Calcul transformateur: courants, tensions, puissance.',
+      'Conversion rapide entre unités ingénierie.',
+      'Assistant IA spécialisé en génie électromécanique.',
+    ],
+    aiSugs: ['Quel disjoncteur pour moteur 15kW?','Couple moteur 22kW 1450 tr/min','Section cable pour 50A moteur','Formule puissance triphasée'],
+    aiGreeting: 'Bonjour! Je suis votre assistant en génie électromécanique. Posez-moi vos questions techniques.',
+    aiSystem: 'Ingenieur electromecanicien expert. Repondez en francais technique. Max 4 paragraphes. Formules avec unites. Normes si pertinent. App par Kouadria Nadir.',
+  },
+  en: {
+    subtitle: 'Calculators · Electromechanical Engineering',
+    devBy: 'Developed by',
+    role: 'Electromechanical Engineer',
+    calcCount: 'Calculators',
+    histCount: 'History',
+    norms: 'Standards',
+    whoAreYou: 'Who are you?',
+    chooseProfil: 'Choose your profile for a personalized experience',
+    engineer: 'Engineer',
+    student: 'Student',
+    proMode: 'Professional Mode',
+    pedMode: 'Learning Mode',
+    engDesc: 'Professional in the field',
+    stuDesc: 'Learning engineering',
+    engF1: 'Instant results', engF2: 'Smart alerts', engF3: 'IEC/NF Standards', engF4: 'Visual gauge',
+    stuF1: 'Formulas shown', stuF2: 'Step by step', stuF3: 'Clear explanations', stuF4: 'Perfect for labs',
+    results: 'Results', approx: 'Approximate results',
+    share: '📤 Share this result',
+    history: '🕐 History',
+    lastCalcs: 'Last calculations',
+    noHistory: 'No calculations saved',
+    engActive: '🔧 Engineer Mode activated',
+    stuActive: '📚 Student Mode activated',
+    copied: '📋 Result copied!',
+    histCleared: '🗑️ History cleared',
+    empty: 'Enter values to display results.',
+    formulasTitle: '📐 Applied formulas',
+    connError: 'Connection failed. Please retry.',
+    aiPlaceholder: 'Ask your technical question...',
+    aiFooter: 'Powered by Claude AI · Developed by Kouadria Nadir',
+    profSub_eng: 'Professional Mode · IEC/NF',
+    profSub_stu: 'Learning Mode · Formulas',
+    tabs: ['Motor Power','Torque','3-Phase Current','Circuit Breaker','Voltage Drop','Transformer','Conversions','AI Assistant'],
+    tabHelp: [
+      'Apparent, active and output power for single/three-phase motors.',
+      'Torque from power/speed or force/radius.',
+      'Nominal current, phase voltage, starting current.',
+      'Circuit breaker and cable selection by load type.',
+      'Voltage drop calculation per NF C 15-100.',
+      'Transformer: currents, voltages, power.',
+      'Quick conversion between engineering units.',
+      'AI assistant specialized in electromechanical engineering.',
+    ],
+    aiSugs: ['Circuit breaker for 15kW motor?','Torque for 22kW motor at 1450rpm','Cable section for 50A motor','Three-phase power formula'],
+    aiGreeting: 'Hello! I am your electromechanical engineering assistant. Ask me your technical questions.',
+    aiSystem: 'Expert electromechanical engineer. Answer in technical English. Max 4 paragraphs. Formulas with units. Cite standards if relevant. App by Kouadria Nadir.',
+  }
+};
+
+function t(key){ return T[lang][key] || T['fr'][key] || key; }
+
+function toggleLang(){
+  lang = lang==='fr' ? 'en' : 'fr';
+  localStorage.setItem('ec_lang', lang);
+  document.getElementById('lang-btn').textContent = lang==='fr' ? '🇫🇷' : '🇬🇧';
+  // Update TABS with new language
+  TABS.forEach(function(tab, i){ tab.label = T[lang].tabs[i]; tab.help = T[lang].tabHelp[i]; });
+  SUGS = T[lang].aiSugs;
+  // Update header
+  document.querySelector('.logo-sub').textContent = t('subtitle');
+  // Update selection screen
+  document.querySelector('.sel-heading').textContent = t('whoAreYou');
+  document.querySelector('.sel-sub').textContent = t('chooseProfil');
+  renderTabs();
+  renderPanel();
+  showToast(lang==='fr' ? '🇫🇷 Français activé' : '🇬🇧 English activated');
+}
+
+// Apply language on init
+(function(){
+  document.getElementById('lang-btn').textContent = lang==='fr' ? '🇫🇷' : '🇬🇧';
+  TABS.forEach(function(tab, i){ tab.label = T[lang].tabs[i]; tab.help = T[lang].tabHelp[i]; });
+  SUGS = T[lang].aiSugs;
+})();
+
+// ── STATE ─────────────────────────────────────────────────
+var activeTab='motor', mode='engineer', loading=false, isDark=true;
+var chatMsgs=[{role:'ai',text:t('aiGreeting')}];
+var SUGS=['Quel disjoncteur pour moteur 15kW?','Couple moteur 22kW 1450 tr/min','Section cable pour 50A moteur','Formule puissance triphasée'];
+var history=JSON.parse(localStorage.getItem('ec_history')||'[]');
+
+// ── HELPERS ───────────────────────────────────────────────
 function fmt(v,d){d=d||2;return Number.isFinite(v)?new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v):'--';}
 function pos(v){return Number.isFinite(v)&&v>0;}
 function N(v){return Number.parseFloat(v);}
 function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);}
 
+// ── THEME ─────────────────────────────────────────────────
+function toggleTheme(){
+  isDark=!isDark;
+  var body=document.getElementById('body');
+  body.classList.toggle('light',!isDark);
+  document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+  localStorage.setItem('ec_theme',isDark?'dark':'light');
+}
+(function(){
+  var saved=localStorage.getItem('ec_theme');
+  if(saved==='light'){isDark=false;document.getElementById('body').classList.add('light');document.getElementById('theme-btn').textContent='☀️';}
+})();
+
+// ── PROFILE ───────────────────────────────────────────────
+function changeProfil(){
+  var sel=document.getElementById('sel-screen');
+  sel.classList.add('show');
+}
+function selectProfile(p){
+  mode=p;
+  var sel=document.getElementById('sel-screen');
+  sel.style.animation='splashFadeOut .4s ease forwards';
+  setTimeout(function(){sel.style.display='none';sel.style.animation='';},400);
+  var lbl=document.getElementById('profile-lbl');
+  var sub=document.getElementById('profile-sub');
+  var badge=document.getElementById('profile-badge');
+  if(p==='engineer'){lbl.textContent='Ingénieur';badge.innerHTML='🔧 <span id="profile-lbl">Ingénieur</span>';sub.textContent=t('profSub_eng');}
+  else{lbl.textContent='Étudiant';badge.innerHTML='📚 <span id="profile-lbl">Étudiant</span>';sub.textContent=t('profSub_stu');}
+  renderPanel();
+  showToast(p==='engineer'?t('engActive'):t('stuActive'));
+}
+
+// ── HISTORY ───────────────────────────────────────────────
+function saveHistory(tab,label,val){
+  var now=new Date();
+  var time=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  history.unshift({tab:tab,label:label,val:val,time:time,date:now.toLocaleDateString('fr-FR')});
+  if(history.length>20)history=history.slice(0,20);
+  localStorage.setItem('ec_history',JSON.stringify(history));
+  document.getElementById('hist-count').textContent=history.length;
+}
+function clearHistory(){history=[];localStorage.removeItem('ec_history');document.getElementById('hist-count').textContent=0;renderPanel();showToast(t('histCleared'));}
+function toggleHist(){var h=document.getElementById('hist-panel');if(h)h.classList.toggle('open');}
+function buildHistPanel(){
+  var h='<div class="hist-panel" id="hist-panel">'
+    +'<div class="hist-title">'+t('lastCalcs')+'<span class="hist-clear" onclick="clearHistory()">🗑️</span></div>';
+  if(history.length===0){h+='<div class="hist-empty">'+t('noHistory')+'</div>';}
+  else{h+=history.slice(0,8).map(function(it){
+    return '<div class="hist-item"><span class="hist-item-lbl">'+it.label+'</span>'
+      +'<span class="hist-item-val">'+it.val+'</span>'
+      +'<span class="hist-item-time">'+it.time+'</span></div>';
+  }).join('');}
+  h+='</div>';
+  return h;
+}
+
+// ── TABS ──────────────────────────────────────────────────
 var TABS=[
   {id:'motor',   label:'Puissance Moteur',  color:'#3b82f6',icon:'⚡',help:'Puissance apparente, active et sortie pour moteurs mono/triphasés.'},
   {id:'torque',  label:'Couple',            color:'#8b5cf6',icon:'🔧',help:'Couple depuis puissance/vitesse ou force/rayon.'},
   {id:'3phase',  label:'Courant Triphasé',  color:'#06b6d4',icon:'🔌',help:'Courant nominal, tension phase, courant démarrage.'},
   {id:'breaker', label:'Disjoncteur',       color:'#f59e0b',icon:'🛡️',help:'Sélection disjoncteur et câble selon type de charge.'},
-  {id:'air',     label:'Air Comprimé',      color:'#10b981',icon:'💨',help:'Puissance compresseur, réservoir, déplacement volumique.'},
-  {id:'pump',    label:'Pompes',            color:'#f97316',icon:'💧',help:'Puissance hydraulique, arbre pompe, NPSH.'},
-  {id:'convert', label:'Conversions',       color:'#ec4899',icon:'🔄',help:'Conversion rapide entre unités ingénierie.'},
+  {id:'vdrop',   label:'Chute Tension',     color:'#ec4899',icon:'📉',help:'Calcul chute de tension selon NF C 15-100.'},
+  {id:'transfo', label:'Transformateur',    color:'#10b981',icon:'🔁',help:'Calcul transformateur: courants, tensions, puissance.'},
+  {id:'convert', label:'Conversions',       color:'#f97316',icon:'🔄',help:'Conversion rapide entre unités ingénierie.'},
   {id:'ai',      label:'Assistant IA',      color:'#a78bfa',icon:'🤖',help:'Assistant IA spécialisé en génie électromécanique.'},
 ];
 
+// ── STATE ─────────────────────────────────────────────────
 var state={
   motor:{voltage:'',current:'',pf:'85',eff:'90',phases:'3'},
   torque:{type:'power',power:'',rpm:'',force:'',radius:''},
   '3phase':{power:'',voltage:'380',pf:'85',eff:'90'},
   breaker:{current:'',type:'motor'},
-  air:{pressure:'',flow:'',pistons:'2',rpm:'900'},
-  pump:{flow:'',head:'',eff:'75',density:'1000'},
+  vdrop:{current:'',length:'',section:'10',voltage:'400',phases:'3',material:'copper'},
+  transfo:{v1:'',v2:'',s:''},
   convert:{cat:'power',value:'',from:'kW',to:'HP'},
 };
-
 var UNITS={
   power:['W','kW','MW','HP','HP(m)','BTU/h'],
   torque:['N.m','kN.m','kgf.m','lbf.ft','lbf.in'],
@@ -368,7 +662,7 @@ var UNITS={
   temperature:['degC','degF','K'],
 };
 
-// CALC
+// ── CALC ENGINES ──────────────────────────────────────────
 function calcMotor(f){
   var V=N(f.voltage),I=N(f.current),PF=N(f.pf)/100,eff=N(f.eff)/100,ph=parseInt(f.phases);
   if(!pos(V)||!pos(I)||!(PF>0&&PF<=1)||!(eff>0&&eff<=1))return null;
@@ -397,18 +691,22 @@ function calcBreaker(f){
   var cable=cableArr.length?cableArr[0][0]:'>240';
   return{min:min,sel:sel,cable:cable,curve:cm[f.type]||'C',factor:factor};
 }
-function calcAir(f){
-  var P=N(f.pressure),Q=N(f.flow),np=N(f.pistons),Nv=N(f.rpm);
-  if(!pos(P)||!pos(Q))return null;
-  var kW=(P*1e5*(Q/60))/(1000*0.85),rec=Q*250;
-  var disp=(pos(np)&&pos(Nv))?(Q/(np*Nv))*1e6:null;
-  return{kW:kW,hp:kW/0.746,rec:rec,disp:disp,pressure:P};
+function calcVdrop(f){
+  var I=N(f.current),L=N(f.length),S=N(f.section),V=N(f.voltage);
+  if(!pos(I)||!pos(L)||!pos(S)||!pos(V))return null;
+  var rho=f.material==='copper'?0.0225:0.036;
+  var coeff=f.phases==='3'?Math.sqrt(3):2;
+  var dU=(rho*L*I*coeff)/S;
+  var pct=(dU/V)*100;
+  return{dU:dU,pct:pct,ok:pct<=3};
 }
-function calcPump(f){
-  var Q=N(f.flow)/3600,H=N(f.head),eff=N(f.eff)/100,rho=N(f.density);
-  if(!pos(Q)||!pos(H)||!(eff>0&&eff<=1)||!pos(rho))return null;
-  var Wh=rho*9.81*Q*H,Ws=Wh/eff;
-  return{hyd:Wh/1000,shaft:Ws/1000,hp:Ws/746,npsh:Math.max(2,H*0.1+2),head:H};
+function calcTransfo(f){
+  var V1=N(f.v1),V2=N(f.v2),S=N(f.s);
+  if(!pos(V1)||!pos(V2))return null;
+  var ratio=V1/V2;
+  var I1=S?S*1000/V1:null;
+  var I2=S?S*1000/V2:null;
+  return{ratio:ratio,I1:I1,I2:I2,S:S};
 }
 function calcConvert(f){
   var v=N(f.value);if(!Number.isFinite(v)||!f.from||!f.to)return null;
@@ -429,48 +727,44 @@ function calcConvert(f){
   return{r:v*tb[f.from]/tb[f.to]};
 }
 
-// SMART ALERTS
+// ── GAUGE ─────────────────────────────────────────────────
+function gauge(val,max,color,label){
+  var pct=Math.min(Math.max(val/max,0),1);
+  var dashoffset=251-(251*pct);
+  var dispVal=fmt(val,1);
+  return '<div class="gauge-wrap">'
+    +'<div class="gauge-title">'+label+'</div>'
+    +'<svg class="gauge-svg" width="100" height="60" viewBox="-5 -5 110 65">'
+    +'<path class="gauge-track" d="M10,50 A40,40 0 0,1 90,50"/>'
+    +'<path class="gauge-bar" d="M10,50 A40,40 0 0,1 90,50" stroke="'+color+'" style="--target:'+dashoffset+'"/>'
+    +'<text class="gauge-val" x="50" y="46" text-anchor="middle">'+dispVal+'</text>'
+    +'<text class="gauge-lbl" x="50" y="58" text-anchor="middle">/ '+fmt(max,0)+'</text>'
+    +'</svg></div>';
+}
+
+// ── ALERTS ────────────────────────────────────────────────
 function alert_(cls,msg){return '<div class="smart-alert '+cls+'">'+msg+'</div>';}
 function motorAlerts(d){
-  if(!d)return '';
   var h='';
   if(d.pf<0.75)h+=alert_('a-warn','⚠️ Facteur de puissance faible — Compensation capacitive recommandée');
   else if(d.pf>=0.92)h+=alert_('a-ok','✅ Excellent facteur de puissance');
-  if(d.eff<0.8)h+=alert_('a-warn','⚠️ Rendement faible — Vérifiez l\'état du moteur');
+  if(d.eff<0.8)h+=alert_('a-warn','⚠️ Rendement faible — Vérifier état du moteur');
   if(d.Pout_kW>100)h+=alert_('a-info','ℹ️ Grande puissance — Démarrage progressif recommandé');
   return h;
 }
 function breakerAlerts(d){
-  if(!d)return '';
   return alert_('a-ok','✅ Disjoncteur: '+d.sel+' A — Courbe '+d.curve)
         +alert_('a-info','📋 Norme: NF C 15-100 / CEI 60947-2');
 }
-function airAlerts(d){
-  if(!d)return '';
-  var h='';
-  if(d.pressure>12)h+=alert_('a-danger','🔴 Pression très élevée — Vérifier classe pression réservoir');
-  else if(d.pressure>8)h+=alert_('a-warn','⚠️ Pression élevée — Contrôle sécurité obligatoire');
-  else h+=alert_('a-ok','✅ Pression nominale — Configuration standard');
-  h+=alert_('a-info','💡 Réservoir min recommandé: '+fmt(d.rec,0)+' L');
-  return h;
-}
-function pumpAlerts(d){
-  if(!d)return '';
-  var h='';
-  if(d.head>50)h+=alert_('a-warn','⚠️ HMT élevée — Vérifier NPSH disponible');
-  else h+=alert_('a-ok','✅ HMT acceptable pour pompe centrifuge standard');
-  h+=alert_('a-info','💡 NPSH estimé: '+fmt(d.npsh,1)+' m — Vérifier avec fabricant');
-  return h;
-}
 
-// FORMULAS
+// ── FORMULAS ──────────────────────────────────────────────
 var FORMULAS={
   motor:[['Puissance apparente (3ph):','S = √3 × U × I [VA]'],['Puissance active:','P = S × cos(φ) [W]'],['Puissance sortie:','Pout = P × η [W]'],['En CV:','CV = Pout / 746']],
   torque:[['Couple (P,n):','T = 9550 × P(kW) / n(tr/min) [N.m]'],['Couple (F,R):','T = F × R [N.m]'],['Conversion:','T(kgf.m) = T(N.m) / 9.81']],
   '3phase':[['Courant nominal:','In = P / (√3 × U × cosφ × η) [A]'],['Tension phase:','Vph = VL / √3 [V]'],['Courant DOL:','Id ≈ 6 × In [A]']],
   breaker:[['Calibre min:','In_disj ≥ 1.25 × In (moteur)'],['Section câble:','Iz ≥ 1.25 × Ib [A]'],['Normes:','NF C 15-100 / CEI 60947-2']],
-  air:[['Puissance:','P = (p × Q) / (60 × η) [kW]'],['Réservoir:','V ≥ Q × 250 [L]'],['Déplacement:','Vd = Q / (n × Np) [m3/tour]']],
-  pump:[['Puissance hydraulique:','Pu = ρ × g × Q × H [W]'],['Puissance arbre:','Pa = Pu / η [W]'],['NPSH approx.:','NPSHd ≈ 0.1 × H + 2 [m]']],
+  vdrop:[['Chute tension (3ph):','ΔU = √3 × ρ × L × I / S [V]'],['Chute tension (1ph):','ΔU = 2 × ρ × L × I / S [V]'],['Limite NF C 15-100:','ΔU% ≤ 3% (départ)']],
+  transfo:[['Rapport:','a = V1 / V2 = N1 / N2'],['Courant primaire:','I1 = S / V1 [A]'],['Courant secondaire:','I2 = S / V2 [A]']],
 };
 function formulaBox(id){
   var steps=FORMULAS[id];if(!steps)return '';
@@ -479,10 +773,11 @@ function formulaBox(id){
     +'</div>';
 }
 
-// UI HELPERS
+// ── UI HELPERS ────────────────────────────────────────────
 function field(id,label,icon,opts){
   opts=opts||{};
-  var type=opts.type||'number',placeholder=opts.placeholder||'',unit=opts.unit||'',options=opts.options||null,value=opts.value||'',min=opts.min||'0',step=opts.step||'any';
+  var type=opts.type||'number',placeholder=opts.placeholder||'',unit=opts.unit||'',
+    options=opts.options||null,value=opts.value||'',min=opts.min||'0',step=opts.step||'any';
   var lbl='<label class="field"><span class="field-label"><span>'+icon+'</span>'+label+'</span>';
   if(options){
     var sel=options.map(function(o){return '<option value="'+o.v+'"'+(o.v===value?' selected':'')+'>'+o.l+'</option>';}).join('');
@@ -491,75 +786,135 @@ function field(id,label,icon,opts){
   return lbl+'<div class="field-ctrl"><input class="field-input" id="'+id+'" type="'+type+'" inputmode="decimal" value="'+value+'" placeholder="'+placeholder+'" min="'+min+'" step="'+step+'" oninput="FC_'+id+'(this.value)"/>'+(unit?'<span class="field-unit">'+unit+'</span>':'')+'</div></label>';
 }
 function results(items,color,note){
-  if(!items)return '<div class="empty-state">Saisissez les valeurs pour afficher les résultats.</div>';
-  return '<div class="results" style="background:linear-gradient(180deg,color-mix(in srgb,'+color+' 8%,rgba(15,23,42,1)),rgba(15,23,42,.8));border:1px solid color-mix(in srgb,'+color+' 22%,rgba(148,163,184,.1))">'
+  if(!items)return '<div class="empty-state">'+t('empty')+'</div>';
+  return '<div class="results" style="background:linear-gradient(180deg,color-mix(in srgb,'+color+' 8%,rgba(15,23,42,.9)),rgba(15,23,42,.75));border:1px solid color-mix(in srgb,'+color+' 22%,rgba(148,163,184,.1))">'
     +'<div class="results-hdr"><span class="results-title">Résultats</span><span class="results-note">'+note+'</span></div>'
     +'<div class="res-list">'+items.map(function(it){return '<div class="res-row"><span class="res-label">'+it.icon+' '+it.l+'</span><span class="res-val">'+it.v+'</span></div>';}).join('')+'</div>'
     +'</div>';
 }
 function tips(icon,txt){return '<div class="tips"><span>'+icon+'</span><span>'+txt+'</span></div>';}
-function modeToggle(){
-  var ec='mode-btn'+(mode==='engineer'?' eng-active':'');
-  var sc='mode-btn'+(mode==='student'?' stu-active':'');
-  return '<div class="mode-toggle"><button class="'+ec+'" onclick="setMode(\'engineer\')">🔧 Ingénieur</button><button class="'+sc+'" onclick="setMode(\'student\')">📚 Étudiant</button></div>';
-}
-function setMode(m){mode=m;renderPanel();}
 
-// CONTENT BUILDERS
+// Share
+function shareResult(text){
+  var msg='ElectroCalc Pro - Kouadria Nadir\n'+text+'\n\nTéléchargez ElectroCalc Pro!';
+  if(navigator.share){navigator.share({title:'ElectroCalc Pro',text:msg}).catch(function(){});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(function(){showToast(t('copied'));});}
+  else{showToast('📋 Partagez: '+text);}
+}
+
+// ── CONTENT BUILDERS ──────────────────────────────────────
 function motorContent(){
   var s=state.motor,r=calcMotor(s);
-  var items=r?[{icon:'⚡',l:'Puissance apparente',v:fmt(r.S_kVA,3)+' kVA'},{icon:'✅',l:'Puissance active',v:fmt(r.P_kW,3)+' kW'},{icon:'🔋',l:'Puissance sortie',v:fmt(r.Pout_kW,3)+' kW'},{icon:'🐎',l:'Puissance CV',v:fmt(r.hp,2)+' HP'},{icon:'📊',l:'Puissance réactive',v:fmt(r.Q_kVAR,3)+' kVAR'}]:null;
-  return '<div class="stack">'+(mode==='student'?formulaBox('motor'):'')
+  if(r)saveHistory('motor','Puissance Moteur',fmt(r.Pout_kW,2)+' kW');
+  var items=r?[
+    {icon:'⚡',l:'Puissance apparente',v:fmt(r.S_kVA,3)+' kVA'},
+    {icon:'✅',l:'Puissance active',v:fmt(r.P_kW,3)+' kW'},
+    {icon:'🔋',l:'Puissance sortie',v:fmt(r.Pout_kW,3)+' kW'},
+    {icon:'🐎',l:'Puissance CV',v:fmt(r.hp,2)+' HP'},
+    {icon:'📊',l:'Puissance réactive',v:fmt(r.Q_kVAR,3)+' kVAR'},
+  ]:null;
+  var gauges=r?'<div style="display:flex;gap:8px;overflow-x:auto;padding:4px 0">'
+    +gauge(r.pf*100,100,'#3b82f6','cos(φ) %')
+    +gauge(r.eff*100,100,'#10b981','η %')
+    +gauge(r.Pout_kW,200,'#8b5cf6','kW sortie')
+    +'</div>':'';
+  var shareBtn=r?'<button class="share-btn" onclick="shareResult(\'Puissance: '+fmt(r&&r.Pout_kW||0,2)+' kW / '+fmt(r&&r.S_kVA||0,2)+' kVA\')">'+t('share')+'</button>':'';
+  return '<div class="stack">'
+    +buildHistPanel()
+    +'<button class="hist-btn" onclick="toggleHist()">🕐 Historique ('+history.length+')</button>'
+    +(mode==='student'?formulaBox('motor'):'')
     +'<div class="grid2">'+field('motor_phases','Alimentation','🔌',{options:[{v:'3',l:'Triphasé (3φ)'},{v:'1',l:'Monophasé (1φ)'}],value:s.phases})+field('motor_voltage','Tension','⚡',{placeholder:'380',unit:'V',value:s.voltage})+'</div>'
     +'<div class="grid2">'+field('motor_current','Courant','🔌',{placeholder:'10',unit:'A',value:s.current})+field('motor_pf','Facteur puissance','📐',{placeholder:'85',unit:'%',value:s.pf})+'</div>'
     +field('motor_eff','Rendement','⚙️',{placeholder:'90',unit:'%',value:s.eff})
     +tips('ℹ️','Valeurs nominales. Pour grands moteurs, consultez la plaque signalétique.')
-    +results(items,'#3b82f6','NF C 15-100')+(r?motorAlerts(r):'')+'</div>';
+    +results(items,'#3b82f6','NF C 15-100')
+    +gauges
+    +(r?motorAlerts(r):'')
+    +shareBtn
+    +'</div>';
 }
 function torqueContent(){
   var s=state.torque,r=calcTorque(s);
+  if(r)saveHistory('torque','Couple',fmt(r.T_Nm,2)+' N.m');
   var items=r?[{icon:'🔧',l:'Couple',v:fmt(r.T_Nm,2)+' N.m'},{icon:'⚖️',l:'Couple équivalent',v:fmt(r.T_kgfm,2)+' kgf.m'}]:null;
+  var gaugeHtml=r?gauge(r.T_Nm,5000,'#8b5cf6','N.m'):'';
+  var shareBtn=r?'<button class="share-btn" onclick="shareResult(\'Couple: '+fmt(r&&r.T_Nm||0,2)+' N.m\')">'+t('share')+'</button>':'';
   return '<div class="stack">'+(mode==='student'?formulaBox('torque'):'')
     +field('torque_type','Méthode','🔧',{options:[{v:'power',l:'Puissance + Vitesse'},{v:'force',l:'Force + Rayon'}],value:s.type})
     +(s.type==='power'?'<div class="grid2">'+field('torque_power','Puissance','⚡',{placeholder:'5.5',unit:'kW',value:s.power})+field('torque_rpm','Vitesse','🌀',{placeholder:'1450',unit:'tr/min',value:s.rpm})+'</div>'
       :'<div class="grid2">'+field('torque_force','Force','💪',{placeholder:'500',unit:'N',value:s.force})+field('torque_radius','Rayon','📏',{placeholder:'0.5',unit:'m',value:s.radius})+'</div>')
     +tips('📐','T = 9550 × P(kW) / n(tr/min)')
-    +results(items,'#8b5cf6','Couple calculé')+'</div>';
+    +results(items,'#8b5cf6','Couple calculé')+gaugeHtml+shareBtn+'</div>';
 }
 function threephaseContent(){
   var s=state['3phase'],r=calc3Phase(s);
-  var items=r?[{icon:'⚡',l:'Courant nominal',v:fmt(r.I,2)+' A'},{icon:'🔌',l:'Tension de ligne',v:fmt(r.VL,1)+' V'},{icon:'📐',l:'Tension de phase',v:fmt(r.Vph,1)+' V'},{icon:'🚀',l:'Courant DOL',v:fmt(r.Istart,1)+' A'}]:null;
+  if(r)saveHistory('3phase','Courant Triphasé',fmt(r.I,2)+' A');
+  var items=r?[
+    {icon:'⚡',l:'Courant nominal',v:fmt(r.I,2)+' A'},
+    {icon:'🔌',l:'Tension de ligne',v:fmt(r.VL,1)+' V'},
+    {icon:'📐',l:'Tension de phase',v:fmt(r.Vph,1)+' V'},
+    {icon:'🚀',l:'Courant DOL',v:fmt(r.Istart,1)+' A'},
+  ]:null;
+  var gaugeHtml=r?gauge(r.I,200,'#06b6d4','A nominal'):'';
+  var shareBtn=r?'<button class="share-btn" onclick="shareResult(\'Courant: '+fmt(r&&r.I||0,2)+' A\')">'+t('share')+'</button>':'';
   return '<div class="stack">'+(mode==='student'?formulaBox('3phase'):'')
     +'<div class="grid2">'+field('3p_power','Puissance charge','⚡',{placeholder:'7.5',unit:'kW',value:s.power})+field('3p_voltage','Tension réseau L-L','🔌',{placeholder:'380',unit:'V',value:s.voltage})+'</div>'
     +'<div class="grid2">'+field('3p_pf','Facteur puissance','📐',{placeholder:'85',unit:'%',value:s.pf})+field('3p_eff','Rendement','⚙️',{placeholder:'90',unit:'%',value:s.eff})+'</div>'
     +tips('ℹ️','Courant DOL ≈ 6×In. Valeur approximative pour démarrage direct.')
-    +results(items,'#06b6d4','CEI 60034')+'</div>';
+    +results(items,'#06b6d4','CEI 60034')+gaugeHtml+shareBtn+'</div>';
 }
 function breakerContent(){
   var s=state.breaker,r=calcBreaker(s);
-  var items=r?[{icon:'⚡',l:'Calibre minimum',v:fmt(r.min,1)+' A'},{icon:'🛡️',l:'Disjoncteur proposé',v:r.sel+' A'},{icon:'📋',l:'Courbe',v:'Courbe '+r.curve},{icon:'🔌',l:'Section câble',v:r.cable+' mm²'},{icon:'✖️',l:'Facteur sélection',v:fmt(r.factor,2)+'×'}]:null;
+  if(r)saveHistory('breaker','Disjoncteur',r.sel+' A Courbe '+r.curve);
+  var items=r?[
+    {icon:'⚡',l:'Calibre minimum',v:fmt(r.min,1)+' A'},
+    {icon:'🛡️',l:'Disjoncteur proposé',v:r.sel+' A'},
+    {icon:'📋',l:'Courbe',v:'Courbe '+r.curve},
+    {icon:'🔌',l:'Section câble',v:r.cable+' mm²'},
+    {icon:'✖️',l:'Facteur sélection',v:fmt(r.factor,2)+'×'},
+  ]:null;
+  var shareBtn=r?'<button class="share-btn" onclick="shareResult(\'Disjoncteur: '+r.sel+' A - Courbe '+r.curve+' - Cable: '+r.cable+' mm²\')">'+t('share')+'</button>':'';
   return '<div class="stack">'+(mode==='student'?formulaBox('breaker'):'')
     +'<div class="grid2">'+field('br_current','Courant charge','⚡',{placeholder:'25',unit:'A',value:s.current})+field('br_type','Type charge','🏭',{options:[{v:'motor',l:'Moteur électrique'},{v:'general',l:'Charge générale'},{v:'welding',l:'Poste soudure'},{v:'lighting',l:'Eclairage'}],value:s.type})+'</div>'
     +tips('ℹ️','Sélection préliminaire. Vérifiez mode de pose, température, chute de tension.')
-    +results(items,'#f59e0b','NF C 15-100')+(r?breakerAlerts(r):'')+'</div>';
+    +results(items,'#f59e0b','NF C 15-100')+(r?breakerAlerts(r):'')+shareBtn+'</div>';
 }
-function airContent(){
-  var s=state.air,r=calcAir(s);
-  var items=r?[{icon:'💨',l:'Puissance compresseur',v:fmt(r.kW,2)+' kW'},{icon:'🐎',l:'Puissance CV',v:fmt(r.hp,2)+' HP'},{icon:'🗄️',l:'Volume réservoir',v:fmt(r.rec,0)+' L'},{icon:'🔩',l:'Déplacement/piston',v:r.disp?fmt(r.disp,0)+' cc':'--'}]:null;
-  return '<div class="stack">'+(mode==='student'?formulaBox('air'):'')
-    +'<div class="grid2">'+field('air_pressure','Pression service','💪',{placeholder:'8',unit:'bar',value:s.pressure})+field('air_flow','Débit requis','💨',{placeholder:'5',unit:'m3/min',value:s.flow})+'</div>'
-    +'<div class="grid2">'+field('air_pistons','Nb pistons','🔩',{placeholder:'2',value:s.pistons,step:'1',min:'1'})+field('air_rpm','Vitesse rotation','🌀',{placeholder:'900',unit:'tr/min',value:s.rpm,step:'1'})+'</div>'
-    +tips('ℹ️','Rendement estimé 85%. Règle réservoir: 250 L par m3/min.')
-    +results(items,'#10b981','ISO 1217')+(r?airAlerts(r):'')+'</div>';
+function vdropContent(){
+  var s=state.vdrop,r=calcVdrop(s);
+  if(r)saveHistory('vdrop','Chute Tension',fmt(r.pct,2)+'%');
+  var items=r?[
+    {icon:'📉',l:'Chute de tension',v:fmt(r.dU,2)+' V'},
+    {icon:'📊',l:'Pourcentage',v:fmt(r.pct,2)+' %'},
+    {icon:r.ok?'✅':'🔴',l:'Conformité NF C 15-100',v:r.ok?'Conforme (≤3%)':'Non conforme (>3%)'},
+  ]:null;
+  var gaugeHtml=r?gauge(r.pct,6,'#ec4899','ΔU %'):'';
+  var shareBtn=r?'<button class="share-btn" onclick="shareResult(\'Chute tension: '+fmt(r&&r.pct||0,2)+'% - '+(r&&r.ok?'Conforme':'Non conforme')+'\')">'+t('share')+'</button>':'';
+  return '<div class="stack">'+(mode==='student'?formulaBox('vdrop'):'')
+    +'<div class="grid2">'+field('vd_current','Courant','⚡',{placeholder:'20',unit:'A',value:s.current})+field('vd_length','Longueur câble','📏',{placeholder:'50',unit:'m',value:s.length})+'</div>'
+    +'<div class="grid2">'+field('vd_section','Section câble','🔌',{placeholder:'10',unit:'mm²',value:s.section})+field('vd_voltage','Tension réseau','⚡',{placeholder:'400',unit:'V',value:s.voltage})+'</div>'
+    +'<div class="grid2">'
+    +field('vd_phases','Phases','🔌',{options:[{v:'3',l:'Triphasé'},{v:'1',l:'Monophasé'}],value:s.phases})
+    +field('vd_material','Conducteur','⚗️',{options:[{v:'copper',l:'Cuivre (Cu)'},{v:'alu',l:'Aluminium (Al)'}],value:s.material})
+    +'</div>'
+    +tips('ℹ️','Limite: ΔU ≤ 3% départ / ≤ 5% terminal selon NF C 15-100.')
+    +results(items,'#ec4899','NF C 15-100')+gaugeHtml+shareBtn+'</div>';
 }
-function pumpContent(){
-  var s=state.pump,r=calcPump(s);
-  var items=r?[{icon:'💧',l:'Puissance hydraulique',v:fmt(r.hyd,2)+' kW'},{icon:'⚙️',l:'Puissance arbre',v:fmt(r.shaft,2)+' kW'},{icon:'🐎',l:'Puissance CV',v:fmt(r.hp,2)+' HP'},{icon:'📏',l:'NPSH approx.',v:fmt(r.npsh,1)+' m'}]:null;
-  return '<div class="stack">'+(mode==='student'?formulaBox('pump'):'')
-    +'<div class="grid2">'+field('pump_flow','Débit','💧',{placeholder:'50',unit:'m3/h',value:s.flow})+field('pump_head','Hauteur HMT','📏',{placeholder:'30',unit:'m',value:s.head})+'</div>'
-    +'<div class="grid2">'+field('pump_eff','Rendement pompe','⚙️',{placeholder:'75',unit:'%',value:s.eff})+field('pump_density','Densité fluide','⚗️',{placeholder:'1000',unit:'kg/m3',value:s.density})+'</div>'
-    +tips('ℹ️','NPSH approx. Vérifiez avec données fabricant.')
-    +results(items,'#f97316','ISO 9906')+(r?pumpAlerts(r):'')+'</div>';
+function transfoContent(){
+  var s=state.transfo,r=calcTransfo(s);
+  if(r)saveHistory('transfo','Transformateur','a='+fmt(r.ratio,2));
+  var items=r?[
+    {icon:'🔁',l:'Rapport de transformation',v:fmt(r.ratio,3)},
+    {icon:'⚡',l:'Tension primaire',v:fmt(N(s.v1),1)+' V'},
+    {icon:'🔌',l:'Tension secondaire',v:fmt(N(s.v2),1)+' V'},
+    {icon:'💡',l:'Courant primaire',v:r.I1?fmt(r.I1,2)+' A':'— (S requis)'},
+    {icon:'💡',l:'Courant secondaire',v:r.I2?fmt(r.I2,2)+' A':'— (S requis)'},
+  ]:null;
+  var shareBtn=r?'<button class="share-btn" onclick="shareResult(\'Transformateur: a='+fmt(r&&r.ratio||0,3)+'\')">'+t('share')+'</button>':'';
+  return '<div class="stack">'+(mode==='student'?formulaBox('transfo'):'')
+    +'<div class="grid2">'+field('tf_v1','Tension primaire V1','⚡',{placeholder:'20000',unit:'V',value:s.v1})+field('tf_v2','Tension secondaire V2','🔌',{placeholder:'400',unit:'V',value:s.v2})+'</div>'
+    +field('tf_s','Puissance (optionnel)','💡',{placeholder:'100',unit:'kVA',value:s.s})
+    +tips('ℹ️','Le rapport a = V1/V2. La puissance est optionnelle pour calculer les courants.')
+    +results(items,'#10b981','CEI 60076')+shareBtn+'</div>';
 }
 function convertContent(){
   var cv=state.convert;
@@ -571,7 +926,7 @@ function convertContent(){
     +field('cv_cat','Catégorie','🔄',{options:catOpts,value:cv.cat})
     +field('cv_value','Valeur','🔢',{placeholder:'100',value:cv.value})
     +'<div class="grid2">'+field('cv_from','De','↗',{options:unitOpts,value:cv.from})+field('cv_to','Vers','↙',{options:unitOpts,value:cv.to})+'</div>'
-    +results(items,'#ec4899','Coefficients ISO/SI')+'</div>';
+    +results(items,'#f97316','Coefficients ISO/SI')+'</div>';
 }
 function aiContent(){
   var msgs=chatMsgs.map(function(m){
@@ -584,47 +939,43 @@ function aiContent(){
     +'<div class="ai-header"><div class="ai-badge"><div class="ai-dot"></div>Assistant IA Electromécanique</div><div class="ai-status">Précis · Professionnel</div></div>'
     +'<div class="chat-msgs" id="chatMsgs">'+msgs+'</div>'
     +(showSug?'<div class="suggestions"><div class="sug-title">Questions fréquentes:</div><div class="sug-grid">'
-      +'<button class="sug-btn" onclick="setSug(0)">'+SUGS[0]+'</button>'
-      +'<button class="sug-btn" onclick="setSug(1)">'+SUGS[1]+'</button>'
-      +'<button class="sug-btn" onclick="setSug(2)">'+SUGS[2]+'</button>'
-      +'<button class="sug-btn" onclick="setSug(3)">'+SUGS[3]+'</button>'
+      +SUGS.map(function(s,i){return '<button class="sug-btn" onclick="setSug('+i+')">'+s+'</button>';}).join('')
       +'</div></div>':'')
     +'<div class="chat-composer"><input class="chat-input" id="chatInput" placeholder="Posez votre question technique..." onkeydown="if(event.key===\'Enter\')sendChat()"/>'
-    +'<button class="send-btn" id="sendBtn" onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>'
-    +'<div class="ai-footer">Powered by Claude AI · Développé par Kouadria Nadir</div>'
+    +'<button class="send-btn" id="sendBtn" onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>'
+    +'<div class="ai-footer">'+t('aiFooter')+'</div>'
     +'</div>';
 }
 
 function setSug(i){var inp=document.getElementById('chatInput');if(inp){inp.value=SUGS[i];inp.focus();}}
 
 function buildContent(){
-  var m={motor:motorContent,torque:torqueContent,'3phase':threephaseContent,breaker:breakerContent,air:airContent,pump:pumpContent,convert:convertContent,ai:aiContent};
+  var m={motor:motorContent,torque:torqueContent,'3phase':threephaseContent,breaker:breakerContent,vdrop:vdropContent,transfo:transfoContent,convert:convertContent,ai:aiContent};
   return(m[activeTab]||motorContent)();
 }
 
+// ── RENDER ────────────────────────────────────────────────
 function renderTabs(){
   document.getElementById('tabs').innerHTML=TABS.map(function(t){
     var sel=t.id===activeTab;
-    return '<button class="tab-btn'+(sel?' active':'')+'" onclick="setTab(\''+t.id+'\')" style="'+(sel?'background:color-mix(in srgb,'+t.color+' 14%,rgba(15,23,42,1));border:1.5px solid color-mix(in srgb,'+t.color+' 40%,transparent)':'')+'"><span class="ticon" style="color:'+(sel?t.color:'#64748b')+'">'+t.icon+'</span><span class="tlbl" style="color:'+(sel?t.color:'#64748b')+'">'+t.label+'</span></button>';
+    return '<button class="tab-btn'+(sel?' active':'')+'" onclick="setTab(\''+t.id+'\')" style="'+(sel?'background:color-mix(in srgb,'+t.color+' 14%,rgba(15,23,42,1));border:1.5px solid color-mix(in srgb,'+t.color+' 40%,transparent)':'')+'"><span class="ticon" style="color:'+(sel?t.color:'')+'">'+t.icon+'</span><span class="tlbl" style="'+(sel?'color:'+t.color:'')+'">'+t.label+'</span></button>';
   }).join('');
 }
-
 function renderPanel(){
   var t=TABS.filter(function(x){return x.id===activeTab;})[0]||TABS[0];
   var panel=document.getElementById('panel');
   panel.style.border='1px solid color-mix(in srgb,'+t.color+' 22%,rgba(148,163,184,.1))';
   panel.style.boxShadow='0 16px 40px color-mix(in srgb,'+t.color+' 10%,rgba(2,8,23,.5))';
-  panel.innerHTML='<div class="panel-hdr"><div class="panel-icon" style="background:color-mix(in srgb,'+t.color+' 12%,rgba(15,23,42,1));border:1px solid color-mix(in srgb,'+t.color+' 22%,transparent)">'+t.icon+'</div><div><h2>'+t.label+'</h2><p>'+t.help+'</p></div></div>'
-    +(activeTab!=='ai'&&activeTab!=='convert'?modeToggle():'')
-    +buildContent();
+  panel.innerHTML='<div class="panel-hdr"><div class="panel-icon" style="background:color-mix(in srgb,'+t.color+' 12%,rgba(15,23,42,1));border:1px solid color-mix(in srgb,'+t.color+' 22%,transparent)">'+t.icon+'</div><div><h2>'+t.label+'</h2><p>'+t.help+'</p></div></div>'+buildContent();
   bindInputs();
   if(activeTab==='ai')scrollChat();
+  document.getElementById('hist-count').textContent=history.length;
 }
-
 function setTab(id){activeTab=id;renderTabs();renderPanel();}
 
+// ── BIND INPUTS ───────────────────────────────────────────
 function bindInputs(){
-  var m=state.motor,t=state.torque,tp=state['3phase'],br=state.breaker,air=state.air,p=state.pump,cv=state.convert;
+  var m=state.motor,t=state.torque,tp=state['3phase'],br=state.breaker,vd=state.vdrop,tf=state.transfo,cv=state.convert;
   window.FC_motor_phases=function(v){m.phases=v;renderPanel();};
   window.FC_motor_voltage=function(v){m.voltage=v;renderPanel();};
   window.FC_motor_current=function(v){m.current=v;renderPanel();};
@@ -641,20 +992,22 @@ function bindInputs(){
   window.FC_3p_eff=function(v){tp.eff=v;renderPanel();};
   window.FC_br_current=function(v){br.current=v;renderPanel();};
   window.FC_br_type=function(v){br.type=v;renderPanel();};
-  window.FC_air_pressure=function(v){air.pressure=v;renderPanel();};
-  window.FC_air_flow=function(v){air.flow=v;renderPanel();};
-  window.FC_air_pistons=function(v){air.pistons=v;renderPanel();};
-  window.FC_air_rpm=function(v){air.rpm=v;renderPanel();};
-  window.FC_pump_flow=function(v){p.flow=v;renderPanel();};
-  window.FC_pump_head=function(v){p.head=v;renderPanel();};
-  window.FC_pump_eff=function(v){p.eff=v;renderPanel();};
-  window.FC_pump_density=function(v){p.density=v;renderPanel();};
+  window.FC_vd_current=function(v){vd.current=v;renderPanel();};
+  window.FC_vd_length=function(v){vd.length=v;renderPanel();};
+  window.FC_vd_section=function(v){vd.section=v;renderPanel();};
+  window.FC_vd_voltage=function(v){vd.voltage=v;renderPanel();};
+  window.FC_vd_phases=function(v){vd.phases=v;renderPanel();};
+  window.FC_vd_material=function(v){vd.material=v;renderPanel();};
+  window.FC_tf_v1=function(v){tf.v1=v;renderPanel();};
+  window.FC_tf_v2=function(v){tf.v2=v;renderPanel();};
+  window.FC_tf_s=function(v){tf.s=v;renderPanel();};
   window.FC_cv_cat=function(v){cv.cat=v;var u=UNITS[v]||[];cv.from=u[0];cv.to=u[1]||u[0];renderPanel();};
   window.FC_cv_value=function(v){cv.value=v;renderPanel();};
   window.FC_cv_from=function(v){cv.from=v;renderPanel();};
   window.FC_cv_to=function(v){cv.to=v;renderPanel();};
 }
 
+// ── AI CHAT ───────────────────────────────────────────────
 function scrollChat(){var c=document.getElementById('chatMsgs');if(c)c.scrollTop=c.scrollHeight;}
 function renderChatOnly(){
   var c=document.getElementById('chatMsgs');if(!c)return;
@@ -665,59 +1018,52 @@ function renderChatOnly(){
   }).join('');
   scrollChat();
 }
-
 async function sendChat(){
-  var inp=document.getElementById('chatInput');
-  var btn=document.getElementById('sendBtn');
+  var inp=document.getElementById('chatInput'),btn=document.getElementById('sendBtn');
   if(!inp)return;
-  var txt=inp.value.trim();
-  if(!txt||loading)return;
+  var txt=inp.value.trim();if(!txt||loading)return;
   inp.value='';
   chatMsgs.push({role:'user',text:txt});
   chatMsgs.push({role:'ai',text:'',typing:true});
-  loading=true;
-  if(btn)btn.disabled=true;
+  loading=true;if(btn)btn.disabled=true;
   renderChatOnly();
   try{
     var res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+      method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:600,
-        system:'Ingenieur electromecanicien expert. Repondez en francais technique. Max 4 paragraphes. Donnez formules avec unites. Citez normes si pertinent. Soyez precis et pratique. App par Kouadria Nadir.',
+        model:'claude-sonnet-4-20250514',max_tokens:600,
+        system:t('aiSystem'),
         messages:[{role:'user',content:txt}]
       })
     });
     var data=await res.json();
-    var reply=data.content?data.content.map(function(c){return c.text||'';}).join(''):'Erreur de reponse.';
+    var reply=data.content?data.content.map(function(c){return c.text||'';}).join(''):'Erreur.';
     chatMsgs.splice(chatMsgs.findIndex(function(m){return m.typing;}),1);
     chatMsgs.push({role:'ai',text:reply});
   }catch(e){
     chatMsgs.splice(chatMsgs.findIndex(function(m){return m.typing;}),1);
-    chatMsgs.push({role:'ai',text:'Connexion impossible. Verifiez votre connexion et reessayez.'});
+    chatMsgs.push({role:'ai',text:t('connError')});
   }
-  loading=false;
-  if(btn)btn.disabled=false;
+  loading=false;if(btn)btn.disabled=false;
   renderChatOnly();
 }
 
-renderTabs();
-renderPanel();
-
-// ── Splash Screen ────────────────────────────────────────
+// ── SPLASH & SELECTION ────────────────────────────────────
 (function(){
-  var splash = document.getElementById('splash');
-  if(!splash) return;
-  // Hide after 2.5s with fade out
+  var splash=document.getElementById('splash');
+  var sel=document.getElementById('sel-screen');
   setTimeout(function(){
-    splash.classList.add('hide');
-    setTimeout(function(){
-      splash.style.display='none';
-    }, 600);
-  }, 2500);
+    if(splash){splash.classList.add('hide');setTimeout(function(){splash.style.display='none';},600);}
+  },2600);
+  setTimeout(function(){
+    if(sel)sel.classList.add('show');
+  },3300);
 })();
 
+// ── INIT ──────────────────────────────────────────────────
+document.getElementById('hist-count').textContent=history.length;
+renderTabs();
+renderPanel();
 </script>
 </body>
 </html>
