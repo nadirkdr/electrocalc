@@ -450,8 +450,13 @@ function changeProfil(){document.getElementById('sel').classList.add('on');}
 function selectProfile(p){
   mode=p;
   var sel=document.getElementById('sel');
-  sel.style.opacity='0';sel.style.transition='opacity .4s';
-  setTimeout(function(){sel.classList.remove('on');sel.style.opacity='';sel.style.transition='';},400);
+  sel.style.transition='opacity .4s ease';
+  sel.style.opacity='0';
+  setTimeout(function(){
+    sel.style.display='none';
+    sel.style.opacity='';
+    sel.style.transition='';
+  },420);
   document.getElementById('prof-lbl').textContent=t(p==='engineer'?'engineer':'student');
   document.getElementById('prof-btn').innerHTML=(p==='engineer'?'🔧 ':'📚 ')+'<span id="prof-lbl">'+t(p==='engineer'?'engineer':'student')+'</span>';
   document.getElementById('prof-sub').textContent=t(p==='engineer'?'profEngSub':'profStuSub');
