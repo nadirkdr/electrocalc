@@ -32,6 +32,13 @@ select option{background:#0f172a}
 @keyframes glow{0%,100%{box-shadow:0 0 15px rgba(59,130,246,.3)}50%{box-shadow:0 0 30px rgba(59,130,246,.6)}}
 @keyframes glow2{0%,100%{box-shadow:0 0 15px rgba(139,92,246,.3)}50%{box-shadow:0 0 30px rgba(139,92,246,.6)}}
 
+/* AD BANNER */
+#ad-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#0f172a;
+  border-top:1px solid rgba(59,130,246,.2);display:flex;align-items:center;justify-content:center;
+  min-height:60px;padding:4px 8px}
+#ad-banner iframe,#ad-banner ins{display:block;width:100%;max-width:468px}
+body{padding-bottom:68px}
+
 /* SPLASH */
 #splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;
   background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.18),transparent 50%),
@@ -898,5 +905,17 @@ document.getElementById('hist-cnt').textContent=calcHist.length;
 renderTabs();
 renderPanel();
 </script>
+
+<!-- ====== AD BANNER ====== -->
+<div id="ad-banner">
+  <!-- أضف كود AdSense هنا عند الحصول على الموافقة -->
+  <div style="width:320px;height:50px;background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.08));
+    border:1px dashed rgba(148,163,184,.2);border-radius:8px;display:flex;align-items:center;
+    justify-content:center;color:#475569;font-size:11px;font-weight:600;letter-spacing:.05em">
+    AD SPACE
+  </div>
+</div>
+<!-- ====== END AD ====== -->
+
 </body>
 </html>
